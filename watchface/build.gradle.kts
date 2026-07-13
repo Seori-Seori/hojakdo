@@ -6,7 +6,6 @@ plugins {
 }
 
 android {
-    enableKotlin = false
     namespace = "com.seori.hojakdo"
     compileSdk = 33
 
