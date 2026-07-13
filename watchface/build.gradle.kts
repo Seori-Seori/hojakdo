@@ -32,6 +32,7 @@ android {
 
 val generatedResDir = layout.buildDirectory.dir("generated/hojakdo-res")
 val sourceLayerDir = rootProject.file("assets/layers/mvp")
+val sourcePreview = rootProject.file("assets/hojakdo_basic_416.png")
 
 fun mirrorAroundAnchor(source: BufferedImage, anchorX: Double): BufferedImage {
     val result = BufferedImage(source.width, source.height, BufferedImage.TYPE_INT_ARGB)
@@ -48,6 +49,7 @@ fun mirrorAroundAnchor(source: BufferedImage, anchorX: Double): BufferedImage {
 
 val prepareHojakdoAssets by tasks.registering {
     inputs.dir(sourceLayerDir)
+    inputs.file(sourcePreview)
     outputs.dir(generatedResDir)
 
     doLast {
@@ -84,8 +86,7 @@ val prepareHojakdoAssets by tasks.registering {
             drawableDir.resolve("minute_magpie_mirrored.png")
         )
 
-        sourceLayerDir.resolve("clean_background.png")
-            .copyTo(drawableDir.resolve("preview.png"), overwrite = true)
+        sourcePreview.copyTo(drawableDir.resolve("preview.png"), overwrite = true)
     }
 }
 
