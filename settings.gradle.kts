@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "HojakdoMotionMvp"
+rootProject.name = "Hojakdo"
 include(":watchface")
