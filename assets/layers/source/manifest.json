@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "inventory_complete",
+  "status": "large_master_visual_draft_approved",
   "sourceImage": "assets/hojakdo_basic_416.png",
   "sourceCanvas": {
     "width": 1254,
@@ -64,6 +64,62 @@
         "red_hanging_ornament"
       ],
       "anchorStatus": "needs_visual_verification"
+    }
+  ],
+  "newAssets": [
+    {
+      "id": "magpie_large_base_master",
+      "file": "assets/layers/source/characters/magpie_large_base_master.png",
+      "generationSource": "assets/layers/source/drafts/magpie_large_base_chromakey_v1.png",
+      "transparentHighResolutionSource": "assets/layers/source/drafts/magpie_large_base_transparent_v1.png",
+      "status": "visual_draft_approved",
+      "approvalDate": "2026-07-14",
+      "selectedVariant": "B",
+      "scaleVersusLegacy": 1.12,
+      "pose": "right_foot_anchored_left_foot_lifted",
+      "intendedInitialUses": [
+        "perch_hand",
+        "perch_tiger"
+      ],
+      "sourceCanvas": {
+        "width": 1254,
+        "height": 1254
+      },
+      "alphaBoundingBoxSource": {
+        "x": 274,
+        "y": 122,
+        "width": 246,
+        "height": 288
+      },
+      "safeCropSource": {
+        "x": 262,
+        "y": 110,
+        "width": 270,
+        "height": 312,
+        "padding": 12
+      },
+      "anchorSource": {
+        "x": 443.08,
+        "y": 328.826667
+      },
+      "anchorLogical": {
+        "x": 159,
+        "y": 118
+      },
+      "anchorInSafeCropSource": {
+        "x": 181.08,
+        "y": 218.826667
+      },
+      "logicalCropApproximation": {
+        "width": 96.889952,
+        "height": 111.961722,
+        "anchorX": 64.980861,
+        "anchorY": 78.526316
+      },
+      "transparentCorners": true,
+      "hiddenRgbPixels": 0,
+      "greenFringePixels": 0,
+      "completionLevel": "draft_created"
     }
   ],
   "decisions": {
