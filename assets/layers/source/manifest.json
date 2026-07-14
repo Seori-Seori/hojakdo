@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "status": "inventory_complete",
+  "sourceImage": "assets/hojakdo_basic_416.png",
+  "sourceCanvas": {
+    "width": 1254,
+    "height": 1254
+  },
+  "logicalCanvas": {
+    "width": 450,
+    "height": 450
+  },
+  "scale": {
+    "sourceToLogical": 0.358851674641,
+    "logicalToSource": 2.786666666667
+  },
+  "transparentRgbPolicy": "zero_outside_alpha_for_new_assets",
+  "legacyMappings": [
+    {
+      "file": "assets/layers/mvp/minute_magpie.png",
+      "legacyBinding": "minute_hand",
+      "semanticRole": "magpie_large",
+      "alphaPixels": 18464,
+      "alphaBoundingBoxSource": {
+        "x": 292,
+        "y": 144,
+        "width": 220,
+        "height": 257
+      },
+      "currentCarrierPivotLogical": {
+        "x": 159,
+        "y": 118
+      },
+      "currentCarrierPivotSource": {
+        "x": 443.08,
+        "y": 328.826667
+      },
+      "contamination": [
+        "perch_branch_fragment_under_feet"
+      ],
+      "anchorStatus": "needs_visual_verification"
+    },
+    {
+      "file": "assets/layers/mvp/hour_magpie.png",
+      "legacyBinding": "hour_hand",
+      "semanticRole": "magpie_small",
+      "alphaPixels": 7344,
+      "alphaBoundingBoxSource": {
+        "x": 830,
+        "y": 317,
+        "width": 102,
+        "height": 238
+      },
+      "currentCarrierPivotLogical": {
+        "x": 305,
+        "y": 143
+      },
+      "currentCarrierPivotSource": {
+        "x": 849.933333,
+        "y": 398.493333
+      },
+      "contamination": [
+        "perch_branch_fragment",
+        "red_hanging_ornament"
+      ],
+      "anchorStatus": "needs_visual_verification"
+    }
+  ],
+  "decisions": {
+    "preserveLegacyMvpNames": true,
+    "newAssetNaming": "semantic_size_and_pose",
+    "sourceMasterCanvas": "full_aligned_1254",
+    "runtimeAssetPolicy": "derive_scaled_cropped_assets_at_build_time",
+    "staticPaddingSourcePixels": 12
+  }
+}
