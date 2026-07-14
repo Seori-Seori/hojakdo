@@ -66,7 +66,7 @@
     "rule": "exactly two of every three consecutive small-magpie cycles"
   },
   "frameCounts": {
-    "day24h": 429,
+    "day24h": 331,
     "largeCycle": 207,
     "smallCycle": 217,
     "smallEarPeck": 42

@@ -130,8 +130,9 @@
   },
   "render": {
     "sourceDate": "2026-07-14",
-    "dayStepMinutes": 8,
+    "dayStepMinutes": 12,
     "dayFrameDurationMs": 72,
+    "dayGifColors": 48,
     "detailStepMinutes": 0.25,
     "detailFrameDurationMs": 105,
     "gifColors": 96

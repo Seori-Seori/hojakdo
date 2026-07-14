@@ -560,7 +560,13 @@ def _day_frame_times(
                 "EXIT_RIGHT",
             }:
                 values.append(plan.cycle_start + timedelta(minutes=phase.start + 0.08))
-        for action in plan.micro_actions:
+        day_actions = [
+            action for action in plan.micro_actions if action.kind != "PECK_TIGER_EAR"
+        ][:1]
+        day_actions.extend(
+            action for action in plan.micro_actions if action.kind == "PECK_TIGER_EAR"
+        )
+        for action in day_actions:
             values.append(
                 plan.cycle_start + timedelta(minutes=(action.start + action.end) / 2.0)
             )
@@ -899,7 +905,7 @@ def render_all(source_date: date, output_dir: Path) -> None:
         day_frames,
         output_dir / "hojakdo_v2_24h_debug.gif",
         int(render_config["dayFrameDurationMs"]),
-        int(render_config["gifColors"]),
+        int(render_config["dayGifColors"]),
     )
     frame_counts["day24h"] = len(day_frames)
     del day_frames
