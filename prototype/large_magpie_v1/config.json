@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "status": "prototype_tuning_values",
+  "logicalCanvas": {
+    "width": 450,
+    "height": 450
+  },
+  "timeline": {
+    "epoch": "2026-01-01T00:00:00",
+    "cycleMinutes": 43,
+    "cycleOffsetMinutes": 32
+  },
+  "durationsMinutes": {
+    "hidden": 2,
+    "spawnPine": 1,
+    "flyPineToHand": 1,
+    "landOnHand": 1,
+    "perchHand": 1,
+    "waitHandMeet": 1,
+    "hopHandToHand": 1,
+    "spawnPlum": 2,
+    "landOnTiger": 1,
+    "perchTiger": 2,
+    "flyOutRight": 1,
+    "minimumHourRide": 5,
+    "minimumMinuteRideAfterTransfer": 4
+  },
+  "geometry": {
+    "clockPivot": [224, 207],
+    "pineSpawnLarge": [112, 166],
+    "plumSpawnLarge": [94, 352],
+    "tigerApproachLarge": [280, 302],
+    "tigerPerchLarge": [337, 220],
+    "screenExitRight": [525, 165],
+    "hourHandAnchorAtZero": [305, 143],
+    "minuteHandAnchorAtZero": [159, 118],
+    "hourHandAngleOffset": -50.232272878132,
+    "minuteHandAngleOffset": -325.271003720479,
+    "magpieAnchorAtZero": [159, 118],
+    "magpieLogicalBoundsAtZero": [98, 39, 187, 151],
+    "plumWalkWaypointsLarge": [
+      [94, 352],
+      [122, 344],
+      [151, 337],
+      [181, 331],
+      [211, 323],
+      [241, 315],
+      [268, 307],
+      [289, 289]
+    ]
+  },
+  "selection": {
+    "idealQuadrantAngle": 315,
+    "quadrantStartAngle": 268,
+    "quadrantEndAngle": 358,
+    "tigerApproachMaxDistance": 24,
+    "tigerArrivalEarlyToleranceMinutes": 3,
+    "handMeetingMaxDistance": 22,
+    "scoreTieThreshold": 12,
+    "weights": {
+      "quadrant": 60,
+      "idealAngle": 35,
+      "pineAccess": 20,
+      "screenMargin": 15,
+      "cycleCompletion": 30,
+      "largeBirdMinuteSpace": 8,
+      "largeBirdHourSpace": 4,
+      "arrivalTiming": 18
+    }
+  },
+  "motion": {
+    "walkStepMotionFraction": 0.16,
+    "reactionDurationMinutes": 0.75,
+    "flightArcHeight": 28,
+    "hopArcHeight": 18,
+    "exitArcHeight": 34
+  },
+  "render": {
+    "sourceDate": "2026-07-14",
+    "dayStepMinutes": 10,
+    "dayFrameDurationMs": 75,
+    "detailStepMinutes": 0.5,
+    "detailFrameDurationMs": 120,
+    "gifColors": 88
+  }
+}

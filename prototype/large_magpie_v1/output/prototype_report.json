@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "status": "static_prototype_generated",
+  "sourceDate": "2026-07-14",
+  "cycleMinutes": 43.0,
+  "dayFrameCount": 278,
+  "detailFrameCount": 111,
+  "dayRouteCounts": {
+    "PLUM_WALK": 31,
+    "HOUR_TO_MINUTE": 1,
+    "MINUTE_DIRECT": 2
+  },
+  "sevenDayRouteCounts": {
+    "PLUM_WALK": 208,
+    "MINUTE_DIRECT": 26,
+    "HOUR_TO_MINUTE": 1
+  },
+  "detailCycle": {
+    "cycleIndex": 6511,
+    "cycleStart": "2026-07-14T10:45:00",
+    "route": "HOUR_TO_MINUTE",
+    "selectedHand": "hour",
+    "reactionMinute": 7.8,
+    "reactionState": "RIDE_HOUR",
+    "hourScore": 173.522,
+    "minuteScore": 178.512,
+    "phases": [
+      {
+        "state": "HIDDEN",
+        "startMinute": 0.0,
+        "endMinute": 2.0,
+        "hand": null
+      },
+      {
+        "state": "SPAWN_PINE",
+        "startMinute": 2.0,
+        "endMinute": 3.0,
+        "hand": null
+      },
+      {
+        "state": "FLY_PINE_TO_HAND",
+        "startMinute": 3.0,
+        "endMinute": 4.0,
+        "hand": "hour"
+      },
+      {
+        "state": "LAND_ON_HAND",
+        "startMinute": 4.0,
+        "endMinute": 5.0,
+        "hand": "hour"
+      },
+      {
+        "state": "PERCH_HAND",
+        "startMinute": 5.0,
+        "endMinute": 6.0,
+        "hand": "hour"
+      },
+      {
+        "state": "RIDE_HOUR",
+        "startMinute": 6.0,
+        "endMinute": 10.0,
+        "hand": "hour"
+      },
+      {
+        "state": "WAIT_HAND_MEET",
+        "startMinute": 10.0,
+        "endMinute": 11.0,
+        "hand": "hour"
+      },
+      {
+        "state": "HOP_HAND_TO_HAND",
+        "startMinute": 11.0,
+        "endMinute": 12.0,
+        "hand": "minute"
+      },
+      {
+        "state": "RIDE_MINUTE",
+        "startMinute": 12.0,
+        "endMinute": 39.0,
+        "hand": "minute"
+      },
+      {
+        "state": "LAND_ON_TIGER",
+        "startMinute": 39.0,
+        "endMinute": 40.0,
+        "hand": null
+      },
+      {
+        "state": "PERCH_TIGER",
+        "startMinute": 40.0,
+        "endMinute": 42.0,
+        "hand": null
+      },
+      {
+        "state": "FLY_OUT_RIGHT",
+        "startMinute": 42.0,
+        "endMinute": 43.0,
+        "hand": null
+      }
+    ]
+  },
+  "outputs": [
+    "large_magpie_v1_24h_debug.gif",
+    "large_magpie_v1_hour_transfer_detail.gif",
+    "large_magpie_v1_hour_transfer_contact_sheet.png",
+    "prototype_report.json"
+  ],
+  "completionLevel": "static_simulation_prototype",
+  "wffConnected": false
+}
