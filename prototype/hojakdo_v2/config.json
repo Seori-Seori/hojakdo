@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 2,
+  "status": "approved_v2_simulation_values",
+  "logicalCanvas": {
+    "width": 450,
+    "height": 450
+  },
+  "timeline": {
+    "epoch": "2026-01-01T00:00:00",
+    "cycleMinutes": 43,
+    "cycleOffsetMinutes": 32,
+    "hiddenMinutes": 2
+  },
+  "durationsMinutes": {
+    "spawnPine": 1,
+    "flyPineToHand": 1,
+    "landOnHand": 1,
+    "perchHand": 1,
+    "waitHandMeet": 1,
+    "hopHandToHand": 1,
+    "spawnPlum": 2,
+    "landOnTiger": 1,
+    "perchTiger": 3,
+    "exitRight": 1,
+    "minimumHourRide": 5,
+    "minimumMinuteRideAfterTransfer": 4,
+    "longRideThreshold": 8
+  },
+  "geometry": {
+    "clockPivot": [224, 207],
+    "hourHandAngleOffset": -50.232272878132,
+    "minuteHandAngleOffset": -325.271003720479,
+    "hourHandAnchorAtZero": {
+      "LARGE": [305, 143],
+      "SMALL": [320, 132]
+    },
+    "minuteHandAnchorAtZero": {
+      "LARGE": [159, 118],
+      "SMALL": [149, 104]
+    },
+    "pineSpawn": {
+      "LARGE": [112, 166],
+      "SMALL": [105, 169]
+    },
+    "plumSpawn": {
+      "LARGE": [94, 352],
+      "SMALL": [89, 354]
+    },
+    "tigerApproach": {
+      "LARGE": [280, 302],
+      "SMALL": [287, 287]
+    },
+    "tigerPerch": {
+      "LARGE": [337, 220],
+      "SMALL": [343, 204]
+    },
+    "screenExitRight": {
+      "LARGE": [535, 174],
+      "SMALL": [510, 151]
+    },
+    "birdAssetAnchorAtZero": {
+      "LARGE": [159, 118],
+      "SMALL": [316, 144]
+    },
+    "birdLogicalBoundsAtZero": {
+      "LARGE": [98, 39, 187, 151],
+      "SMALL": [304, 112, 337, 158]
+    },
+    "plumWalkWaypoints": {
+      "LARGE": [
+        [94, 352], [122, 344], [151, 337], [181, 331],
+        [211, 323], [241, 315], [268, 307], [289, 289]
+      ],
+      "SMALL": [
+        [89, 354], [111, 348], [133, 342], [155, 336],
+        [178, 329], [202, 321], [228, 311], [254, 298], [284, 282]
+      ]
+    }
+  },
+  "selection": {
+    "idealQuadrantAngle": 315,
+    "quadrantStartAngle": 268,
+    "quadrantEndAngle": 358,
+    "tigerApproachBaseDistance": 43,
+    "tigerApproachExtendedDistance": 46,
+    "borderlineOpportunityPercent": 74,
+    "tigerArrivalEarlyToleranceMinutes": 4,
+    "handMeetingMaxDistance": 90,
+    "largeHourPreferencePercent": 62,
+    "smallHourPreferencePercent": 38,
+    "weights": {
+      "quadrant": 60,
+      "idealAngle": 35,
+      "pineAccess": 20,
+      "screenMargin": 15,
+      "cycleCompletion": 30,
+      "arrivalTiming": 18,
+      "largeHourBias": 5,
+      "smallMinuteBias": 5
+    }
+  },
+  "motion": {
+    "walkStepMotionFraction": {
+      "LARGE": 0.16,
+      "SMALL": 0.11
+    },
+    "reactionDurationMinutes": 0.75,
+    "flightArcHeight": {
+      "LARGE": 28,
+      "SMALL": 39
+    },
+    "hopArcHeight": {
+      "LARGE": 18,
+      "SMALL": 25
+    },
+    "exitArcHeight": {
+      "LARGE": 24,
+      "SMALL": 48
+    },
+    "microActionDurationMinutes": {
+      "LARGE": 0.9,
+      "SMALL": 0.55,
+      "PECK_TIGER_EAR": 0.72
+    },
+    "turnNeedPercent": {
+      "LARGE": 36,
+      "SMALL": 44
+    },
+    "smallExitWingFlaps": 2
+  },
+  "render": {
+    "sourceDate": "2026-07-14",
+    "dayStepMinutes": 8,
+    "dayFrameDurationMs": 72,
+    "detailStepMinutes": 0.25,
+    "detailFrameDurationMs": 105,
+    "gifColors": 96
+  }
+}
