@@ -1,6 +1,7 @@
 {
-  "schemaVersion": 2,
-  "status": "approved_v2_simulation_values",
+  "schemaVersion": 3,
+  "version": "2.1",
+  "status": "approved_v2_1_simulation_values",
   "logicalCanvas": {
     "width": 450,
     "height": 450
@@ -64,7 +65,7 @@
     },
     "birdLogicalBoundsAtZero": {
       "LARGE": [98, 39, 187, 151],
-      "SMALL": [304, 112, 337, 158]
+      "SMALL": [298, 99, 347, 155]
     },
     "plumWalkWaypoints": {
       "LARGE": [
@@ -126,7 +127,11 @@
       "LARGE": 36,
       "SMALL": 44
     },
-    "smallExitWingFlaps": 2
+    "movementFacingSampleMinutes": 0.12,
+    "smallTigerTurnDurationMinutes": 0.55,
+    "smallExitWingFlaps": 2,
+    "smallExitWingSpanRatio": 0.44,
+    "smallExitWingRootHeightRatio": 0.41
   },
   "render": {
     "sourceDate": "2026-07-14",

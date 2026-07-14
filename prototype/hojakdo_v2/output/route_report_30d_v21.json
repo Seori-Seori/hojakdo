@@ -1,0 +1,315 @@
+{
+  "schemaVersion": 3,
+  "version": "2.1",
+  "status": "integrated_v2_1_simulation_generated",
+  "sourceDate": "2026-07-14",
+  "cycleMinutes": 43.0,
+  "hiddenMinutes": 2.0,
+  "handLandingWindow": {
+    "start": "2026-07-14T00:00:00",
+    "endExclusive": "2026-08-13T00:00:00",
+    "days": 30,
+    "countingRule": "actual LAND_ON_HAND completion timestamp",
+    "total": 181,
+    "averagePerDay": 6.033,
+    "minimumPerDay": 4,
+    "maximumPerDay": 8,
+    "dailyCounts": {
+      "2026-07-14": 7,
+      "2026-07-15": 6,
+      "2026-07-16": 6,
+      "2026-07-17": 6,
+      "2026-07-18": 5,
+      "2026-07-19": 7,
+      "2026-07-20": 5,
+      "2026-07-21": 7,
+      "2026-07-22": 6,
+      "2026-07-23": 6,
+      "2026-07-24": 7,
+      "2026-07-25": 4,
+      "2026-07-26": 8,
+      "2026-07-27": 4,
+      "2026-07-28": 8,
+      "2026-07-29": 4,
+      "2026-07-30": 8,
+      "2026-07-31": 5,
+      "2026-08-01": 6,
+      "2026-08-02": 6,
+      "2026-08-03": 6,
+      "2026-08-04": 7,
+      "2026-08-05": 5,
+      "2026-08-06": 7,
+      "2026-08-07": 5,
+      "2026-08-08": 6,
+      "2026-08-09": 6,
+      "2026-08-10": 6,
+      "2026-08-11": 7,
+      "2026-08-12": 5
+    }
+  },
+  "routeCounts": {
+    "MINUTE_DIRECT": 168,
+    "HOUR_TO_MINUTE": 13
+  },
+  "characterCounts": {
+    "SMALL": 97,
+    "LARGE": 84
+  },
+  "characterRouteCounts": {
+    "SMALL:MINUTE_DIRECT": 95,
+    "LARGE:MINUTE_DIRECT": 73,
+    "LARGE:HOUR_TO_MINUTE": 11,
+    "SMALL:HOUR_TO_MINUTE": 2
+  },
+  "smallEarPeck": {
+    "smallCycleCount": 502,
+    "peckCycleCount": 335,
+    "rule": "exactly two of every three consecutive small-magpie cycles"
+  },
+  "frameCounts": {
+    "day24h": 331,
+    "largeCycle": 207,
+    "smallCycle": 222,
+    "smallEarPeck": 42
+  },
+  "largeDetailCycle": {
+    "cycleIndex": 6578,
+    "cycleStart": "2026-07-16T10:46:00",
+    "character": "LARGE",
+    "route": "HOUR_TO_MINUTE",
+    "selectedHand": "hour",
+    "initialFacing": "RIGHT",
+    "earPeck": false,
+    "reactionMinute": 11.35,
+    "reactionState": "HOP_HAND_TO_HAND",
+    "reactionSource": "MOTION",
+    "hourScore": 182.388,
+    "minuteScore": 176.463,
+    "phases": [
+      {
+        "state": "HIDDEN",
+        "startMinute": 0.0,
+        "endMinute": 2.0,
+        "hand": null
+      },
+      {
+        "state": "SPAWN_PINE",
+        "startMinute": 2.0,
+        "endMinute": 3.0,
+        "hand": null
+      },
+      {
+        "state": "FLY_PINE_TO_HAND",
+        "startMinute": 3.0,
+        "endMinute": 4.0,
+        "hand": "hour"
+      },
+      {
+        "state": "LAND_ON_HAND",
+        "startMinute": 4.0,
+        "endMinute": 5.0,
+        "hand": "hour"
+      },
+      {
+        "state": "PERCH_HAND",
+        "startMinute": 5.0,
+        "endMinute": 6.0,
+        "hand": "hour"
+      },
+      {
+        "state": "RIDE_HOUR",
+        "startMinute": 6.0,
+        "endMinute": 10.0,
+        "hand": "hour"
+      },
+      {
+        "state": "WAIT_HAND_MEET",
+        "startMinute": 10.0,
+        "endMinute": 11.0,
+        "hand": "hour"
+      },
+      {
+        "state": "HOP_HAND_TO_HAND",
+        "startMinute": 11.0,
+        "endMinute": 12.0,
+        "hand": "minute"
+      },
+      {
+        "state": "RIDE_MINUTE",
+        "startMinute": 12.0,
+        "endMinute": 38.0,
+        "hand": "minute"
+      },
+      {
+        "state": "LAND_ON_TIGER",
+        "startMinute": 38.0,
+        "endMinute": 39.0,
+        "hand": null
+      },
+      {
+        "state": "PERCH_TIGER",
+        "startMinute": 39.0,
+        "endMinute": 42.0,
+        "hand": null
+      },
+      {
+        "state": "EXIT_RIGHT",
+        "startMinute": 42.0,
+        "endMinute": 43.0,
+        "hand": null
+      }
+    ],
+    "microActions": [
+      {
+        "kind": "HEAD_TILT",
+        "startMinute": 20.65,
+        "endMinute": 21.55,
+        "sourceState": "RIDE_MINUTE"
+      },
+      {
+        "kind": "TURN",
+        "startMinute": 30.27,
+        "endMinute": 31.17,
+        "sourceState": "RIDE_MINUTE"
+      }
+    ]
+  },
+  "smallDetailCycle": {
+    "cycleIndex": 6797,
+    "cycleStart": "2026-07-22T23:43:00",
+    "character": "SMALL",
+    "route": "HOUR_TO_MINUTE",
+    "selectedHand": "hour",
+    "initialFacing": "RIGHT",
+    "earPeck": true,
+    "reactionMinute": 40.178,
+    "reactionState": "PERCH_TIGER",
+    "reactionSource": "EAR_PECK",
+    "hourScore": 147.52,
+    "minuteScore": 166.35,
+    "phases": [
+      {
+        "state": "HIDDEN",
+        "startMinute": 0.0,
+        "endMinute": 2.0,
+        "hand": null
+      },
+      {
+        "state": "SPAWN_PINE",
+        "startMinute": 2.0,
+        "endMinute": 3.0,
+        "hand": null
+      },
+      {
+        "state": "FLY_PINE_TO_HAND",
+        "startMinute": 3.0,
+        "endMinute": 4.0,
+        "hand": "hour"
+      },
+      {
+        "state": "LAND_ON_HAND",
+        "startMinute": 4.0,
+        "endMinute": 5.0,
+        "hand": "hour"
+      },
+      {
+        "state": "PERCH_HAND",
+        "startMinute": 5.0,
+        "endMinute": 6.0,
+        "hand": "hour"
+      },
+      {
+        "state": "RIDE_HOUR",
+        "startMinute": 6.0,
+        "endMinute": 17.0,
+        "hand": "hour"
+      },
+      {
+        "state": "WAIT_HAND_MEET",
+        "startMinute": 17.0,
+        "endMinute": 18.0,
+        "hand": "hour"
+      },
+      {
+        "state": "HOP_HAND_TO_HAND",
+        "startMinute": 18.0,
+        "endMinute": 19.0,
+        "hand": "minute"
+      },
+      {
+        "state": "RIDE_MINUTE",
+        "startMinute": 19.0,
+        "endMinute": 38.0,
+        "hand": "minute"
+      },
+      {
+        "state": "LAND_ON_TIGER",
+        "startMinute": 38.0,
+        "endMinute": 39.0,
+        "hand": null
+      },
+      {
+        "state": "PERCH_TIGER",
+        "startMinute": 39.0,
+        "endMinute": 42.0,
+        "hand": null
+      },
+      {
+        "state": "EXIT_RIGHT",
+        "startMinute": 42.0,
+        "endMinute": 43.0,
+        "hand": null
+      }
+    ],
+    "microActions": [
+      {
+        "kind": "HEAD_SCAN",
+        "startMinute": 23.475,
+        "endMinute": 24.025,
+        "sourceState": "RIDE_MINUTE"
+      },
+      {
+        "kind": "LOOK_PLUM",
+        "startMinute": 28.225,
+        "endMinute": 28.775,
+        "sourceState": "RIDE_MINUTE"
+      },
+      {
+        "kind": "TURN",
+        "startMinute": 32.975,
+        "endMinute": 33.525,
+        "sourceState": "RIDE_MINUTE"
+      },
+      {
+        "kind": "TURN_TO_TIGER",
+        "startMinute": 39.08,
+        "endMinute": 39.63,
+        "sourceState": "PERCH_TIGER"
+      },
+      {
+        "kind": "PECK_TIGER_EAR",
+        "startMinute": 40.02,
+        "endMinute": 40.74,
+        "sourceState": "PERCH_TIGER"
+      }
+    ]
+  },
+  "outputs": [
+    "hojakdo_v21_24h_debug.gif",
+    "hojakdo_v21_large_cycle_detail.gif",
+    "hojakdo_v21_small_cycle_detail.gif",
+    "hojakdo_v21_small_ear_peck_detail.gif",
+    "hojakdo_v21_motion_comparison.png",
+    "hojakdo_v21_asset_repairs.png",
+    "route_report_30d_v21.json"
+  ],
+  "assetStatus": {
+    "largeMagpie": "clean approved V1 master; rendered at 0.893 scale around foot anchor",
+    "smallMagpie": "clean V2.1 transparent master; branch and ornament removed",
+    "smallExitWing": "body-scaled two-plate wing with shared vertical pose offset and front shoulder connector; two beats",
+    "tiger": "V2.1 repaired jaw/neck head layer with separated pupil layer"
+  },
+  "completionLevel": "integrated_static_simulation_prototype",
+  "wffConnected": false,
+  "agifProduced": false
+}

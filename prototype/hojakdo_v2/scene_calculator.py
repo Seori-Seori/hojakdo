@@ -115,7 +115,7 @@ class SceneSnapshot:
 
 
 class HojakdoSceneCalculator:
-    """Stateless deterministic scene calculator for the approved V2 behavior."""
+    """Stateless deterministic scene calculator for the approved V2.1 behavior."""
 
     def __init__(self, config_path: Path | str = CONFIG_PATH) -> None:
         self.config_path = Path(config_path)
@@ -533,17 +533,11 @@ class HojakdoSceneCalculator:
     ) -> tuple[tuple[MicroAction, ...], bool, str]:
         result: list[MicroAction] = []
         window = self._action_window(phases)
-        turn_needed = False
         initial_facing = "RIGHT"
         if window is not None:
             turn_needed = self._stable_pick(cycle_index, salt=43, modulo=100) < int(
                 self.motion["turnNeedPercent"][character]
             )
-            # The large magpie must enter from the pine facing toward its
-            # destination. Its optional turn is a single look-back-and-settle
-            # gesture during the long perch, never an initial mirrored pose.
-            if turn_needed and character == "SMALL":
-                initial_facing = "LEFT"
 
             duration = float(self.motion["microActionDurationMinutes"][character])
             if character == "LARGE":
@@ -561,6 +555,18 @@ class HojakdoSceneCalculator:
                 result.append(
                     MicroAction(kind, start, start + duration, window.state)
                 )
+
+        if character == "SMALL":
+            # The small magpie lands in its direction of travel, then performs
+            # one visible hop-turn before settling toward the tiger's ear.
+            perch = next(phase for phase in phases if phase.state == "PERCH_TIGER")
+            duration = float(self.motion["smallTigerTurnDurationMinutes"])
+            start = perch.start + 0.08
+            result.append(
+                MicroAction(
+                    "TURN_TO_TIGER", start, start + duration, perch.state
+                )
+            )
 
         # Odd cycle indices are the strict small-magpie sequence. Using its own
         # ordinal (rather than a random percentage) guarantees exactly two
@@ -810,19 +816,45 @@ class HojakdoSceneCalculator:
     def _facing_at(plan: CyclePlan, local: float) -> str:
         facing = plan.initial_facing
         for action in plan.micro_actions:
-            if action.kind != "TURN":
+            if action.kind != "TURN_TO_TIGER":
                 continue
-            if plan.character == "LARGE":
-                # One restrained shadow-puppet gesture: arrive facing right,
-                # glance behind near the top of the hop, then settle right.
-                progress = (local - action.start) / action.duration
-                if 0.34 <= progress < 0.70:
-                    facing = "LEFT"
-                elif progress >= 0.0:
-                    facing = "RIGHT"
-            elif local >= action.start + action.duration * 0.52:
-                facing = "RIGHT"
+            if local >= action.start + action.duration * 0.52:
+                facing = "LEFT"
         return facing
+
+    def _movement_facing(
+        self,
+        plan: CyclePlan,
+        phase: Phase,
+        timestamp: datetime,
+        phase_progress: float,
+        fallback: str,
+    ) -> str:
+        """Face the horizontal direction produced by the actual motion path."""
+        if phase.state in {"HIDDEN", "PERCH_TIGER"}:
+            return fallback
+        sample = float(self.motion["movementFacingSampleMinutes"])
+        center = phase.start + phase.duration * phase_progress
+        before = max(phase.start, center - sample)
+        after = min(phase.end, center + sample)
+        if after - before < 1e-6:
+            return fallback
+
+        def position(local: float) -> tuple[float, float] | None:
+            progress = (local - phase.start) / phase.duration
+            sample_time = plan.cycle_start + timedelta(minutes=local)
+            return self._position_for_phase(plan, phase, sample_time, progress)
+
+        start = position(before)
+        end = position(after)
+        if start is None or end is None:
+            return fallback
+        delta_x = end[0] - start[0]
+        if delta_x > 0.05:
+            return "RIGHT"
+        if delta_x < -0.05:
+            return "LEFT"
+        return fallback
 
     def snapshot(self, timestamp: datetime, aod: bool = False) -> SceneSnapshot:
         cycle_index = self.cycle_index_at(timestamp)
@@ -843,13 +875,14 @@ class HojakdoSceneCalculator:
         tiger_reacting = 0.0 <= reaction_progress < 1.0 and not aod
         action, micro_progress = self._active_micro_action(plan.micro_actions, local)
         position = self._position_for_phase(plan, phase, timestamp, phase_progress)
-        facing = self._facing_at(plan, local)
-        if plan.character == "SMALL" and phase.state in {
-            "LAND_ON_TIGER",
-            "PERCH_TIGER",
-        }:
-            facing = "LEFT"
-        elif phase.state == "EXIT_RIGHT":
+        facing = self._movement_facing(
+            plan,
+            phase,
+            timestamp,
+            phase_progress,
+            self._facing_at(plan, local),
+        )
+        if phase.state == "EXIT_RIGHT":
             facing = "RIGHT"
 
         wing_beat = 0

@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 1,
-  "status": "large_master_visual_draft_approved",
+  "schemaVersion": 2,
+  "status": "v2_1_character_assets_ready",
   "sourceImage": "assets/hojakdo_basic_416.png",
   "sourceCanvas": {
     "width": 1254,
@@ -120,6 +120,54 @@
       "hiddenRgbPixels": 0,
       "greenFringePixels": 0,
       "completionLevel": "draft_created"
+    },
+    {
+      "id": "magpie_small_base_master_v21",
+      "file": "assets/layers/source/characters/magpie_small_base_master_v21.png",
+      "generationSource": "assets/layers/source/drafts/magpie_small_base_chromakey_v21.png",
+      "transparentHighResolutionSource": "assets/layers/source/drafts/magpie_small_base_transparent_v21.png",
+      "status": "v2_1_approved",
+      "approvalDate": "2026-07-14",
+      "pose": "left_facing_clean_perch",
+      "sourceCanvas": {
+        "width": 1254,
+        "height": 1254
+      },
+      "alphaBoundingBoxSource": {
+        "x": 838,
+        "y": 284,
+        "width": 121,
+        "height": 142
+      },
+      "anchorSource": {
+        "x": 880.5867,
+        "y": 401.28
+      },
+      "anchorLogical": {
+        "x": 316,
+        "y": 144
+      },
+      "removedAttachments": [
+        "perch_branch_fragment",
+        "red_hanging_ornament"
+      ],
+      "completionLevel": "base_master_created"
+    },
+    {
+      "id": "tiger_head_v21",
+      "file": "assets/layers/source/characters/tiger_head_v21.png",
+      "generationSource": "assets/hojakdo_basic_416.png",
+      "status": "v2_1_repaired",
+      "approvalDate": "2026-07-14",
+      "repair": "restore missing jaw and neck alpha from original RGB",
+      "alphaBoundingBoxSource": {
+        "x": 803,
+        "y": 601,
+        "width": 276,
+        "height": 285
+      },
+      "pupilHolesPreserved": true,
+      "completionLevel": "static_layer_repaired"
     }
   ],
   "decisions": {

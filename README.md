@@ -10,9 +10,9 @@
 
 ## 현재 단계
 
-> **V2 통합 시뮬레이션 완료 / AGIF·WFF 연결 전**
+> **V2.1 시각 보정 완료 / AGIF·WFF 연결 전**
 
-V1의 큰 까치 전용 프로토타입은 회귀 비교용으로 보존했다. V2에서는 승인된 두 까치 교대, 세부 행동, 호랑이 반응, 퇴장 차이까지 하나의 무상태 계산기와 렌더러로 합쳤다.
+V1과 V2 결과는 회귀 비교용으로 보존했다. V2.1에서는 깨끗한 작은 까치 마스터, 이동 방향 추종, 몸에 결합된 퇴장 날개, 호랑이 턱·목 알파 보정을 반영했다.
 
 현재 완료된 범위:
 
@@ -23,27 +23,30 @@ V1의 큰 까치 전용 프로토타입은 회귀 비교용으로 보존했다. 
 - 365일 검증 범위에서 하루 4~8회, 평균 5.997회
 - 큰 까치의 오른쪽 등장, 발 기준점 고정 0.893배 렌더링, 느린 고개 동작, 뒤보기·복귀 방향 동작, 접은 날개 점프 퇴장
 - 작은 까치의 고개 살피기·매화 보기·다음 목표 확인, 3회 중 2회의 귀 두 번 쪼기, 어깨에 연결된 피영극식 날개로 정확히 두 번 날갯짓
+- 모든 이동 구간에서 실제 수평 이동량에 맞춘 좌우 방향, 호랑이 착지 뒤 작은 홉 전환
+- 호랑이 턱·목의 비어 보이던 알파 영역을 원본 색으로 복원
 - 호랑이 머리 선행, 눈동자 후행, 작은 반동과 중립 복귀
 - AOD에서 까치와 모든 세부 애니메이션을 숨기는 계산 결과
 - 결정성·교대·경로 고정·자정 연속성·빈도·AOD·쪼기·날갯짓 자동 테스트
 
 이 단계는 **시각 검증용 정적 시뮬레이션**이다. 아직 17개 AGIF 제작, 실제 WFF 연결, 에뮬레이터 또는 실기기 구현 완료를 뜻하지 않는다.
 
-## V2 결과물
+## V2.1 결과물
 
 [`prototype/hojakdo_v2`](prototype/hojakdo_v2)에 다음 결과가 있다.
 
-- `hojakdo_v2_24h_debug.gif`: 하루 전체 흐름
-- `hojakdo_v2_large_cycle_detail.gif`: 큰 까치 상세 사이클
-- `hojakdo_v2_small_cycle_detail.gif`: 작은 까치 상세 사이클
-- `hojakdo_v2_small_ear_peck_detail.gif`: 귀 쪼기와 호랑이 반응
-- `hojakdo_v2_motion_comparison.png`: 두 까치 성격 차이 비교
-- `route_report_30d.json`: 실제 착지 시각 기준 30일 보고서
+- `hojakdo_v21_24h_debug.gif`: 하루 전체 흐름
+- `hojakdo_v21_large_cycle_detail.gif`: 큰 까치 상세 사이클
+- `hojakdo_v21_small_cycle_detail.gif`: 작은 까치 상세 사이클
+- `hojakdo_v21_small_ear_peck_detail.gif`: 귀 쪼기와 호랑이 반응
+- `hojakdo_v21_motion_comparison.png`: 두 까치 성격 차이 비교
+- `hojakdo_v21_asset_repairs.png`: 작은 까치·날개 접합·호랑이 턱 보정 비교
+- `route_report_30d_v21.json`: 실제 착지 시각 기준 30일 보고서
 
 실행:
 
 ```bash
-python -m unittest prototype.hojakdo_v2.test_scene_calculator
+python -m unittest discover -s prototype -p 'test_*.py'
 python -m prototype.hojakdo_v2.render_prototype
 ```
 
@@ -79,9 +82,9 @@ V1 결과와 실행 방법은 [`prototype/large_magpie_v1`](prototype/large_magp
 
 ### 세부 행동
 
-- 큰 까치: 긴 체류 중 느린 고개 동작 1회, 구도상 필요할 때 실제 방향 전환 최대 1회
+- 큰 까치: 긴 체류 중 느린 고개 동작 1회, 구도상 필요할 때 상체 뒤보기 최대 1회
 - 작은 까치: 긴 체류의 약 25%·50%·75% 지점에 최대 3개의 상체 행동
-- 작은 까치의 방향 전환이 필요하면 세 번째 행동을 작은 홉 전환으로 대체
+- 이동 중 몸 방향은 실제 수평 이동 방향을 따르고, 작은 까치는 호랑이 착지 뒤 귀 쪽으로 홉 전환
 - 작은 까치가 호랑이 위에 앉는 장면 3회 중 2회에는 귀를 빠르게 두 번 쪼음
 - 추가 행동 중 발 기준점은 고정하고 상체만 움직임
 - 한 사이클의 호랑이 반응은 정확히 1회이며, 귀 쪼기 장면에서는 쪼기가 유일한 반응 원인
@@ -95,10 +98,8 @@ V1 결과와 실행 방법은 [`prototype/large_magpie_v1`](prototype/large_magp
 ## 자산 상태
 
 - 큰 까치: 승인된 깨끗한 기반 마스터 사용
-- 작은 까치: 기존 레이어의 가지·붉은 노리개를 렌더 시 임시 마스킹한 V2 시각 초안 사용
-- 호랑이: 분리된 머리와 눈동자 레이어 사용
-
-작은 까치의 깨끗한 마스터는 모션·좌표 승인 뒤, 최종 AGIF 제작 전에 반드시 별도로 분리한다. V2 렌더용 임시 마스크를 최종 자산으로 간주하지 않는다.
+- 작은 까치: 가지·붉은 노리개가 없는 V2.1 투명 기반 마스터 사용
+- 호랑이: 턱·목 알파를 복원한 머리와 기존 눈동자 분리 레이어 사용
 
 ## Android Studio 실행
 
@@ -107,4 +108,4 @@ V1 결과와 실행 방법은 [`prototype/large_magpie_v1`](prototype/large_magp
 3. Wear OS API 33 이상 에뮬레이터 또는 기기를 선택한다.
 4. `watchface` 모듈을 실행한다.
 
-현재 `watchface`는 기존 바늘 MVP다. V2 승인 뒤 17개 AGIF와 새 무상태 결정식을 연결하는 단계가 남아 있다.
+현재 `watchface`는 기존 바늘 MVP다. V2.1 승인 뒤 17개 AGIF와 새 무상태 결정식을 연결하는 단계가 남아 있다.

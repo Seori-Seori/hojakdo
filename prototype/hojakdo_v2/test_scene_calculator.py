@@ -117,63 +117,104 @@ class HojakdoSceneCalculatorTest(unittest.TestCase):
             else:
                 self.assertEqual("MOTION", plan.reaction_source)
 
-    def test_micro_actions_are_bounded_and_turn_is_animated(self) -> None:
+    def test_ride_micro_actions_are_bounded(self) -> None:
         first = self.calculator.cycle_index_at(self.day_start)
         plans = [self.calculator.plan_cycle(first + offset) for offset in range(120)]
-        large_turn_plan = None
-        small_turn_plan = None
         for plan in plans:
             ride_actions = [
                 action
                 for action in plan.micro_actions
-                if action.kind != "PECK_TIGER_EAR"
+                if action.kind not in {"PECK_TIGER_EAR", "TURN_TO_TIGER"}
             ]
             if plan.character == "SMALL":
                 self.assertLessEqual(len(ride_actions), 3)
             else:
                 self.assertLessEqual(len(ride_actions), 2)
-                self.assertEqual("RIGHT", plan.initial_facing)
-            if any(action.kind == "TURN" for action in ride_actions):
-                if plan.character == "LARGE":
-                    large_turn_plan = plan
-                else:
-                    small_turn_plan = plan
-        self.assertIsNotNone(large_turn_plan)
-        self.assertIsNotNone(small_turn_plan)
-        assert large_turn_plan is not None
-        assert small_turn_plan is not None
+            self.assertEqual("RIGHT", plan.initial_facing)
 
-        large_turn = next(
-            action for action in large_turn_plan.micro_actions if action.kind == "TURN"
+    def test_motion_facing_matches_horizontal_velocity(self) -> None:
+        first = self.calculator.cycle_index_at(self.day_start)
+        sample = timedelta(
+            minutes=float(
+                self.calculator.motion["movementFacingSampleMinutes"]
+            )
         )
-        large_appearance = self.calculator.snapshot(
-            large_turn_plan.cycle_start + timedelta(minutes=2.25)
-        )
-        large_back = self.calculator.snapshot(
-            large_turn_plan.cycle_start
-            + timedelta(minutes=large_turn.start + large_turn.duration * 0.50)
-        )
-        large_settled = self.calculator.snapshot(
-            large_turn_plan.cycle_start
-            + timedelta(minutes=large_turn.start + large_turn.duration * 0.82)
-        )
-        self.assertEqual("RIGHT", large_appearance.facing)
-        self.assertEqual("LEFT", large_back.facing)
-        self.assertEqual("RIGHT", large_settled.facing)
+        compared = 0
+        for offset in range(12):
+            plan = self.calculator.plan_cycle(first + offset)
+            timestamp = plan.cycle_start + timedelta(seconds=10)
+            while timestamp < plan.cycle_end - timedelta(seconds=10):
+                center = self.calculator.snapshot(timestamp)
+                before = self.calculator.snapshot(timestamp - sample)
+                after = self.calculator.snapshot(timestamp + sample)
+                if (
+                    center.visible
+                    and center.state not in {"HIDDEN", "PERCH_TIGER"}
+                    and before.cycle_index == center.cycle_index == after.cycle_index
+                    and before.state == center.state == after.state
+                    and before.foot_position is not None
+                    and after.foot_position is not None
+                ):
+                    delta_x = after.foot_position[0] - before.foot_position[0]
+                    if abs(delta_x) > 0.05:
+                        expected = "RIGHT" if delta_x > 0 else "LEFT"
+                        self.assertEqual(expected, center.facing)
+                        compared += 1
+                timestamp += timedelta(seconds=10)
+        self.assertGreater(compared, 500)
 
-        small_turn = next(
-            action for action in small_turn_plan.micro_actions if action.kind == "TURN"
+    def test_lookback_action_does_not_reverse_travel_facing(self) -> None:
+        first = self.calculator.cycle_index_at(self.day_start)
+        plan = next(
+            plan
+            for plan in (
+                self.calculator.plan_cycle(first + offset) for offset in range(120)
+            )
+            if any(action.kind == "TURN" for action in plan.micro_actions)
         )
-        small_before = self.calculator.snapshot(
-            small_turn_plan.cycle_start
-            + timedelta(minutes=small_turn.start + small_turn.duration * 0.25)
+        turn = next(action for action in plan.micro_actions if action.kind == "TURN")
+        timestamp = plan.cycle_start + timedelta(
+            minutes=turn.start + turn.duration * 0.5
         )
-        small_after = self.calculator.snapshot(
-            small_turn_plan.cycle_start
-            + timedelta(minutes=small_turn.start + small_turn.duration * 0.75)
+        sample = timedelta(
+            minutes=float(
+                self.calculator.motion["movementFacingSampleMinutes"]
+            )
         )
-        self.assertEqual("LEFT", small_before.facing)
-        self.assertEqual("RIGHT", small_after.facing)
+        before = self.calculator.snapshot(timestamp - sample)
+        center = self.calculator.snapshot(timestamp)
+        after = self.calculator.snapshot(timestamp + sample)
+        assert before.foot_position is not None
+        assert after.foot_position is not None
+        delta_x = after.foot_position[0] - before.foot_position[0]
+        self.assertGreater(abs(delta_x), 0.05)
+        self.assertEqual("TURN", center.micro_action)
+        self.assertEqual("RIGHT" if delta_x > 0 else "LEFT", center.facing)
+
+    def test_small_turns_toward_tiger_after_landing(self) -> None:
+        first = self.calculator.cycle_index_at(self.day_start)
+        plan = next(
+            self.calculator.plan_cycle(first + offset)
+            for offset in range(4)
+            if self.calculator.character_for_cycle(first + offset) == "SMALL"
+        )
+        turn = next(
+            action for action in plan.micro_actions if action.kind == "TURN_TO_TIGER"
+        )
+        before = self.calculator.snapshot(
+            plan.cycle_start
+            + timedelta(minutes=turn.start + turn.duration * 0.25)
+        )
+        after = self.calculator.snapshot(
+            plan.cycle_start
+            + timedelta(minutes=turn.start + turn.duration * 0.75)
+        )
+        self.assertEqual("PERCH_TIGER", before.state)
+        self.assertEqual("TURN_TO_TIGER", before.micro_action)
+        self.assertEqual("TURN_TO_TIGER", after.micro_action)
+        self.assertEqual("RIGHT", before.facing)
+        self.assertEqual("LEFT", after.facing)
+        self.assertEqual(before.foot_position, after.foot_position)
 
     def test_small_exit_has_two_flaps_and_large_exit_has_none(self) -> None:
         first = self.calculator.cycle_index_at(self.day_start)
