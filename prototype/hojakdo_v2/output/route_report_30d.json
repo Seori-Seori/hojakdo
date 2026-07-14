@@ -77,7 +77,7 @@
     "character": "LARGE",
     "route": "HOUR_TO_MINUTE",
     "selectedHand": "hour",
-    "initialFacing": "LEFT",
+    "initialFacing": "RIGHT",
     "earPeck": false,
     "reactionMinute": 11.35,
     "reactionState": "HOP_HAND_TO_HAND",
@@ -296,8 +296,9 @@
     "route_report_30d.json"
   ],
   "assetStatus": {
-    "largeMagpie": "clean approved V1 master",
+    "largeMagpie": "clean approved V1 master; rendered at 0.893 scale around foot anchor",
     "smallMagpie": "legacy layer with render-only silhouette mask; clean master pending",
+    "smallExitWing": "attached two-plate shadow-puppet wing overlay; two beats",
     "tiger": "existing separated head and pupil layers"
   },
   "completionLevel": "integrated_static_simulation_prototype",

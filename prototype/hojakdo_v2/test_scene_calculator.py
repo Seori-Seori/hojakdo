@@ -120,7 +120,8 @@ class HojakdoSceneCalculatorTest(unittest.TestCase):
     def test_micro_actions_are_bounded_and_turn_is_animated(self) -> None:
         first = self.calculator.cycle_index_at(self.day_start)
         plans = [self.calculator.plan_cycle(first + offset) for offset in range(120)]
-        turn_plan = None
+        large_turn_plan = None
+        small_turn_plan = None
         for plan in plans:
             ride_actions = [
                 action
@@ -131,21 +132,48 @@ class HojakdoSceneCalculatorTest(unittest.TestCase):
                 self.assertLessEqual(len(ride_actions), 3)
             else:
                 self.assertLessEqual(len(ride_actions), 2)
+                self.assertEqual("RIGHT", plan.initial_facing)
             if any(action.kind == "TURN" for action in ride_actions):
-                turn_plan = plan
-        self.assertIsNotNone(turn_plan)
-        assert turn_plan is not None
-        turn = next(action for action in turn_plan.micro_actions if action.kind == "TURN")
-        before = self.calculator.snapshot(
-            turn_plan.cycle_start + timedelta(minutes=turn.start + turn.duration * 0.25)
+                if plan.character == "LARGE":
+                    large_turn_plan = plan
+                else:
+                    small_turn_plan = plan
+        self.assertIsNotNone(large_turn_plan)
+        self.assertIsNotNone(small_turn_plan)
+        assert large_turn_plan is not None
+        assert small_turn_plan is not None
+
+        large_turn = next(
+            action for action in large_turn_plan.micro_actions if action.kind == "TURN"
         )
-        after = self.calculator.snapshot(
-            turn_plan.cycle_start + timedelta(minutes=turn.start + turn.duration * 0.75)
+        large_appearance = self.calculator.snapshot(
+            large_turn_plan.cycle_start + timedelta(minutes=2.25)
         )
-        self.assertEqual("TURN", before.micro_action)
-        self.assertEqual("TURN", after.micro_action)
-        self.assertEqual("LEFT", before.facing)
-        self.assertEqual("RIGHT", after.facing)
+        large_back = self.calculator.snapshot(
+            large_turn_plan.cycle_start
+            + timedelta(minutes=large_turn.start + large_turn.duration * 0.50)
+        )
+        large_settled = self.calculator.snapshot(
+            large_turn_plan.cycle_start
+            + timedelta(minutes=large_turn.start + large_turn.duration * 0.82)
+        )
+        self.assertEqual("RIGHT", large_appearance.facing)
+        self.assertEqual("LEFT", large_back.facing)
+        self.assertEqual("RIGHT", large_settled.facing)
+
+        small_turn = next(
+            action for action in small_turn_plan.micro_actions if action.kind == "TURN"
+        )
+        small_before = self.calculator.snapshot(
+            small_turn_plan.cycle_start
+            + timedelta(minutes=small_turn.start + small_turn.duration * 0.25)
+        )
+        small_after = self.calculator.snapshot(
+            small_turn_plan.cycle_start
+            + timedelta(minutes=small_turn.start + small_turn.duration * 0.75)
+        )
+        self.assertEqual("LEFT", small_before.facing)
+        self.assertEqual("RIGHT", small_after.facing)
 
     def test_small_exit_has_two_flaps_and_large_exit_has_none(self) -> None:
         first = self.calculator.cycle_index_at(self.day_start)

@@ -539,7 +539,10 @@ class HojakdoSceneCalculator:
             turn_needed = self._stable_pick(cycle_index, salt=43, modulo=100) < int(
                 self.motion["turnNeedPercent"][character]
             )
-            if turn_needed:
+            # The large magpie must enter from the pine facing toward its
+            # destination. Its optional turn is a single look-back-and-settle
+            # gesture during the long perch, never an initial mirrored pose.
+            if turn_needed and character == "SMALL":
                 initial_facing = "LEFT"
 
             duration = float(self.motion["microActionDurationMinutes"][character])
@@ -809,7 +812,15 @@ class HojakdoSceneCalculator:
         for action in plan.micro_actions:
             if action.kind != "TURN":
                 continue
-            if local >= action.start + action.duration * 0.52:
+            if plan.character == "LARGE":
+                # One restrained shadow-puppet gesture: arrive facing right,
+                # glance behind near the top of the hop, then settle right.
+                progress = (local - action.start) / action.duration
+                if 0.34 <= progress < 0.70:
+                    facing = "LEFT"
+                elif progress >= 0.0:
+                    facing = "RIGHT"
+            elif local >= action.start + action.duration * 0.52:
                 facing = "RIGHT"
         return facing
 

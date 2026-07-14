@@ -86,6 +86,24 @@ class PrototypeRenderer:
             anchor[1] - top,
         )
 
+    @staticmethod
+    def _scale_sprite_from_anchor(
+        sprite: Image.Image, anchor: tuple[float, float], scale: float
+    ) -> tuple[Image.Image, tuple[float, float]]:
+        """Scale a sprite while keeping its foot anchor fixed in the scene."""
+        if scale <= 0:
+            raise ValueError("Bird scale must be positive")
+        if math.isclose(scale, 1.0):
+            return sprite, anchor
+        size = (
+            max(1, int(round(sprite.width * scale))),
+            max(1, int(round(sprite.height * scale))),
+        )
+        return sprite.resize(size, Image.Resampling.LANCZOS), (
+            anchor[0] * scale,
+            anchor[1] * scale,
+        )
+
     def _load_large_bird(self) -> tuple[Image.Image, tuple[float, float], str]:
         path = self._source_path(
             "assets/layers/source/characters/magpie_large_base_master.png"
@@ -96,6 +114,11 @@ class PrototypeRenderer:
             )
         anchor = tuple(self.geometry["birdAssetAnchorAtZero"]["LARGE"])
         sprite, local_anchor = self._crop_asset(full, anchor)
+        sprite, local_anchor = self._scale_sprite_from_anchor(
+            sprite,
+            local_anchor,
+            float(self.config["render"].get("largeBirdScale", 1.0)),
+        )
         return sprite, local_anchor, "RIGHT"
 
     def _load_small_bird_draft(self) -> tuple[Image.Image, tuple[float, float], str]:
@@ -230,25 +253,74 @@ class PrototypeRenderer:
     ) -> None:
         if snapshot.character != "SMALL" or snapshot.state != "EXIT_RIGHT":
             return
+        # A Chinese shadow-puppet-inspired two-plate wing. The shoulder joint
+        # never moves; the broad upper plate and primary-feather fan overlap,
+        # so the wing reads as one attached limb instead of a floating shard.
         amplitude = math.sin(snapshot.wing_flap_progress * math.pi)
+        if amplitude < 0.06:
+            # The source bird already contains a natural folded wing. Hiding
+            # the overlay at the beat boundary prevents a second loose shape.
+            return
         x, y = foot
-        shoulder = (x - 4, y - 23)
-        reach = 12 + 18 * amplitude
+        # Keep the whole joint inside the torso silhouette. Only the feather
+        # tips rise above the back, which remains legible at 450 px.
+        shoulder = (x - 1.0, y - 12.0)
+        elbow = (
+            shoulder[0] - 4.0 - 2.0 * amplitude,
+            shoulder[1] - 4.0 - 5.0 * amplitude,
+        )
+        wrist = (
+            shoulder[0] - 7.0 - 3.0 * amplitude,
+            shoulder[1] - 8.0 - 14.0 * amplitude,
+        )
         overlay = Image.new("RGBA", target.size, (0, 0, 0, 0))
         draw = ImageDraw.Draw(overlay)
+
+        outline = (153, 124, 65, 235)
+        upper_fill = (11, 25, 29, 250)
+        primary_fill = (15, 34, 39, 250)
+
+        # Outer primary feathers form a single fan with a softly stepped edge.
         draw.polygon(
             [
-                shoulder,
-                (x - 12 - reach * 0.45, y - 20 - reach),
-                (x - 15, y - 13),
+                (elbow[0] - 2.0, elbow[1]),
+                (wrist[0] + 3.0, wrist[1] + 5.0),
+                (wrist[0] + 3.0, wrist[1] - 5.0 * amplitude),
+                (wrist[0], wrist[1] - 3.0 * amplitude),
+                (wrist[0] - 3.0, wrist[1] - 6.0 * amplitude),
+                (wrist[0] - 3.0, wrist[1] - 1.0 * amplitude),
+                (wrist[0] - 7.0, wrist[1] - 3.0 * amplitude),
+                (wrist[0] - 5.0, wrist[1] + 5.0),
+                (elbow[0] + 4.0, elbow[1] + 7.0),
             ],
-            fill=(20, 42, 48, 215),
-            outline=(155, 126, 63, 220),
+            fill=primary_fill,
+            outline=outline,
+        )
+
+        # The upper plate overlaps both the fan and the bird body at the joint.
+        draw.polygon(
+            [
+                (shoulder[0] + 5.0, shoulder[1] + 5.0),
+                (shoulder[0] - 3.0, shoulder[1] - 5.0),
+                (elbow[0] - 3.0, elbow[1] - 2.0),
+                (wrist[0] + 3.0, wrist[1] + 5.0),
+                (elbow[0] + 5.0, elbow[1] + 6.0),
+                (shoulder[0] + 6.0, shoulder[1] + 6.0),
+            ],
+            fill=upper_fill,
+            outline=outline,
         )
         draw.line(
-            (shoulder, (x - 10 - reach * 0.35, y - 18 - reach * 0.82)),
-            fill=(222, 208, 167, 175),
-            width=1,
+            (shoulder, elbow, wrist), fill=(72, 82, 78, 210), width=2
+        )
+        draw.ellipse(
+            (
+                shoulder[0] - 2.0,
+                shoulder[1] - 2.0,
+                shoulder[0] + 2.0,
+                shoulder[1] + 2.0,
+            ),
+            fill=outline,
         )
         target.alpha_composite(overlay)
 
@@ -875,8 +947,11 @@ def _write_report(
             "route_report_30d.json",
         ],
         "assetStatus": {
-            "largeMagpie": "clean approved V1 master",
+            "largeMagpie": (
+                "clean approved V1 master; rendered at 0.893 scale around foot anchor"
+            ),
             "smallMagpie": "legacy layer with render-only silhouette mask; clean master pending",
+            "smallExitWing": "attached two-plate shadow-puppet wing overlay; two beats",
             "tiger": "existing separated head and pupil layers",
         },
         "completionLevel": "integrated_static_simulation_prototype",

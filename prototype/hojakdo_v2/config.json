@@ -130,6 +130,7 @@
   },
   "render": {
     "sourceDate": "2026-07-14",
+    "largeBirdScale": 0.893,
     "dayStepMinutes": 12,
     "dayFrameDurationMs": 72,
     "dayGifColors": 48,
