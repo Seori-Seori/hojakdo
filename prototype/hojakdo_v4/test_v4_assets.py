@@ -227,12 +227,14 @@ class HojakdoV4AssetsTest(unittest.TestCase):
 
     def test_review_outputs_exist_at_logical_resolution(self) -> None:
         static = OUTPUT_DIR / "hojakdo_v4_integrated_static.png"
+        cleanup_review = OUTPUT_DIR / "hojakdo_v4_readout_cleanup_review.png"
         board = OUTPUT_DIR / "hojakdo_v4_review_board.png"
         catalog = OUTPUT_DIR / "hojakdo_v4_animation_catalog.png"
-        for path in (static, board, catalog, MANIFEST_PATH):
+        for path in (static, cleanup_review, board, catalog, MANIFEST_PATH):
             self.assertTrue(path.is_file(), path)
         for path, expected_size in (
             (static, (450, 450)),
+            (cleanup_review, (450, 450)),
             (board, (940, 540)),
             (catalog, (1040, 740)),
         ):
@@ -242,6 +244,10 @@ class HojakdoV4AssetsTest(unittest.TestCase):
                 self.assertEqual(expected_size, image.size)
 
         quiet_zone = self.manifest["readoutQuietZone"]
+        self.assertEqual(
+            [198, 250, 252, 300],
+            quiet_zone["dateCloudCleanupBoundsLogical"],
+        )
         self.assertEqual([-12, 20], quiet_zone["liveTextShiftLogical"])
         self.assertEqual(213, quiet_zone["liveTextCenterXLogical"])
         with Image.open(DRAWABLE_DIR / "hojakdo_v4_background.png") as source:
@@ -255,8 +261,10 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         # cloud-tail regions to contain paper texture rather than dark glyphs.
         readout = luma[228:295, 175:275]
         cloud_tail = luma[240:275, 148:202]
+        date_cloud = luma[255:295, 203:247]
         self.assertLessEqual(int((readout < 145).sum()), 1)
         self.assertEqual(0, int((cloud_tail < 145).sum()))
+        self.assertGreater(float(np.percentile(date_cloud, 1)), 164.0)
 
 
 if __name__ == "__main__":

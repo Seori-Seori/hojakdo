@@ -35,6 +35,7 @@ FRAME_DURATION_MS = 125
 FPS = 1000 / FRAME_DURATION_MS
 READOUT_CENTER_X = 213
 READOUT_SHIFT = (-12, 20)
+DATE_CLOUD_CLEANUP_BOUNDS = (198, 250, 252, 300)
 
 
 @dataclass(frozen=True)
@@ -162,6 +163,30 @@ def _remove_embedded_ui(background: Image.Image) -> Image.Image:
     filled[mask] = values[nearest[0][mask], nearest[1][mask]]
     feather = ndimage.gaussian_filter(mask.astype(np.float32), sigma=0.75)
     result = values * (1.0 - feather[..., None]) + filled * feather[..., None]
+
+    # The old date left a very pale, block-shaped cloud halo after its dark
+    # pixels were inpainted. Replace the complete quiet-zone patch, not merely
+    # another luma threshold, so no anti-aliased edge can survive behind the
+    # live date. A feathered clean-paper donor keeps the repair invisible and
+    # stops before the adjacent tiger and plum artwork.
+    x0, y0, x1, y1 = DATE_CLOUD_CLEANUP_BOUNDS
+    donor_box = (230, 45, 284, 95)
+    target = result[y0:y1, x0:x1].copy()
+    donor = result[
+        donor_box[1] : donor_box[3], donor_box[0] : donor_box[2]
+    ].copy()
+    donor += np.median(target, axis=(0, 1)) - np.median(donor, axis=(0, 1))
+    donor = np.clip(donor, 0, 255)
+
+    height, width = target.shape[:2]
+    yy, xx = np.indices((height, width))
+    edge_distance = np.minimum.reduce((xx, yy, width - 1 - xx, height - 1 - yy))
+    patch_alpha = np.clip(edge_distance.astype(np.float32) / 5.0, 0.0, 1.0)
+    patch_alpha = patch_alpha * patch_alpha * (3.0 - 2.0 * patch_alpha)
+    result[y0:y1, x0:x1] = (
+        target * (1.0 - patch_alpha[..., None])
+        + donor * patch_alpha[..., None]
+    )
     return Image.fromarray(np.clip(result, 0, 255).astype(np.uint8), "RGB")
 
 
@@ -660,7 +685,7 @@ def _build_battery_icon() -> None:
     _save_png(icon, DRAWABLE_DIR / "battery_icon.png")
 
 
-def _render_preview(
+def _compose_preview_face(
     background: Image.Image,
     hour_branch: Image.Image,
     minute_branch: Image.Image,
@@ -668,14 +693,16 @@ def _render_preview(
     tiger_pupils: Image.Image,
     small_flight: tuple[Image.Image, tuple[float, float]],
     plum: list[dict[str, object]],
-) -> None:
+    hour: int,
+    minute: int,
+) -> Image.Image:
     face = background.convert("RGBA")
     full_bloom = plum[-1]
     with Image.open(DRAWABLE_DIR / str(full_bloom["resource"])) as source:
         face.alpha_composite(source.convert("RGBA"), tuple(full_bloom["placementLogical"]))
 
-    hour_angle = (14 * 60 + 18) * 0.5 - 50.232272878132
-    minute_angle = (14 * 60 + 18) * 6.0 - 325.271003720479
+    hour_angle = (hour * 60 + minute) * 0.5 - 50.232272878132
+    minute_angle = (hour * 60 + minute) * 6.0 - 325.271003720479
     face.alpha_composite(
         hour_branch.rotate(
             -hour_angle,
@@ -700,7 +727,12 @@ def _render_preview(
     draw = ImageDraw.Draw(face)
     ink = (31, 24, 17, 255)
     _draw_centered(
-        draw, 250, "14:18", _font(25, bold=True), ink, READOUT_CENTER_X
+        draw,
+        250,
+        f"{hour:02d}:{minute:02d}",
+        _font(25, bold=True),
+        ink,
+        READOUT_CENTER_X,
     )
     _draw_centered(
         draw, 278, "07.15", _font(11, bold=True), ink, READOUT_CENTER_X
@@ -715,10 +747,50 @@ def _render_preview(
     draw.rectangle((x - 5, 422, x - 3, 427), fill=ink)
     draw.rectangle((x - 22, 422, x - 10, 427), fill=ink)
     draw.text((x, 416), battery_text, font=battery_font, fill=ink)
+    return face
+
+
+def _render_preview(
+    background: Image.Image,
+    hour_branch: Image.Image,
+    minute_branch: Image.Image,
+    tiger_head: Image.Image,
+    tiger_pupils: Image.Image,
+    small_flight: tuple[Image.Image, tuple[float, float]],
+    plum: list[dict[str, object]],
+) -> None:
+    face = _compose_preview_face(
+        background,
+        hour_branch,
+        minute_branch,
+        tiger_head,
+        tiger_pupils,
+        small_flight,
+        plum,
+        14,
+        18,
+    )
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     static_path = OUTPUT_DIR / "hojakdo_v4_integrated_static.png"
     _save_rgb_png(face, static_path)
+
+    # Dedicated cleanup inspection: both calibrated branch hands point to
+    # twelve, leaving the complete live readout zone unobstructed.
+    hands_up = _compose_preview_face(
+        background,
+        hour_branch,
+        minute_branch,
+        tiger_head,
+        tiger_pupils,
+        small_flight,
+        plum,
+        12,
+        0,
+    )
+    _save_rgb_png(
+        hands_up, OUTPUT_DIR / "hojakdo_v4_readout_cleanup_review.png"
+    )
 
     board = Image.new("RGB", (940, 540), (20, 17, 13))
     board.paste(face.convert("RGB").resize((500, 500), Image.Resampling.LANCZOS), (20, 20))
@@ -896,6 +968,7 @@ def build() -> dict[str, object]:
         "titleSealShiftLogical": [-20, -3],
         "readoutQuietZone": {
             "sourceCleanupBoundsLogical": [175, 220, 275, 295],
+            "dateCloudCleanupBoundsLogical": list(DATE_CLOUD_CLEANUP_BOUNDS),
             "liveTextShiftLogical": list(READOUT_SHIFT),
             "liveTextCenterXLogical": READOUT_CENTER_X,
             "removes": ["baked_time", "baked_date", "baked_weekday", "cloud_line"],
@@ -962,6 +1035,7 @@ def main() -> None:
     memory = manifest["memoryEstimate"]
     print(MANIFEST_PATH)
     print(OUTPUT_DIR / "hojakdo_v4_integrated_static.png")
+    print(OUTPUT_DIR / "hojakdo_v4_readout_cleanup_review.png")
     print(OUTPUT_DIR / "hojakdo_v4_review_board.png")
     print(OUTPUT_DIR / "hojakdo_v4_animation_catalog.png")
     print(

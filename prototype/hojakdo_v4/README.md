@@ -11,6 +11,7 @@
 - 매화: 배터리 5단계 정적 교체
 - 중앙 표시: 실시간 `HH:mm`, `MM.DD`, 대문자 요일
 - 중앙 표시: 구형 글자·구름선 제거 후 기준점을 `(-12px, +20px)` 이동해 회전 바늘과 분리
+- 날짜 조용한 영역: `(198, 250)~(252, 300)`의 옅은 구름 잔상까지 종이 질감으로 복원
 - 하단 표시: 실시간 배터리 아이콘과 퍼센트
 
 ## 산출물
@@ -24,6 +25,7 @@ assets/layers/v4/
 
 prototype/hojakdo_v4/output/
   hojakdo_v4_integrated_static.png
+  hojakdo_v4_readout_cleanup_review.png
   hojakdo_v4_review_board.png
   hojakdo_v4_animation_catalog.png
 ```
