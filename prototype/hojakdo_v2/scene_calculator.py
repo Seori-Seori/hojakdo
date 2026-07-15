@@ -115,7 +115,7 @@ class SceneSnapshot:
 
 
 class HojakdoSceneCalculator:
-    """Stateless deterministic scene calculator for the approved V2.1 behavior."""
+    """Stateless deterministic scene calculator for the approved V2 behavior."""
 
     def __init__(self, config_path: Path | str = CONFIG_PATH) -> None:
         self.config_path = Path(config_path)
@@ -189,10 +189,30 @@ class HojakdoSceneCalculator:
             self.hand_group_angle(hand, timestamp),
         )
 
+    def _selection_hand_anchor(
+        self, hand: str, timestamp: datetime, character: str
+    ) -> tuple[float, float]:
+        """Evaluate routes with V2.1 geometry while V2.2 adjusts rendering only."""
+        key = "minuteHandAnchorAtZero" if hand == "minute" else "hourHandAnchorAtZero"
+        reference = self.geometry.get("selectionReference", {})
+        points = reference.get(key, self.geometry[key])
+        return self._rotate_point(
+            points[character],
+            self.geometry["clockPivot"],
+            self.hand_group_angle(hand, timestamp),
+        )
+
     def hand_clock_angle(
         self, hand: str, timestamp: datetime, character: str
     ) -> float:
         x, y = self.hand_anchor(hand, timestamp, character)
+        pivot_x, pivot_y = self.geometry["clockPivot"]
+        return math.degrees(math.atan2(x - pivot_x, pivot_y - y)) % 360.0
+
+    def _selection_hand_clock_angle(
+        self, hand: str, timestamp: datetime, character: str
+    ) -> float:
+        x, y = self._selection_hand_anchor(hand, timestamp, character)
         pivot_x, pivot_y = self.geometry["clockPivot"]
         return math.degrees(math.atan2(x - pivot_x, pivot_y - y)) % 360.0
 
@@ -221,7 +241,11 @@ class HojakdoSceneCalculator:
     def _bird_screen_margin(
         self, foot: tuple[float, float], character: str
     ) -> float:
-        left, top, right, bottom = self.geometry["birdLogicalBoundsAtZero"][character]
+        reference = self.geometry.get("selectionReference", {})
+        bounds = reference.get(
+            "birdLogicalBoundsAtZero", self.geometry["birdLogicalBoundsAtZero"]
+        )
+        left, top, right, bottom = bounds[character]
         anchor_x, anchor_y = self.geometry["birdAssetAnchorAtZero"][character]
         shifted = (
             foot[0] + left - anchor_x,
@@ -257,13 +281,16 @@ class HojakdoSceneCalculator:
         early = float(self.selection["tigerArrivalEarlyToleranceMinutes"])
         first = max(math.ceil(earliest), math.ceil(nominal - early))
         last = math.floor(nominal)
-        target = self.geometry["tigerApproach"][character]
+        reference = self.geometry.get("selectionReference", {})
+        target = reference.get("tigerApproach", self.geometry["tigerApproach"])[
+            character
+        ]
         best_minute: float | None = None
         best_distance = math.inf
         for local_minute in range(first, last + 1):
             timestamp = cycle_start + timedelta(minutes=local_minute)
             current_distance = self.distance(
-                self.hand_anchor("minute", timestamp, character), target
+                self._selection_hand_anchor("minute", timestamp, character), target
             )
             if current_distance < best_distance:
                 best_distance = current_distance
@@ -290,8 +317,8 @@ class HojakdoSceneCalculator:
         for local_minute in range(first, last + 1):
             timestamp = cycle_start + timedelta(minutes=local_minute)
             current_distance = self.distance(
-                self.hand_anchor("hour", timestamp, character),
-                self.hand_anchor("minute", timestamp, character),
+                self._selection_hand_anchor("hour", timestamp, character),
+                self._selection_hand_anchor("minute", timestamp, character),
             )
             if current_distance < best_distance:
                 best_distance = current_distance
@@ -306,8 +333,10 @@ class HojakdoSceneCalculator:
         cycle_start = self.cycle_start_for_index(cycle_index)
         ride_start = self._hand_ride_start()
         landing_time = cycle_start + timedelta(minutes=ride_start)
-        landing_point = self.hand_anchor(hand, landing_time, character)
-        landing_angle = self.hand_clock_angle(hand, landing_time, character)
+        landing_point = self._selection_hand_anchor(hand, landing_time, character)
+        landing_angle = self._selection_hand_clock_angle(
+            hand, landing_time, character
+        )
         reasons: list[str] = []
 
         if not self._in_quadrant(landing_angle):

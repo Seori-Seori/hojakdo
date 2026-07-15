@@ -50,13 +50,26 @@ class PrototypeRenderer:
         self.calculator = calculator
         self.config = calculator.config
         self.geometry = calculator.geometry
-        self.background = self._load_layer("assets/layers/mvp/clean_background.png", "RGB")
+        version = str(self.config.get("version", "2.1"))
+        is_v22 = version == "2.2"
+        self.background = self._load_layer(
+            "assets/layers/mvp/clean_background_v22.png"
+            if is_v22
+            else "assets/layers/mvp/clean_background.png",
+            "RGB",
+        )
         self.hour_branch = self._load_layer("assets/layers/mvp/hour_branch.png")
         self.minute_branch = self._load_layer("assets/layers/mvp/minute_branch.png")
         self.tiger_head = self._load_layer(
-            "assets/layers/source/characters/tiger_head_v21.png"
+            "assets/layers/source/characters/tiger_head_v22.png"
+            if is_v22
+            else "assets/layers/source/characters/tiger_head_v21.png"
         )
-        self.tiger_pupils = self._load_layer("assets/layers/mvp/tiger_pupils.png")
+        self.tiger_pupils = self._load_layer(
+            "assets/layers/source/characters/tiger_pupils_v22.png"
+            if is_v22
+            else "assets/layers/mvp/tiger_pupils.png"
+        )
         self.birds = {
             "LARGE": self._load_large_bird(),
             "SMALL": self._load_small_bird(),
@@ -517,7 +530,12 @@ class PrototypeRenderer:
         )
         x = x0 + 16
         y = 16
-        draw.text((x, y), "HOJAKDO V2.1", font=FONT_TITLE, fill=(245, 240, 226))
+        draw.text(
+            (x, y),
+            f"HOJAKDO V{self.config.get('version', '2.1')}",
+            font=FONT_TITLE,
+            fill=(245, 240, 226),
+        )
         y += 25
         asset_note = (
             "CLEAN LARGE MASTER" if snapshot.character == "LARGE" else "CLEAN SMALL MASTER"

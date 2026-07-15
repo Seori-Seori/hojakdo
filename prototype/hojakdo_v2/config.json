@@ -1,7 +1,7 @@
 {
-  "schemaVersion": 3,
-  "version": "2.1",
-  "status": "approved_v2_1_simulation_values",
+  "schemaVersion": 4,
+  "version": "2.2",
+  "status": "v2_2_geometry_candidate",
   "logicalCanvas": {
     "width": 450,
     "height": 450
@@ -33,11 +33,11 @@
     "minuteHandAngleOffset": -325.271003720479,
     "hourHandAnchorAtZero": {
       "LARGE": [305, 143],
-      "SMALL": [320, 132]
+      "SMALL": [302, 148]
     },
     "minuteHandAnchorAtZero": {
       "LARGE": [159, 118],
-      "SMALL": [149, 104]
+      "SMALL": [171, 122]
     },
     "pineSpawn": {
       "LARGE": [112, 166],
@@ -48,12 +48,12 @@
       "SMALL": [89, 354]
     },
     "tigerApproach": {
-      "LARGE": [280, 302],
-      "SMALL": [287, 287]
+      "LARGE": [281, 310],
+      "SMALL": [288, 296]
     },
     "tigerPerch": {
-      "LARGE": [337, 220],
-      "SMALL": [343, 204]
+      "LARGE": [335, 233],
+      "SMALL": [340, 218]
     },
     "screenExitRight": {
       "LARGE": [535, 174],
@@ -64,8 +64,26 @@
       "SMALL": [316, 144]
     },
     "birdLogicalBoundsAtZero": {
-      "LARGE": [98, 39, 187, 151],
+      "LARGE": [100, 42, 186, 150],
       "SMALL": [298, 99, 347, 155]
+    },
+    "selectionReference": {
+      "hourHandAnchorAtZero": {
+        "LARGE": [305, 143],
+        "SMALL": [320, 132]
+      },
+      "minuteHandAnchorAtZero": {
+        "LARGE": [159, 118],
+        "SMALL": [149, 104]
+      },
+      "tigerApproach": {
+        "LARGE": [280, 302],
+        "SMALL": [287, 287]
+      },
+      "birdLogicalBoundsAtZero": {
+        "LARGE": [98, 39, 187, 151],
+        "SMALL": [298, 99, 347, 155]
+      }
     },
     "plumWalkWaypoints": {
       "LARGE": [
@@ -135,7 +153,9 @@
   },
   "render": {
     "sourceDate": "2026-07-14",
-    "largeBirdScale": 0.893,
+    "largeBirdScale": 0.85728,
+    "tigerScale": 0.94,
+    "tigerScaleAnchor": [300, 429],
     "dayStepMinutes": 12,
     "dayFrameDurationMs": 72,
     "dayGifColors": 48,
