@@ -216,7 +216,7 @@ class HojakdoSceneCalculatorTest(unittest.TestCase):
         self.assertEqual("LEFT", after.facing)
         self.assertEqual(before.foot_position, after.foot_position)
 
-    def test_small_exit_has_two_flaps_and_large_exit_has_none(self) -> None:
+    def test_both_exits_have_zero_wing_flaps_in_v31(self) -> None:
         first = self.calculator.cycle_index_at(self.day_start)
         plans = [self.calculator.plan_cycle(first + offset) for offset in range(4)]
         for plan in plans:
@@ -231,10 +231,9 @@ class HojakdoSceneCalculatorTest(unittest.TestCase):
                         )
                     ).wing_flap_beat
                 )
-            if plan.character == "SMALL":
-                self.assertEqual([1, 1, 2, 2], samples)
-            else:
-                self.assertEqual([0, 0, 0, 0], samples)
+            self.assertEqual([0, 0, 0, 0], samples)
+        self.assertEqual(0, self.calculator.motion["smallExitWingFlaps"])
+        self.assertEqual(0, self.calculator.config["smallExit"]["wingFlaps"])
 
     def test_aod_hides_bird_and_reaction(self) -> None:
         timestamp = self.day_start + timedelta(hours=12)

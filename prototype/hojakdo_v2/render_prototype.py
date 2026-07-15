@@ -51,10 +51,10 @@ class PrototypeRenderer:
         self.config = calculator.config
         self.geometry = calculator.geometry
         version = str(self.config.get("version", "2.1"))
-        is_v22_or_newer = version in {"2.2", "2.3"}
+        is_v22_or_newer = version in {"2.2", "2.3", "3.1"}
         self.background = self._load_layer(
             "assets/layers/mvp/clean_background_v23.png"
-            if version == "2.3"
+            if version in {"2.3", "3.1"}
             else (
                 "assets/layers/mvp/clean_background_v22.png"
                 if is_v22_or_newer
@@ -80,6 +80,7 @@ class PrototypeRenderer:
             "LARGE": self._load_large_bird(),
             "SMALL": self._load_small_bird(),
         }
+        self.small_exit_bird = self._load_small_exit_bird()
 
     @staticmethod
     def _source_path(relative: str) -> Path:
@@ -229,6 +230,17 @@ class PrototypeRenderer:
         sprite, local_anchor = self._crop_asset(full, anchor, padding=4)
         return sprite, local_anchor, "LEFT"
 
+    def _load_small_exit_bird(self) -> tuple[Image.Image, tuple[float, float]]:
+        flight = self.config["smallExit"]
+        with Image.open(self._source_path(str(flight["runtimeSprite"]))) as source:
+            sprite = source.convert("RGBA")
+        normalized = flight["anchorNormalized"]
+        anchor = (
+            sprite.width * float(normalized[0]),
+            sprite.height * float(normalized[1]),
+        )
+        return sprite, anchor
+
     @staticmethod
     def _rotate_layer(
         layer: Image.Image, clockwise_degrees: float, pivot: Iterable[float]
@@ -278,6 +290,10 @@ class PrototypeRenderer:
     def _posed_bird(
         self, snapshot: SceneSnapshot
     ) -> tuple[Image.Image, tuple[float, float], float]:
+        if snapshot.character == "SMALL" and snapshot.state == "EXIT_RIGHT":
+            sprite, anchor = self.small_exit_bird
+            return sprite.copy(), anchor, 0.0
+
         sprite, source_anchor, base_facing = self.birds[snapshot.character]
         image = sprite.copy()
         anchor = source_anchor
@@ -326,105 +342,7 @@ class PrototypeRenderer:
                 crouch = math.sin(min(1.0, snapshot.state_progress * 1.7) * math.pi)
                 image = self._rotate_upper(image, anchor, -2.2 * crouch, 15)
                 y_offset += 2.0 * crouch
-            else:
-                flap = math.sin(snapshot.wing_flap_progress * math.pi)
-                image = self._rotate_upper(image, anchor, 3.2 * flap, 7)
-                y_offset -= 2.0 * flap
         return image, anchor, y_offset
-
-    def _draw_small_wing(
-        self,
-        target: Image.Image,
-        foot: tuple[float, float],
-        snapshot: SceneSnapshot,
-        foreground: bool,
-    ) -> None:
-        if snapshot.character != "SMALL" or snapshot.state != "EXIT_RIGHT":
-            return
-        amplitude = math.sin(snapshot.wing_flap_progress * math.pi)
-        if amplitude < 0.06:
-            return
-        x, y = foot
-        body_height = float(self.birds["SMALL"][0].height)
-        span = body_height * float(self.calculator.motion["smallExitWingSpanRatio"])
-        root_height = body_height * float(
-            self.calculator.motion["smallExitWingRootHeightRatio"]
-        )
-        shoulder = (x - body_height * 0.07, y - root_height)
-        elbow = (
-            shoulder[0] - span * 0.23,
-            shoulder[1] - span * (0.05 + 0.20 * amplitude),
-        )
-        wrist = (
-            shoulder[0] - span * (0.52 + 0.12 * amplitude),
-            shoulder[1] - span * (0.18 + 0.58 * amplitude),
-        )
-        overlay = Image.new("RGBA", target.size, (0, 0, 0, 0))
-        draw = ImageDraw.Draw(overlay)
-
-        outline = (153, 124, 65, 235)
-        upper_fill = (11, 25, 29, 250)
-        primary_fill = (15, 34, 39, 250)
-
-        if foreground:
-            # This cap is painted after the torso. It bridges the rear wing
-            # plate into the body and makes the shoulder joint unambiguously
-            # attached even at the top of a flap.
-            radius = max(2.2, body_height * 0.043)
-            draw.polygon(
-                [
-                    (shoulder[0] - radius, shoulder[1] - radius * 0.7),
-                    (shoulder[0] + radius * 2.0, shoulder[1] + radius * 1.4),
-                    (shoulder[0] + radius * 0.2, shoulder[1] + radius * 2.1),
-                    (elbow[0] - radius * 0.2, elbow[1] + radius * 0.4),
-                ],
-                fill=upper_fill,
-                outline=outline,
-            )
-            draw.ellipse(
-                (
-                    shoulder[0] - radius,
-                    shoulder[1] - radius,
-                    shoulder[0] + radius,
-                    shoulder[1] + radius,
-                ),
-                fill=upper_fill,
-                outline=outline,
-            )
-            target.alpha_composite(overlay)
-            return
-
-        draw.polygon(
-            [
-                (elbow[0] - span * 0.12, elbow[1]),
-                (wrist[0] + span * 0.18, wrist[1] + span * 0.28),
-                (wrist[0] + span * 0.23, wrist[1] - span * 0.16 * amplitude),
-                (wrist[0] + span * 0.10, wrist[1] - span * 0.28 * amplitude),
-                (wrist[0] - span * 0.06, wrist[1] - span * 0.18 * amplitude),
-                (wrist[0] - span * 0.22, wrist[1] - span * 0.30 * amplitude),
-                (wrist[0] - span * 0.20, wrist[1] - span * 0.04 * amplitude),
-                (wrist[0] - span * 0.36, wrist[1] - span * 0.13 * amplitude),
-                (wrist[0] - span * 0.28, wrist[1] + span * 0.26),
-                (elbow[0] + span * 0.24, elbow[1] + span * 0.31),
-            ],
-            fill=primary_fill,
-            outline=outline,
-        )
-
-        draw.polygon(
-            [
-                (shoulder[0] + span * 0.24, shoulder[1] + span * 0.24),
-                (shoulder[0] - span * 0.16, shoulder[1] - span * 0.22),
-                (elbow[0] - span * 0.18, elbow[1] - span * 0.12),
-                (wrist[0] + span * 0.20, wrist[1] + span * 0.23),
-                (elbow[0] + span * 0.26, elbow[1] + span * 0.29),
-                (shoulder[0] + span * 0.26, shoulder[1] + span * 0.26),
-            ],
-            fill=upper_fill,
-            outline=outline,
-        )
-        draw.line((shoulder, elbow, wrist), fill=(72, 82, 78, 210), width=2)
-        target.alpha_composite(overlay)
 
     def _paste_bird(
         self,
@@ -436,11 +354,9 @@ class PrototypeRenderer:
             return
         bird, anchor, y_offset = self._posed_bird(snapshot)
         posed_foot = (foot[0], foot[1] + y_offset)
-        self._draw_small_wing(target, posed_foot, snapshot, foreground=False)
         x = int(round(posed_foot[0] - anchor[0]))
         y = int(round(posed_foot[1] - anchor[1]))
         target.alpha_composite(bird, (x, y))
-        self._draw_small_wing(target, posed_foot, snapshot, foreground=True)
 
     @staticmethod
     def _reaction_curve(progress: float) -> float:
@@ -665,9 +581,9 @@ class PrototypeRenderer:
         action_color = (255, 220, 118) if snapshot.micro_action else (149, 155, 163)
         draw.text((x, y), f"ACTION  {action}", font=FONT_BODY_BOLD, fill=action_color)
         y += 18
-        if snapshot.wing_flap_beat:
+        if snapshot.character == "SMALL" and snapshot.state == "EXIT_RIGHT":
             draw.text(
-                (x, y), f"WING FLAP {snapshot.wing_flap_beat}/2",
+                (x, y), "FIXED FLIGHT / 0 FLAPS",
                 font=FONT_BODY_BOLD, fill=(116, 219, 239)
             )
         else:
@@ -898,12 +814,12 @@ def _comparison_sheet(
         ("TIGER HOP-TURN", _action_time(small, "TURN_TO_TIGER", 39.0)),
         ("TWO EAR PECKS", _action_time(small, "PECK_TIGER_EAR", 40.0)),
         (
-            "WING FLAP 1/2",
+            "FIXED FLIGHT START",
             small.cycle_start
             + timedelta(minutes=small_exit.start + small_exit.duration * 0.24),
         ),
         (
-            "WING FLAP 2/2",
+            "FIXED FLIGHT MID",
             small.cycle_start
             + timedelta(minutes=small_exit.start + small_exit.duration * 0.66),
         ),
@@ -1145,22 +1061,21 @@ def _write_report(
         "largeDetailCycle": _plan_report(large),
         "smallDetailCycle": _plan_report(small),
         "outputs": [
-            "hojakdo_v21_24h_debug.gif",
-            "hojakdo_v21_large_cycle_detail.gif",
-            "hojakdo_v21_small_cycle_detail.gif",
-            "hojakdo_v21_small_ear_peck_detail.gif",
-            "hojakdo_v21_motion_comparison.png",
-            "hojakdo_v21_asset_repairs.png",
-            "route_report_30d_v21.json",
+            "hojakdo_v31_24h_debug.gif",
+            "hojakdo_v31_large_cycle_detail.gif",
+            "hojakdo_v31_small_cycle_detail.gif",
+            "hojakdo_v31_small_ear_peck_detail.gif",
+            "hojakdo_v31_motion_comparison.png",
+            "hojakdo_v31_asset_repairs.png",
+            "route_report_30d_v31.json",
         ],
         "assetStatus": {
             "largeMagpie": (
                 "clean approved V1 master; rendered at 0.893 scale around foot anchor"
             ),
             "smallMagpie": "clean V2.1 transparent master; branch and ornament removed",
-            "smallExitWing": (
-                "body-scaled two-plate wing with shared vertical pose offset and "
-                "front shoulder connector; two beats"
+            "smallExitFlight": (
+                "approved fixed whole-body sprite; smoothstep 48px arc; zero flaps"
             ),
             "tiger": "V2.1 repaired jaw/neck head layer with separated pupil layer",
         },
@@ -1168,7 +1083,7 @@ def _write_report(
         "wffConnected": False,
         "agifProduced": False,
     }
-    (output_dir / "route_report_30d_v21.json").write_text(
+    (output_dir / "route_report_30d_v31.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
 
@@ -1188,7 +1103,7 @@ def render_all(source_date: date, output_dir: Path) -> None:
     day_frames = [renderer.render_debug_frame(timestamp) for timestamp in day_times]
     _save_gif(
         day_frames,
-        output_dir / "hojakdo_v21_24h_debug.gif",
+        output_dir / "hojakdo_v31_24h_debug.gif",
         int(render_config["dayFrameDurationMs"]),
         int(render_config["dayGifColors"]),
     )
@@ -1197,8 +1112,8 @@ def render_all(source_date: date, output_dir: Path) -> None:
     gc.collect()
 
     for label, plan, filename in (
-        ("largeCycle", large, "hojakdo_v21_large_cycle_detail.gif"),
-        ("smallCycle", small, "hojakdo_v21_small_cycle_detail.gif"),
+        ("largeCycle", large, "hojakdo_v31_large_cycle_detail.gif"),
+        ("smallCycle", small, "hojakdo_v31_small_cycle_detail.gif"),
     ):
         detail_times = _detail_frame_times(
             plan, float(render_config["detailStepMinutes"])
@@ -1218,7 +1133,7 @@ def render_all(source_date: date, output_dir: Path) -> None:
     peck_frames = [renderer.render_debug_frame(timestamp) for timestamp in peck_times]
     _save_gif(
         peck_frames,
-        output_dir / "hojakdo_v21_small_ear_peck_detail.gif",
+        output_dir / "hojakdo_v31_small_ear_peck_detail.gif",
         90,
         int(render_config["gifColors"]),
     )
@@ -1227,10 +1142,10 @@ def render_all(source_date: date, output_dir: Path) -> None:
     gc.collect()
 
     _comparison_sheet(
-        renderer, large, small, output_dir / "hojakdo_v21_motion_comparison.png"
+        renderer, large, small, output_dir / "hojakdo_v31_motion_comparison.png"
     )
     _asset_repair_sheet(
-        renderer, small, output_dir / "hojakdo_v21_asset_repairs.png"
+        renderer, small, output_dir / "hojakdo_v31_asset_repairs.png"
     )
     _write_report(
         calculator, day_start, large, small, frame_counts, output_dir
@@ -1240,7 +1155,7 @@ def render_all(source_date: date, output_dir: Path) -> None:
 def main() -> None:
     calculator = HojakdoSceneCalculator()
     parser = argparse.ArgumentParser(
-        description="Render the deterministic two-magpie Hojakdo V2.1 prototype"
+        description="Render the deterministic two-magpie Hojakdo V3.1 prototype"
     )
     parser.add_argument(
         "--date",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "status": "v3_fixed_flight_source_approved",
+  "status": "v3_1_fixed_flight_integrated",
   "sourceImage": "assets/hojakdo_basic_416.png",
   "sourceCanvas": {
     "width": 1254,
@@ -206,8 +206,28 @@
       "wholeBodySprite": true,
       "preserveCenterDigitalTimeWeekday": true,
       "background": "opaque_hanji_preview_source",
-      "nextDerivation": "transparent_aligned_runtime_master",
-      "completionLevel": "approved_source_saved"
+      "nextDerivation": "completed_in_magpie_small_flight_right_v31_master",
+      "completionLevel": "approved_source_and_runtime_complete"
+    },
+    {
+      "id": "magpie_small_flight_right_v31_runtime",
+      "file": "assets/layers/mvp/magpie_small_flight_right_v31.png",
+      "metadata": "assets/layers/source/characters/magpie_small_flight_right_v31.json",
+      "alignedMaster": "assets/layers/source/characters/magpie_small_flight_right_v31_master.png",
+      "generationSource": "assets/layers/source/drafts/magpie_small_flight_right_v3_approved.png",
+      "status": "v3_1_integrated",
+      "approvalDate": "2026-07-15",
+      "runtimeSizeLogical": [138, 107],
+      "anchorRuntimeLogical": [92.46, 68.48],
+      "animation": "STATIC_SPRITE_TRANSLATION",
+      "easing": "SMOOTHSTEP",
+      "arcHeightLogical": 48,
+      "wingFlaps": 0,
+      "rotationDegrees": 0,
+      "scaleStart": 1,
+      "scaleEnd": 1,
+      "fullyOffscreenAtExit": true,
+      "completionLevel": "runtime_asset_created_and_integrated"
     }
   ],
   "decisions": {

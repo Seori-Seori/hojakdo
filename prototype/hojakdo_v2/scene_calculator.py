@@ -115,7 +115,7 @@ class SceneSnapshot:
 
 
 class HojakdoSceneCalculator:
-    """Stateless deterministic scene calculator for the approved V2 behavior."""
+    """Stateless deterministic scene calculator for the approved V3.1 behavior."""
 
     def __init__(self, config_path: Path | str = CONFIG_PATH) -> None:
         self.config_path = Path(config_path)
@@ -696,6 +696,11 @@ class HojakdoSceneCalculator:
         return 0.955 + 0.045 * ((progress - 0.9) / 0.1)
 
     @staticmethod
+    def _smoothstep(progress: float) -> float:
+        progress = min(1.0, max(0.0, progress))
+        return progress * progress * (3.0 - 2.0 * progress)
+
+    @staticmethod
     def _quadratic_arc(
         start: tuple[float, float],
         end: tuple[float, float],
@@ -806,9 +811,20 @@ class HojakdoSceneCalculator:
             return tuple(self.geometry["tigerPerch"][character])
         if phase.state == "EXIT_RIGHT":
             if character == "SMALL":
-                # Keep both wing beats on screen, then accelerate through the
-                # boundary at the end of the second beat.
-                exit_progress = progress**2.35
+                flight = self.config["smallExit"]
+                offset = flight["bodyCoreOffsetFromTigerPerch"]
+                perch = self.geometry["tigerPerch"][character]
+                start = (
+                    float(perch[0]) + float(offset[0]),
+                    float(perch[1]) + float(offset[1]),
+                )
+                end = tuple(float(value) for value in flight["endAnchorLogical"])
+                return self._quadratic_arc(
+                    start,
+                    end,
+                    self._smoothstep(progress),
+                    float(flight["arcHeightLogical"]),
+                )
             else:
                 # The large bird first lowers its body, then makes one long,
                 # low jump with folded wings.
@@ -914,13 +930,10 @@ class HojakdoSceneCalculator:
         if phase.state == "EXIT_RIGHT":
             facing = "RIGHT"
 
+        # V3.1 uses one fixed small-magpie sprite. Both characters now leave
+        # with zero wing-flap frames; only their whole-sprite Transform moves.
         wing_beat = 0
         wing_progress = 0.0
-        if plan.character == "SMALL" and phase.state == "EXIT_RIGHT":
-            total = int(self.motion["smallExitWingFlaps"])
-            scaled = min(total - 1e-9, phase_progress * total)
-            wing_beat = min(total, int(scaled) + 1)
-            wing_progress = scaled - math.floor(scaled)
 
         visible = phase.state != "HIDDEN" and not aod
         return SceneSnapshot(

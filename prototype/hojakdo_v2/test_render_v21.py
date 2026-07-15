@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import unittest
-from datetime import datetime, timedelta
+from datetime import datetime
 
-from PIL import Image, ImageChops
+from PIL import Image
 
 from .render_prototype import FACE_SIZE, PrototypeRenderer
 from .scene_calculator import HojakdoSceneCalculator
@@ -19,13 +19,6 @@ class HojakdoV21RenderTest(unittest.TestCase):
             cls.calculator.plan_cycle(first + offset)
             for offset in range(4)
             if cls.calculator.character_for_cycle(first + offset) == "SMALL"
-        )
-
-    def _small_exit_snapshot(self, fraction: float):
-        phase = self.small_plan.phases[-1]
-        return self.calculator.snapshot(
-            self.small_plan.cycle_start
-            + timedelta(minutes=phase.start + phase.duration * fraction)
         )
 
     def test_clean_small_master_has_expected_bounds_and_no_red_ornament(self) -> None:
@@ -49,44 +42,6 @@ class HojakdoV21RenderTest(unittest.TestCase):
             if alpha > 128 and red > 150 and green < 85 and blue < 80
         )
         self.assertEqual(0, red_pixels)
-
-    def test_exit_wing_connector_overlaps_bird_and_rear_wing(self) -> None:
-        snapshot = self._small_exit_snapshot(0.25)
-        foot = (225.0, 245.0)
-        bird, anchor, y_offset = self.renderer._posed_bird(snapshot)
-        posed_foot = (foot[0], foot[1] + y_offset)
-        bird_layer = Image.new("RGBA", (FACE_SIZE, FACE_SIZE), (0, 0, 0, 0))
-        bird_layer.alpha_composite(
-            bird,
-            (
-                int(round(posed_foot[0] - anchor[0])),
-                int(round(posed_foot[1] - anchor[1])),
-            ),
-        )
-        rear = Image.new("RGBA", (FACE_SIZE, FACE_SIZE), (0, 0, 0, 0))
-        front = Image.new("RGBA", (FACE_SIZE, FACE_SIZE), (0, 0, 0, 0))
-        self.renderer._draw_small_wing(rear, posed_foot, snapshot, foreground=False)
-        self.renderer._draw_small_wing(front, posed_foot, snapshot, foreground=True)
-        self.assertIsNotNone(
-            ImageChops.multiply(
-                front.getchannel("A"), bird_layer.getchannel("A")
-            ).getbbox()
-        )
-        self.assertIsNotNone(
-            ImageChops.multiply(front.getchannel("A"), rear.getchannel("A")).getbbox()
-        )
-
-    def test_exit_wing_is_scaled_to_small_bird_body(self) -> None:
-        snapshot = self._small_exit_snapshot(0.25)
-        foot = (225.0, 245.0)
-        layer = Image.new("RGBA", (FACE_SIZE, FACE_SIZE), (0, 0, 0, 0))
-        self.renderer._draw_small_wing(layer, foot, snapshot, foreground=False)
-        bounds = layer.getchannel("A").getbbox()
-        assert bounds is not None
-        wing_width = bounds[2] - bounds[0]
-        body_height = self.renderer.birds["SMALL"][0].height
-        self.assertGreater(wing_width, body_height * 0.30)
-        self.assertLess(wing_width, body_height * 0.58)
 
     def test_repaired_tiger_head_covers_original_chin_gap(self) -> None:
         old_path = self.renderer._source_path("assets/layers/mvp/tiger_head.png")
