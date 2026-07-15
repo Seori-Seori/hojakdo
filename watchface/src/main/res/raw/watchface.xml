@@ -368,7 +368,7 @@
             <Variant mode="AMBIENT" target="alpha" value="155" />
         </PartImage>
 
-        <PartText name="live_time" x="183" y="226" width="84" height="31">
+        <PartText name="live_time" x="171" y="246" width="84" height="31">
             <Text align="CENTER" verticalAlign="CENTER">
                 <Font family="SYNC_TO_DEVICE" size="25" color="#211811" weight="BOLD" letterSpacing="0.03">
                     <Template>%s:%s
@@ -379,7 +379,7 @@
             </Text>
             <Variant mode="AMBIENT" target="alpha" value="220" />
         </PartText>
-        <PartText name="live_date" x="198" y="255" width="54" height="15">
+        <PartText name="live_date" x="186" y="275" width="54" height="15">
             <Text align="CENTER" verticalAlign="CENTER">
                 <Font family="SYNC_TO_DEVICE" size="11" color="#211811" weight="BOLD">
                     <Template>%s.%s
@@ -390,7 +390,7 @@
             </Text>
             <Variant mode="AMBIENT" target="alpha" value="220" />
         </PartText>
-        <PartText name="live_weekday" x="202" y="271" width="46" height="13">
+        <PartText name="live_weekday" x="190" y="291" width="46" height="13">
             <Text align="CENTER" verticalAlign="CENTER">
                 <Font family="SYNC_TO_DEVICE" size="9" color="#211811" weight="BOLD">
                     <Upper><Template>%s<Parameter expression="[DAY_OF_WEEK_S]" /></Template></Upper>

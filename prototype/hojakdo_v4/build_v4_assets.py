@@ -33,6 +33,8 @@ HOUR_ANCHOR = (302.0, 148.0)
 SMALL_FLIGHT_WIDTH = 100
 FRAME_DURATION_MS = 125
 FPS = 1000 / FRAME_DURATION_MS
+READOUT_CENTER_X = 213
+READOUT_SHIFT = (-12, 20)
 
 
 @dataclass(frozen=True)
@@ -641,10 +643,11 @@ def _draw_centered(
     text: str,
     font: ImageFont.FreeTypeFont,
     fill: tuple[int, int, int, int],
+    center_x: float = FACE_SIZE / 2,
 ) -> None:
     box = draw.textbbox((0, 0), text, font=font)
     width = box[2] - box[0]
-    draw.text(((FACE_SIZE - width) / 2, y), text, font=font, fill=fill)
+    draw.text((center_x - width / 2, y), text, font=font, fill=fill)
 
 
 def _build_battery_icon() -> None:
@@ -696,9 +699,13 @@ def _render_preview(
 
     draw = ImageDraw.Draw(face)
     ink = (31, 24, 17, 255)
-    _draw_centered(draw, 230, "14:18", _font(25, bold=True), ink)
-    _draw_centered(draw, 258, "07.15", _font(11, bold=True), ink)
-    _draw_centered(draw, 273, "WED", _font(9, bold=True), ink)
+    _draw_centered(
+        draw, 250, "14:18", _font(25, bold=True), ink, READOUT_CENTER_X
+    )
+    _draw_centered(
+        draw, 278, "07.15", _font(11, bold=True), ink, READOUT_CENTER_X
+    )
+    _draw_centered(draw, 293, "WED", _font(9, bold=True), ink, READOUT_CENTER_X)
     battery_font = _font(12, bold=True)
     battery_text = "85%"
     battery_box = draw.textbbox((0, 0), battery_text, font=battery_font)
@@ -888,7 +895,9 @@ def build() -> dict[str, object]:
         },
         "titleSealShiftLogical": [-20, -3],
         "readoutQuietZone": {
-            "boundsLogical": [175, 220, 275, 295],
+            "sourceCleanupBoundsLogical": [175, 220, 275, 295],
+            "liveTextShiftLogical": list(READOUT_SHIFT),
+            "liveTextCenterXLogical": READOUT_CENTER_X,
             "removes": ["baked_time", "baked_date", "baked_weekday", "cloud_line"],
             "liveTextLayer": "topmost",
         },

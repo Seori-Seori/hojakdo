@@ -37,12 +37,17 @@
     -3
   ],
   "readoutQuietZone": {
-    "boundsLogical": [
+    "sourceCleanupBoundsLogical": [
       175,
       220,
       275,
       295
     ],
+    "liveTextShiftLogical": [
+      -12,
+      20
+    ],
+    "liveTextCenterXLogical": 213,
     "removes": [
       "baked_time",
       "baked_date",

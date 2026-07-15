@@ -187,7 +187,7 @@ def _hand_group(
 
 
 def _live_text() -> str:
-    time_part = '''<PartText name="live_time" x="183" y="226" width="84" height="31">
+    time_part = '''<PartText name="live_time" x="171" y="246" width="84" height="31">
     <Text align="CENTER" verticalAlign="CENTER">
         <Font family="SYNC_TO_DEVICE" size="25" color="#211811" weight="BOLD" letterSpacing="0.03">
             <Template>%s:%s
@@ -198,7 +198,7 @@ def _live_text() -> str:
     </Text>
     <Variant mode="AMBIENT" target="alpha" value="220" />
 </PartText>'''
-    date_part = '''<PartText name="live_date" x="198" y="255" width="54" height="15">
+    date_part = '''<PartText name="live_date" x="186" y="275" width="54" height="15">
     <Text align="CENTER" verticalAlign="CENTER">
         <Font family="SYNC_TO_DEVICE" size="11" color="#211811" weight="BOLD">
             <Template>%s.%s
@@ -209,7 +209,7 @@ def _live_text() -> str:
     </Text>
     <Variant mode="AMBIENT" target="alpha" value="220" />
 </PartText>'''
-    weekday_part = '''<PartText name="live_weekday" x="202" y="271" width="46" height="13">
+    weekday_part = '''<PartText name="live_weekday" x="190" y="291" width="46" height="13">
     <Text align="CENTER" verticalAlign="CENTER">
         <Font family="SYNC_TO_DEVICE" size="9" color="#211811" weight="BOLD">
             <Upper><Template>%s<Parameter expression="[DAY_OF_WEEK_S]" /></Template></Upper>
@@ -408,7 +408,6 @@ def generate() -> str:
         name="tiger_pupils",
         ambient_alpha=155,
     )
-
     scene_parts = [
         background,
         _condition(plum_expressions),

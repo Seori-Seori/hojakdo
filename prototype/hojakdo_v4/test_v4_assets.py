@@ -173,6 +173,12 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             'name="tiger_pupils"',
         ):
             self.assertGreater(live_index, xml.index(decorative_part))
+        live_parts = {
+            part.attrib["name"]: part.attrib for part in self.root.findall(".//PartText")
+        }
+        self.assertEqual(("171", "246"), (live_parts["live_time"]["x"], live_parts["live_time"]["y"]))
+        self.assertEqual(("186", "275"), (live_parts["live_date"]["x"], live_parts["live_date"]["y"]))
+        self.assertEqual(("190", "291"), (live_parts["live_weekday"]["x"], live_parts["live_weekday"]["y"]))
 
     def test_all_wff_image_resources_exist_and_names_are_android_safe(self) -> None:
         available = {path.stem for path in DRAWABLE_DIR.glob("*.png")}
@@ -236,7 +242,8 @@ class HojakdoV4AssetsTest(unittest.TestCase):
                 self.assertEqual(expected_size, image.size)
 
         quiet_zone = self.manifest["readoutQuietZone"]
-        self.assertEqual([175, 220, 275, 295], quiet_zone["boundsLogical"])
+        self.assertEqual([-12, 20], quiet_zone["liveTextShiftLogical"])
+        self.assertEqual(213, quiet_zone["liveTextCenterXLogical"])
         with Image.open(DRAWABLE_DIR / "hojakdo_v4_background.png") as source:
             background = np.asarray(source.convert("RGB"), dtype=np.float32)
         luma = (
