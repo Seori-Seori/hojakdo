@@ -176,9 +176,9 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         live_parts = {
             part.attrib["name"]: part.attrib for part in self.root.findall(".//PartText")
         }
-        self.assertEqual(("171", "246"), (live_parts["live_time"]["x"], live_parts["live_time"]["y"]))
-        self.assertEqual(("186", "275"), (live_parts["live_date"]["x"], live_parts["live_date"]["y"]))
-        self.assertEqual(("190", "291"), (live_parts["live_weekday"]["x"], live_parts["live_weekday"]["y"]))
+        self.assertEqual(("183", "246"), (live_parts["live_time"]["x"], live_parts["live_time"]["y"]))
+        self.assertEqual(("198", "275"), (live_parts["live_date"]["x"], live_parts["live_date"]["y"]))
+        self.assertEqual(("202", "291"), (live_parts["live_weekday"]["x"], live_parts["live_weekday"]["y"]))
 
     def test_all_wff_image_resources_exist_and_names_are_android_safe(self) -> None:
         available = {path.stem for path in DRAWABLE_DIR.glob("*.png")}
@@ -248,8 +248,12 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             [198, 250, 252, 300],
             quiet_zone["dateCloudCleanupBoundsLogical"],
         )
-        self.assertEqual([-12, 20], quiet_zone["liveTextShiftLogical"])
-        self.assertEqual(213, quiet_zone["liveTextCenterXLogical"])
+        self.assertEqual([0, 20], quiet_zone["liveTextShiftLogical"])
+        self.assertEqual(225, quiet_zone["liveTextCenterXLogical"])
+        self.assertEqual(
+            [282, 158, 306, 181],
+            self.manifest["backgroundCleanup"]["pineSprigBoundsLogical"],
+        )
         with Image.open(DRAWABLE_DIR / "hojakdo_v4_background.png") as source:
             background = np.asarray(source.convert("RGB"), dtype=np.float32)
         luma = (
@@ -262,9 +266,11 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         readout = luma[228:295, 175:275]
         cloud_tail = luma[240:275, 148:202]
         date_cloud = luma[255:295, 203:247]
+        pine_sprig = luma[163:176, 287:301]
         self.assertLessEqual(int((readout < 145).sum()), 1)
         self.assertEqual(0, int((cloud_tail < 145).sum()))
         self.assertGreater(float(np.percentile(date_cloud, 1)), 164.0)
+        self.assertEqual(0, int((pine_sprig < 145).sum()))
 
 
 if __name__ == "__main__":

@@ -33,9 +33,10 @@ HOUR_ANCHOR = (302.0, 148.0)
 SMALL_FLIGHT_WIDTH = 100
 FRAME_DURATION_MS = 125
 FPS = 1000 / FRAME_DURATION_MS
-READOUT_CENTER_X = 213
-READOUT_SHIFT = (-12, 20)
+READOUT_CENTER_X = FACE_SIZE // 2
+READOUT_SHIFT = (0, 20)
 DATE_CLOUD_CLEANUP_BOUNDS = (198, 250, 252, 300)
+PINE_SPRIG_CLEANUP_BOUNDS = (282, 158, 306, 181)
 
 
 @dataclass(frozen=True)
@@ -96,6 +97,36 @@ def _logical_layer(path: Path, mode: str = "RGBA") -> Image.Image:
         return source.convert(mode).resize(
             (FACE_SIZE, FACE_SIZE), Image.Resampling.LANCZOS
         )
+
+
+def _replace_paper_texture(
+    values: np.ndarray,
+    target_box: tuple[int, int, int, int],
+    donor_box: tuple[int, int, int, int],
+    feather_pixels: float,
+) -> None:
+    """Replace a plain-paper artifact with a color-matched texture patch."""
+    x0, y0, x1, y1 = target_box
+    target = values[y0:y1, x0:x1].copy()
+    donor = values[
+        donor_box[1] : donor_box[3], donor_box[0] : donor_box[2]
+    ].copy()
+    if donor.shape != target.shape:
+        raise ValueError("Paper donor and target patches must have identical sizes")
+
+    donor += np.median(target, axis=(0, 1)) - np.median(donor, axis=(0, 1))
+    donor = np.clip(donor, 0, 255)
+    height, width = target.shape[:2]
+    yy, xx = np.indices((height, width))
+    edge_distance = np.minimum.reduce((xx, yy, width - 1 - xx, height - 1 - yy))
+    patch_alpha = np.clip(
+        edge_distance.astype(np.float32) / feather_pixels, 0.0, 1.0
+    )
+    patch_alpha = patch_alpha * patch_alpha * (3.0 - 2.0 * patch_alpha)
+    values[y0:y1, x0:x1] = (
+        target * (1.0 - patch_alpha[..., None])
+        + donor * patch_alpha[..., None]
+    )
 
 
 def _remove_embedded_ui(background: Image.Image) -> Image.Image:
@@ -169,23 +200,22 @@ def _remove_embedded_ui(background: Image.Image) -> Image.Image:
     # another luma threshold, so no anti-aliased edge can survive behind the
     # live date. A feathered clean-paper donor keeps the repair invisible and
     # stops before the adjacent tiger and plum artwork.
-    x0, y0, x1, y1 = DATE_CLOUD_CLEANUP_BOUNDS
-    donor_box = (230, 45, 284, 95)
-    target = result[y0:y1, x0:x1].copy()
-    donor = result[
-        donor_box[1] : donor_box[3], donor_box[0] : donor_box[2]
-    ].copy()
-    donor += np.median(target, axis=(0, 1)) - np.median(donor, axis=(0, 1))
-    donor = np.clip(donor, 0, 255)
+    _replace_paper_texture(
+        result,
+        DATE_CLOUD_CLEANUP_BOUNDS,
+        (230, 45, 284, 95),
+        feather_pixels=5.0,
+    )
 
-    height, width = target.shape[:2]
-    yy, xx = np.indices((height, width))
-    edge_distance = np.minimum.reduce((xx, yy, width - 1 - xx, height - 1 - yy))
-    patch_alpha = np.clip(edge_distance.astype(np.float32) / 5.0, 0.0, 1.0)
-    patch_alpha = patch_alpha * patch_alpha * (3.0 - 2.0 * patch_alpha)
-    result[y0:y1, x0:x1] = (
-        target * (1.0 - patch_alpha[..., None])
-        + donor * patch_alpha[..., None]
+    # Remove the detached pine-needle fragment floating in the upper-right
+    # paper field. The donor is the immediately adjacent clean paper strip, so
+    # the local color and grain stay continuous without touching the magpie,
+    # cloud, pivot, or either live hand layer.
+    _replace_paper_texture(
+        result,
+        PINE_SPRIG_CLEANUP_BOUNDS,
+        (258, 158, 282, 181),
+        feather_pixels=3.0,
     )
     return Image.fromarray(np.clip(result, 0, 255).astype(np.uint8), "RGB")
 
@@ -966,6 +996,10 @@ def build() -> dict[str, object]:
             "landingAnchor": list(HOUR_ANCHOR),
         },
         "titleSealShiftLogical": [-20, -3],
+        "backgroundCleanup": {
+            "pineSprigBoundsLogical": list(PINE_SPRIG_CLEANUP_BOUNDS),
+            "method": "color_matched_paper_texture",
+        },
         "readoutQuietZone": {
             "sourceCleanupBoundsLogical": [175, 220, 275, 295],
             "dateCloudCleanupBoundsLogical": list(DATE_CLOUD_CLEANUP_BOUNDS),

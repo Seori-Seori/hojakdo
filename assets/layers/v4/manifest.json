@@ -36,6 +36,15 @@
     -20,
     -3
   ],
+  "backgroundCleanup": {
+    "pineSprigBoundsLogical": [
+      282,
+      158,
+      306,
+      181
+    ],
+    "method": "color_matched_paper_texture"
+  },
   "readoutQuietZone": {
     "sourceCleanupBoundsLogical": [
       175,
@@ -50,10 +59,10 @@
       300
     ],
     "liveTextShiftLogical": [
-      -12,
+      0,
       20
     ],
-    "liveTextCenterXLogical": 213,
+    "liveTextCenterXLogical": 225,
     "removes": [
       "baked_time",
       "baked_date",
