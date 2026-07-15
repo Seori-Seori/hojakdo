@@ -1,7 +1,7 @@
 {
-  "schemaVersion": 4,
-  "version": "2.2",
-  "status": "v2_2_geometry_candidate",
+  "schemaVersion": 5,
+  "version": "2.3",
+  "status": "approved_v2_3_static_battery_plum",
   "logicalCanvas": {
     "width": 450,
     "height": 450
@@ -151,8 +151,23 @@
     "smallExitWingSpanRatio": 0.44,
     "smallExitWingRootHeightRatio": 0.41
   },
+  "batteryPlum": {
+    "manifest": "assets/layers/source/environment/plum_battery_v23/manifest.json",
+    "stageRanges": [
+      [0, 15],
+      [16, 35],
+      [36, 55],
+      [56, 80],
+      [81, 100]
+    ],
+    "transition": "STATIC_LAYER_SWAP",
+    "animatedBloom": false,
+    "keepNumericIndicator": true,
+    "visibleInAod": true,
+    "aodOpacity": 0.52
+  },
   "render": {
-    "sourceDate": "2026-07-14",
+    "sourceDate": "2026-07-15",
     "largeBirdScale": 0.85728,
     "tigerScale": 0.94,
     "tigerScaleAnchor": [300, 429],

@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 2,
-  "status": "v2_1_character_assets_ready",
+  "schemaVersion": 3,
+  "status": "v2_3_static_battery_plum_ready",
   "sourceImage": "assets/hojakdo_basic_416.png",
   "sourceCanvas": {
     "width": 1254,
@@ -168,6 +168,27 @@
       },
       "pupilHolesPreserved": true,
       "completionLevel": "static_layer_repaired"
+    },
+    {
+      "id": "plum_battery_v23",
+      "file": "assets/layers/source/environment/plum_battery_v23/manifest.json",
+      "generationSource": "approved 2026-07-15 plum battery review GIF",
+      "status": "v2_3_approved",
+      "approvalDate": "2026-07-15",
+      "stageRanges": [
+        [0, 15],
+        [16, 35],
+        [36, 55],
+        [56, 80],
+        [81, 100]
+      ],
+      "baseBackground": "assets/layers/mvp/clean_background_v23.png",
+      "runtimeStructure": "one bare-tree background plus five cumulative tight-crop flower stages",
+      "transition": "STATIC_LAYER_SWAP",
+      "animatedBloom": false,
+      "keepNumericBatteryIndicator": true,
+      "visibleInAod": true,
+      "completionLevel": "static_battery_layers_created"
     }
   ],
   "decisions": {

@@ -9,7 +9,7 @@ from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from typing import Iterable
 
-from PIL import Image, ImageDraw, ImageFont, ImageOps
+from PIL import Image, ImageDraw, ImageEnhance, ImageFont, ImageOps
 
 from .scene_calculator import CyclePlan, HojakdoSceneCalculator, SceneSnapshot
 
@@ -51,25 +51,31 @@ class PrototypeRenderer:
         self.config = calculator.config
         self.geometry = calculator.geometry
         version = str(self.config.get("version", "2.1"))
-        is_v22 = version == "2.2"
+        is_v22_or_newer = version in {"2.2", "2.3"}
         self.background = self._load_layer(
-            "assets/layers/mvp/clean_background_v22.png"
-            if is_v22
-            else "assets/layers/mvp/clean_background.png",
+            "assets/layers/mvp/clean_background_v23.png"
+            if version == "2.3"
+            else (
+                "assets/layers/mvp/clean_background_v22.png"
+                if is_v22_or_newer
+                else "assets/layers/mvp/clean_background.png"
+            ),
             "RGB",
         )
         self.hour_branch = self._load_layer("assets/layers/mvp/hour_branch.png")
         self.minute_branch = self._load_layer("assets/layers/mvp/minute_branch.png")
         self.tiger_head = self._load_layer(
             "assets/layers/source/characters/tiger_head_v22.png"
-            if is_v22
+            if is_v22_or_newer
             else "assets/layers/source/characters/tiger_head_v21.png"
         )
         self.tiger_pupils = self._load_layer(
             "assets/layers/source/characters/tiger_pupils_v22.png"
-            if is_v22
+            if is_v22_or_newer
             else "assets/layers/mvp/tiger_pupils.png"
         )
+        self.plum_manifest = self._load_plum_manifest()
+        self.plum_stages = self._load_plum_stages()
         self.birds = {
             "LARGE": self._load_large_bird(),
             "SMALL": self._load_small_bird(),
@@ -84,6 +90,81 @@ class PrototypeRenderer:
             return source.convert(mode).resize(
                 (FACE_SIZE, FACE_SIZE), Image.Resampling.LANCZOS
             )
+
+    def _load_plum_manifest(self) -> dict[str, object] | None:
+        config = self.config.get("batteryPlum")
+        if not isinstance(config, dict):
+            return None
+        path = config.get("manifest")
+        if not isinstance(path, str):
+            return None
+        return json.loads(self._source_path(path).read_text(encoding="utf-8"))
+
+    def _load_plum_stages(
+        self,
+    ) -> list[tuple[Image.Image | None, tuple[int, int]]]:
+        if self.plum_manifest is None:
+            return []
+        source_canvas = self.plum_manifest["sourceCanvas"]
+        source_width = float(source_canvas[0])
+        source_height = float(source_canvas[1])
+        scale_x = FACE_SIZE / source_width
+        scale_y = FACE_SIZE / source_height
+        stages: list[tuple[Image.Image | None, tuple[int, int]]] = []
+        for entry in self.plum_manifest["stages"]:
+            position = entry["positionSource"]
+            logical_position = (
+                int(round(float(position[0]) * scale_x)),
+                int(round(float(position[1]) * scale_y)),
+            )
+            asset = entry.get("asset")
+            if not asset:
+                stages.append((None, logical_position))
+                continue
+            with Image.open(self._source_path(str(asset))) as source:
+                sprite = source.convert("RGBA")
+            size = (
+                max(1, int(round(sprite.width * scale_x))),
+                max(1, int(round(sprite.height * scale_y))),
+            )
+            stages.append(
+                (
+                    sprite.resize(size, Image.Resampling.LANCZOS),
+                    logical_position,
+                )
+            )
+        return stages
+
+    def battery_plum_stage_index(self, battery_percent: int | float) -> int:
+        if not self.plum_stages:
+            return 0
+        percent = max(0, min(100, int(round(float(battery_percent)))))
+        ranges = self.config["batteryPlum"]["stageRanges"]
+        for index, (minimum, maximum) in enumerate(ranges):
+            if int(minimum) <= percent <= int(maximum):
+                return index
+        raise ValueError(f"Battery percentage did not match a plum stage: {percent}")
+
+    def _plum_layer(
+        self, battery_percent: int | float, aod: bool = False
+    ) -> Image.Image:
+        layer = Image.new("RGBA", (FACE_SIZE, FACE_SIZE), (0, 0, 0, 0))
+        if not self.plum_stages:
+            return layer
+        stage_index = self.battery_plum_stage_index(battery_percent)
+        sprite, position = self.plum_stages[stage_index]
+        if sprite is None:
+            return layer
+        rendered = sprite.copy()
+        if aod:
+            opacity = float(self.config["batteryPlum"]["aodOpacity"])
+            rendered = ImageEnhance.Brightness(rendered).enhance(0.68)
+            alpha = rendered.getchannel("A").point(
+                lambda value: int(round(value * opacity))
+            )
+            rendered.putalpha(alpha)
+        layer.alpha_composite(rendered, dest=position)
+        return layer
 
     @staticmethod
     def _crop_asset(
@@ -464,8 +545,11 @@ class PrototypeRenderer:
         snapshot: SceneSnapshot,
         guides: bool = True,
         clock_label: bool = True,
+        battery_percent: int | float = 85,
+        aod: bool = False,
     ) -> Image.Image:
         face = self.background.convert("RGBA")
+        face.alpha_composite(self._plum_layer(battery_percent, aod=aod))
         hour_angle = self.calculator.hand_group_angle("hour", timestamp)
         minute_angle = self.calculator.hand_group_angle("minute", timestamp)
         hour_branch = self._rotate_layer(
