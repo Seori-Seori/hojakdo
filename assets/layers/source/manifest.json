@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 3,
-  "status": "v2_3_static_battery_plum_ready",
+  "schemaVersion": 4,
+  "status": "v3_fixed_flight_source_approved",
   "sourceImage": "assets/hojakdo_basic_416.png",
   "sourceCanvas": {
     "width": 1254,
@@ -189,6 +189,25 @@
       "keepNumericBatteryIndicator": true,
       "visibleInAod": true,
       "completionLevel": "static_battery_layers_created"
+    },
+    {
+      "id": "magpie_small_flight_right_v3_approved",
+      "file": "assets/layers/source/drafts/magpie_small_flight_right_v3_approved.png",
+      "status": "v3_visual_source_approved",
+      "approvalDate": "2026-07-15",
+      "pose": "right_facing_fixed_flight_single_visible_wing",
+      "sourceCanvas": {
+        "width": 1254,
+        "height": 1254
+      },
+      "sha256": "7c267cc9dddd42365970c3c35be5597acd454a4af88b5c91b52bc08f4fa2aa10",
+      "animation": "STATIC_SPRITE_TRANSLATION",
+      "wingFlaps": 0,
+      "wholeBodySprite": true,
+      "preserveCenterDigitalTimeWeekday": true,
+      "background": "opaque_hanji_preview_source",
+      "nextDerivation": "transparent_aligned_runtime_master",
+      "completionLevel": "approved_source_saved"
     }
   ],
   "decisions": {
