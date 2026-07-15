@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "magpie_small_turn_hop",
+  "format": "AGIF",
+  "resource": "magpie_small_turn_hop.gif",
+  "thumbnail": "magpie_small_turn_hop_thumbnail.png",
+  "placementLogical": [
+    306,
+    164
+  ],
+  "sizeLogical": [
+    69,
+    69
+  ],
+  "anchorX": 0,
+  "anchorY": 0,
+  "anchorSemantics": "common_frame_canvas_top_left",
+  "cropX": 306,
+  "cropY": 164,
+  "cropWidth": 69,
+  "cropHeight": 69,
+  "facing": "SCENE_DIRECTED",
+  "startPose": "magpie_small_turn_hop:frame_00",
+  "endPose": "magpie_small_turn_hop:frame_05",
+  "loopCount": 1,
+  "frameCount": 6,
+  "frameDurationMs": 125,
+  "fps": 8.0,
+  "decodedBytesEstimate": 114264,
+  "sha256": "8c448008c4c5c41dfa0770fa40d878023d03e3016303664ab8a5e8dedd9c5a4e"
+}

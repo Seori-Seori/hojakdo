@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "magpie_small_land_on_hand",
+  "format": "AGIF",
+  "resource": "magpie_small_land_on_hand.gif",
+  "thumbnail": "magpie_small_land_on_hand_thumbnail.png",
+  "placementLogical": [
+    100,
+    51
+  ],
+  "sizeLogical": [
+    108,
+    89
+  ],
+  "anchorX": 0,
+  "anchorY": 0,
+  "anchorSemantics": "common_frame_canvas_top_left",
+  "cropX": 100,
+  "cropY": 51,
+  "cropWidth": 108,
+  "cropHeight": 89,
+  "facing": "SCENE_DIRECTED",
+  "startPose": "magpie_small_land_on_hand:frame_00",
+  "endPose": "magpie_small_land_on_hand:frame_06",
+  "loopCount": 1,
+  "frameCount": 7,
+  "frameDurationMs": 125,
+  "fps": 8.0,
+  "decodedBytesEstimate": 269136,
+  "sha256": "82e8a23a51c26453c906516c5c3457be3a56900d6c2b675a1350aa96bead7e8b"
+}

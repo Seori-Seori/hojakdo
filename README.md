@@ -10,9 +10,9 @@
 
 ## 현재 단계
 
-> **V3.1 작은 까치 고정 비행 + 매화 배터리 통합 완료 / 16개 AGIF·WFF 연결 전**
+> **V4 프로덕션 후보 완료 / 16개 AGIF·실시간 WFF·AOD 연결 완료**
 
-V1·V2·V2.1 결과는 회귀 비교용으로 보존했다. V2.2에서는 호랑이와 큰 까치의 비중, 작은 까치의 양쪽 바늘 착지점을 보정했다. V2.3에서는 기존 숫자 배터리 표시를 유지하면서 배터리 잔량에 따라 매화가 다섯 단계로 피도록 정적 레이어를 추가했다. V3.1에서는 승인된 작은 까치 비행 원본에서 투명 정렬 마스터와 138×107 런타임 스프라이트를 파생하고, 기존 두 번 날갯짓 퇴장을 고정 스프라이트의 `smoothstep` 48px 포물선 이동으로 교체했다.
+V1~V3.1 결과는 회귀 비교용으로 보존했다. V4는 승인된 V3.1 구도를 실제 리소스 전용 Watch Face Format v1 프로젝트에 연결한 프로덕션 후보다. 작은 비행 까치는 100×78로 축소했고, 시침은 길이와 착지점을 유지한 채 수직 두께를 24% 늘리고 밝기를 12% 낮췄다. `鵲虎圖`와 도장은 원 안쪽으로 옮겼다.
 
 현재 완료된 범위:
 
@@ -30,16 +30,33 @@ V1·V2·V2.1 결과는 회귀 비교용으로 보존했다. V2.2에서는 호랑
 - 배터리 `0~15 / 16~35 / 36~55 / 56~80 / 81~100%`에 대응하는 매화 5단계 정적 교체
 - 배터리 아이콘·숫자 퍼센트 유지, 피어나는 전환 애니메이션 없음
 - 화면 가운데 디지털 시각·요일의 위치·형식·가시성 유지
+- 배경에 구워져 있던 시각·날짜·요일·배터리 픽셀 제거 후 WFF 실시간 데이터로 교체
+- 작은 까치 고정 비행 런타임 자산을 138×107에서 100×78로 축소
+- 큰·작은 까치 정적 자세 6종과 매화·소나무·호랑이 몸 전경 가림막 3종 완성
+- 큰 까치 7개, 작은 까치 8개, 호랑이 1개의 AGIF 16개와 원본 프레임·메타데이터·썸네일 완성
+- 16개 AGIF를 43분 무상태 WFF `Condition` 시간표에 연결
+- 실시간 `HH:mm`, `MM.DD`, 요일, 배터리 퍼센트와 배터리 5단계 매화 연결
+- 시침·분침 착석 까치를 회전 그룹과 역회전 캐리어에 연결
 - 호랑이 머리 선행, 눈동자 후행, 작은 반동과 중립 복귀
 - AOD에서 까치와 모든 세부 애니메이션은 숨기고 현재 매화 단계는 낮은 밝기로 유지
 - 결정성·교대·경로 고정·자정 연속성·빈도·AOD·쪼기·고정 비행·배터리 경계·자산 메모리 자동 테스트
-- V1·통합 V2·V2.3·V3.1 합계 39개 자동 테스트 통과
+- V1~V4 합계 49개 자동 테스트 통과
+- 압축 해제 추정 메모리: 대화형 12.09MiB, AOD 정적 자산 5.89MiB
 
-이 단계는 **매화 5단계와 작은 까치 V3.1 퇴장을 합친 시각 검증용 통합 시뮬레이션**이다. 기존 V2.3 출력은 회귀 비교용으로 보존한다. V3 제작 목표는 16개 AGIF와 작은 까치 고정 비행 PNG 1장이며, 고정 비행 PNG는 완료됐다. 아직 16개 AGIF, 실제 WFF 연결, 에뮬레이터 또는 실기기 구현 완료를 뜻하지 않는다.
+V4의 소스·자산·WFF 연결과 정적 검증은 완료됐다. 현재 작업 환경에는 Android SDK와 Gradle 8.13 배포본이 없고 외부 배포본 다운로드도 차단되어 APK 조립과 Wear OS 에뮬레이터 렌더 검증은 수행하지 못했다. Android Studio 또는 CI에서 `:watchface:assembleDebug`와 실기기 검수를 통과하면 배포 후보로 승격한다.
 
-## V2.3 결과물
+## V4 결과물
 
-[`prototype/hojakdo_v2`](prototype/hojakdo_v2)에 다음 결과가 있다.
+[`prototype/hojakdo_v4`](prototype/hojakdo_v4)에 다음 결과가 있다.
+
+- `hojakdo_v4_integrated_static.png`: 실시간 표시를 샘플값으로 합성한 450×450 완성 정적 화면
+- `hojakdo_v4_review_board.png`: 승인값과 전체 연결 범위를 표시한 리뷰 보드
+- `hojakdo_v4_animation_catalog.png`: 16개 AGIF의 시작·중간·끝 프레임 카탈로그
+- `assets/layers/v4/manifest.json`: 자산 크기·기준점·장면 시간표·메모리 보고서
+- `assets/layers/v4/frames/*`: AGIF별 원본 PNG 프레임
+- `assets/layers/v4/animations/*`: 16개 AGIF와 메타데이터
+
+V1~V3.1의 다음 결과도 [`prototype/hojakdo_v2`](prototype/hojakdo_v2)에 보존한다.
 
 - `hojakdo_v21_24h_debug.gif`: 하루 전체 흐름
 - `hojakdo_v21_large_cycle_detail.gif`: 큰 까치 상세 사이클
@@ -63,6 +80,9 @@ python -m prototype.hojakdo_v2.build_v23_assets
 python -m prototype.hojakdo_v2.render_v23_preview
 python -m prototype.hojakdo_v2.build_v31_assets
 python -m prototype.hojakdo_v2.render_v31_preview
+python -m prototype.hojakdo_v4.build_v4_assets
+python -m prototype.hojakdo_v4.generate_watchface
+./gradlew :watchface:assembleDebug
 ```
 
 V1 결과와 실행 방법은 [`prototype/large_magpie_v1`](prototype/large_magpie_v1)에 그대로 남아 있다.
@@ -126,4 +146,4 @@ V1 결과와 실행 방법은 [`prototype/large_magpie_v1`](prototype/large_magp
 3. Wear OS API 33 이상 에뮬레이터 또는 기기를 선택한다.
 4. `watchface` 모듈을 실행한다.
 
-현재 `watchface`는 기존 바늘 MVP다. 다음 단계는 16개 AGIF 원본 프레임·메타데이터와 나머지 정적 자세·가림막을 확정한 뒤, V3.1 무상태 계산과 매화 배터리 조건을 실제 WFF 표현식·Transform·렌더링 슬롯으로 옮기는 작업이다.
+현재 `watchface`는 V4 자산과 실시간 WFF 로직을 사용한다. 설치 전 검수는 Android Studio에서 Gradle Sync와 `assembleDebug`를 실행한 뒤 API 33 이상 Wear OS 에뮬레이터 또는 실기기에서 대화형·AOD 전환, 16개 전환 슬롯, 텍스트 기준선을 확인한다.

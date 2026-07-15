@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "magpie_large_fly_pine_to_hand",
+  "format": "AGIF",
+  "resource": "magpie_large_fly_pine_to_hand.gif",
+  "thumbnail": "magpie_large_fly_pine_to_hand_thumbnail.png",
+  "placementLogical": [
+    55,
+    39
+  ],
+  "sizeLogical": [
+    134,
+    160
+  ],
+  "anchorX": 0,
+  "anchorY": 0,
+  "anchorSemantics": "common_frame_canvas_top_left",
+  "cropX": 55,
+  "cropY": 39,
+  "cropWidth": 134,
+  "cropHeight": 160,
+  "facing": "SCENE_DIRECTED",
+  "startPose": "magpie_large_fly_pine_to_hand:frame_00",
+  "endPose": "magpie_large_fly_pine_to_hand:frame_07",
+  "loopCount": 1,
+  "frameCount": 8,
+  "frameDurationMs": 125,
+  "fps": 8.0,
+  "decodedBytesEstimate": 686080,
+  "sha256": "5293af07d11fa16f6abc8247b987b55212f4ecabe896b318138695bd57ebf1ff"
+}

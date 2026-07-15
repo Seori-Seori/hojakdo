@@ -1,6 +1,6 @@
 # 호작도 워치페이스 애니메이션 구현 기준서
 
-> 문서 상태: V3.1 작은 까치 고정 비행 + 매화 배터리 통합 완료 기준서
+> 문서 상태: V4 프로덕션 후보 구현 완료 기준서
 >
 > 구현 기준: Watch Face Format(WFF) v1, 논리 좌표계 450×450
 >
@@ -21,7 +21,7 @@
 - 세부 행동 예약
 - 호랑이 반응 예약
 
-V2.3에서 두 까치의 **통합 시뮬레이션, V2.2 구도 보정, 매화 배터리 5단계 정적 자산**을 완성했다. V3.1에서는 승인된 작은 까치 원본에서 투명 정렬 마스터와 런타임 PNG를 파생하고, 기존 두 번 날갯짓을 고정 스프라이트의 `smoothstep` 48px 포물선 이동으로 교체했다. 85% 만개 통합 정적 화면과 39개 자동 테스트까지 완료했다. 아직 16개 AGIF, WFF 연결, 에뮬레이터·실기기 구현은 완료되지 않았다.
+V4에서 두 까치의 정적 자세 6종, 전경 가림막 3종, 16개 AGIF와 원본 프레임·메타데이터를 완성했다. 배경에 구워져 있던 중앙 표시와 배터리를 제거하고 실시간 WFF 텍스트로 교체했으며, 43분 무상태 시간표·배터리 매화·시침·분침 캐리어·AOD까지 `watchface.xml`에 연결했다. 49개 자동 테스트가 통과한다. APK 조립과 Wear OS 에뮬레이터·실기기 렌더 검증은 Android SDK가 있는 환경에서 수행한다.
 
 ## 2. 절대 타임라인
 
@@ -37,7 +37,7 @@ V2.3에서 두 까치의 **통합 시뮬레이션, V2.2 구도 보정, 매화 �
 개념식:
 
 ```text
-timelineMinute = YEAR·DAY_OF_YEAR·HOUR·MINUTE 기반 절대 분
+timelineMinute = YEAR·366일 + DAY_OF_YEAR·HOUR·MINUTE 기반 절대 분
 cycleIndex = floor((timelineMinute - offset) / 43)
 cycleLocalMinute = modulo(timelineMinute - offset, 43)
 character = cycleIndex 짝수/홀수 교대
@@ -62,6 +62,8 @@ character = cycleIndex 짝수/홀수 교대
 - 배터리 퍼센트에 따른 매화 정적 단계 선택
 - 작은 까치 퇴장 시 고정 비행 스프라이트 선택과 오른쪽 Transform 이동
 - AOD 가시성
+
+V4 실제 표현식은 매년 366일짜리 고정 스트라이드를 사용한다. 윤년 여부와 무관하게 연도 경계를 건너도 키가 감소하지 않고, `YEAR`, `DAY_OF_YEAR`, `HOUR_0_23`, `MINUTE`만 사용하므로 분당 한 번만 장면 조건이 바뀐다.
 
 ### AGIF가 담당할 것
 
@@ -140,7 +142,20 @@ HIDDEN
 
 ## 5. 경로와 바늘 선택
 
-바늘 착석 후보는 다음을 함께 평가한다.
+V4 프로덕션 시간표는 모든 판단을 완성본에서 검수할 수 있도록 다음의 고정 결정표를 사용한다.
+
+```text
+cycleIndex % 11 == 0 → 시침 경로
+cycleIndex % 11 == 5 → 분침 경로
+그 밖의 나머지       → 매화 경로
+```
+
+- 장기 평균 바늘 착석은 약 6.09회/일이다.
+- 11은 홀수이므로 큰·작은 까치 모두 시간이 지나면 시침과 분침을 각각 사용한다.
+- 같은 시각에는 항상 같은 까치·경로·상태가 계산된다.
+- 복잡한 각도 점수식은 V3.1 시뮬레이션 회귀 비교용으로 보존하되 V4 WFF 런타임에서는 사용하지 않는다.
+
+V3.1 시뮬레이션의 바늘 착석 후보는 다음을 함께 평가했다.
 
 - 좌상단 2사분면 착지
 - 캐릭터가 화면 안에 완전히 들어오는지
@@ -199,7 +214,7 @@ V2 장기 검증:
 - 발과 장면 좌표는 고정하고 상체만 움직임
 - 호랑이 위에서 연속 작은 까치 3사이클 중 정확히 2사이클에 귀 쪼기
 - 귀 쪼기는 빠른 두 번의 동작으로 구성
-- 오른쪽 퇴장은 승인된 `magpie_small_flight_right_v3_approved.png`의 한 장짜리 고정 자세를 사용
+- 오른쪽 퇴장은 승인된 `magpie_small_flight_right_v3_approved.png`에서 파생한 100×78 한 장짜리 고정 자세를 사용
 - 몸통의 접힌 날개가 중복되어 보이지 않는 최종 승인본을 기준으로 투명 런타임 마스터 파생 완료
 - 퇴장 중 날갯짓은 0회이며 날개를 별도 레이어나 프레임 애니메이션으로 만들지 않음
 - 까치 전체 스프라이트를 기존 오른쪽 퇴장 경로에 따라 완전히 화면 밖까지 이동
@@ -292,7 +307,7 @@ magpie_large_perch_tiger.png
 magpie_small_perch_hand.png
 magpie_small_walk_idle.png
 magpie_small_perch_tiger.png
-magpie_small_flight_right_v3.png
+magpie_small_flight_right_v4.png
 ```
 
 필수 전경 가림막:
@@ -307,7 +322,7 @@ tiger_body_foreground_mask.png
 - 큰 까치의 깨끗한 기반 마스터는 승인됐다.
 - 작은 까치 기존 레이어에는 가지와 붉은 노리개가 붙어 있다.
 - V2.1은 가지·붉은 노리개가 없는 깨끗한 작은 까치 마스터를 사용한다.
-- `magpie_small_flight_right_v3.png`는 승인 원본에서 배경을 제거해 파생하며, 한 장의 몸 전체 스프라이트로 정렬한다.
+- `magpie_small_flight_right_v4.png`는 승인 원본에서 배경을 제거한 V3.1 런타임을 폭 100px로 축소하며, 한 장의 몸 전체 스프라이트로 정렬한다.
 - 승인 원본의 해상도·색·형태를 보존하고 투명화·타이트 크롭·기준점 정렬만 수행한다.
 
 ## 12. 애니메이션 원본과 메타데이터
@@ -315,11 +330,11 @@ tiger_body_foreground_mask.png
 AGIF 바이너리만 원본으로 보관하지 않는다.
 
 ```text
-assets/animation_src/<asset_name>/
+assets/layers/v4/frames/<asset_name>/
   frame_00.png
   frame_01.png
   ...
-  metadata.json
+assets/layers/v4/animations/<asset_name>.json
 ```
 
 `metadata.json` 필수 항목:
@@ -381,8 +396,8 @@ AOD:
 메모리 목표:
 
 ```text
-대화형 모드 60MB 이하 목표
-AOD 8MB 이하 목표
+대화형 모드 12.09MiB 추정 / 공식 100MiB 미만
+AOD 정적 자산 5.89MiB 추정 / 공식 10MiB 미만
 ```
 
 - 압축 파일 크기가 아니라 모든 프레임의 압축 해제 크기로 계산한다.

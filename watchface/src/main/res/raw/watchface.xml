@@ -1,80 +1,414 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WatchFace width="450" height="450">
     <Metadata key="CLOCK_TYPE" value="ANALOG" />
-    <Metadata key="PREVIEW_TIME" value="10:08:00" />
-
+    <Metadata key="PREVIEW_TIME" value="14:18:00" />
     <Scene backgroundColor="#000000">
-        <PartImage x="0" y="0" width="450" height="450">
-            <Image resource="clean_background" />
+        <PartImage name="hojakdo_v4_background" x="0" y="0" width="450" height="450">
+            <Image resource="hojakdo_v4_background" />
+            <Variant mode="AMBIENT" target="alpha" value="145" />
         </PartImage>
 
-        <Group name="hour_hand_group" x="0" y="0" width="450" height="450"
-            pivotX="0.497777778" pivotY="0.460000000">
-            <Transform target="angle" value="((([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE]) * 0.5) - 50.232272878132">
-                <Animation duration="0.35" interpolation="EASE_IN_OUT" />
-            </Transform>
-            <PartImage x="0" y="0" width="450" height="450">
-                <Image resource="hour_branch" />
-            </PartImage>
-            <Group name="hour_magpie_carrier" x="0" y="0" width="450" height="450"
-                pivotX="0.677777778" pivotY="0.317777778">
-                <Transform target="angle" value="-((((([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE]) * 0.5) - 50.232272878132))">
-                    <Animation duration="0.35" interpolation="EASE_IN_OUT" />
-                </Transform>
-                <Condition>
-                    <Expressions>
-                        <Expression name="hour_on_right_half"><![CDATA[[HOUR_0_11_MINUTE] < 6]]></Expression>
-                    </Expressions>
-                    <Compare expression="hour_on_right_half">
-                        <PartImage x="0" y="0" width="450" height="450">
-                            <Image resource="hour_magpie_normal" />
-                        </PartImage>
-                    </Compare>
-                    <Default>
-                        <PartImage x="0" y="0" width="450" height="450">
-                            <Image resource="hour_magpie_mirrored" />
-                        </PartImage>
-                    </Default>
-                </Condition>
-            </Group>
-        </Group>
+        <Condition>
+            <Expressions>
+                <Expression name="battery_stage_1"><![CDATA[[BATTERY_PERCENT] >= 0 && [BATTERY_PERCENT] <= 15]]></Expression>
+                <Expression name="battery_stage_2"><![CDATA[[BATTERY_PERCENT] >= 16 && [BATTERY_PERCENT] <= 35]]></Expression>
+                <Expression name="battery_stage_3"><![CDATA[[BATTERY_PERCENT] >= 36 && [BATTERY_PERCENT] <= 55]]></Expression>
+                <Expression name="battery_stage_4"><![CDATA[[BATTERY_PERCENT] >= 56 && [BATTERY_PERCENT] <= 80]]></Expression>
+                <Expression name="battery_stage_5"><![CDATA[[BATTERY_PERCENT] >= 81 && [BATTERY_PERCENT] <= 100]]></Expression>
+            </Expressions>
+            <Compare expression="battery_stage_1">
+                <PartImage name="plum_stage_1" x="25" y="154" width="1" height="1">
+                    <Image resource="plum_battery_stage_01" />
+                    <Variant mode="AMBIENT" target="alpha" value="133" />
+                </PartImage>
+            </Compare>
+            <Compare expression="battery_stage_2">
+                <PartImage name="plum_stage_2" x="64" y="242" width="120" height="112">
+                    <Image resource="plum_battery_stage_02" />
+                    <Variant mode="AMBIENT" target="alpha" value="133" />
+                </PartImage>
+            </Compare>
+            <Compare expression="battery_stage_3">
+                <PartImage name="plum_stage_3" x="34" y="163" width="149" height="226">
+                    <Image resource="plum_battery_stage_03" />
+                    <Variant mode="AMBIENT" target="alpha" value="133" />
+                </PartImage>
+            </Compare>
+            <Compare expression="battery_stage_4">
+                <PartImage name="plum_stage_4" x="34" y="163" width="149" height="226">
+                    <Image resource="plum_battery_stage_04" />
+                    <Variant mode="AMBIENT" target="alpha" value="133" />
+                </PartImage>
+            </Compare>
+            <Compare expression="battery_stage_5">
+                <PartImage name="plum_stage_5" x="25" y="156" width="158" height="243">
+                    <Image resource="plum_battery_stage_05" />
+                    <Variant mode="AMBIENT" target="alpha" value="133" />
+                </PartImage>
+            </Compare>
+        </Condition>
 
-        <Group name="minute_hand_group" x="0" y="0" width="450" height="450"
-            pivotX="0.497777778" pivotY="0.460000000">
-            <Transform target="angle" value="((([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE]) * 6) - 325.271003720479">
-                <Animation duration="0.35" interpolation="EASE_IN_OUT" />
-            </Transform>
-            <PartImage x="0" y="0" width="450" height="450">
-                <Image resource="minute_branch" />
-            </PartImage>
-            <Group name="minute_magpie_carrier" x="0" y="0" width="450" height="450"
-                pivotX="0.353333333" pivotY="0.262222222">
-                <Transform target="angle" value="-((((([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE]) * 6) - 325.271003720479))">
-                    <Animation duration="0.35" interpolation="EASE_IN_OUT" />
-                </Transform>
-                <Condition>
-                    <Expressions>
-                        <Expression name="minute_on_left_half"><![CDATA[[MINUTE] >= 30]]></Expression>
-                    </Expressions>
-                    <Compare expression="minute_on_left_half">
-                        <PartImage x="0" y="0" width="450" height="450">
-                            <Image resource="minute_magpie_normal" />
-                        </PartImage>
-                    </Compare>
-                    <Default>
-                        <PartImage x="0" y="0" width="450" height="450">
-                            <Image resource="minute_magpie_mirrored" />
-                        </PartImage>
-                    </Default>
-                </Condition>
-            </Group>
-        </Group>
-
-        <PartImage x="0" y="0" width="450" height="450">
-            <Image resource="tiger_head" />
+        <PartText name="live_time" x="183" y="226" width="84" height="31">
+            <Text align="CENTER" verticalAlign="CENTER">
+                <Font family="SYNC_TO_DEVICE" size="25" color="#211811" weight="BOLD" letterSpacing="0.03">
+                    <Template>%s:%s
+                        <Parameter expression="[HOUR_0_23_Z]" />
+                        <Parameter expression="[MINUTE_Z]" />
+                    </Template>
+                </Font>
+            </Text>
+            <Variant mode="AMBIENT" target="alpha" value="220" />
+        </PartText>
+        <PartText name="live_date" x="198" y="255" width="54" height="15">
+            <Text align="CENTER" verticalAlign="CENTER">
+                <Font family="SYNC_TO_DEVICE" size="11" color="#211811" weight="BOLD">
+                    <Template>%s.%s
+                        <Parameter expression="[MONTH_Z]" />
+                        <Parameter expression="[DAY_Z]" />
+                    </Template>
+                </Font>
+            </Text>
+            <Variant mode="AMBIENT" target="alpha" value="220" />
+        </PartText>
+        <PartText name="live_weekday" x="202" y="271" width="46" height="13">
+            <Text align="CENTER" verticalAlign="CENTER">
+                <Font family="SYNC_TO_DEVICE" size="9" color="#211811" weight="BOLD">
+                    <Upper><Template>%s<Parameter expression="[DAY_OF_WEEK_S]" /></Template></Upper>
+                </Font>
+            </Text>
+            <Variant mode="AMBIENT" target="alpha" value="220" />
+        </PartText>
+        <PartImage name="battery_icon" x="186" y="418" width="22" height="14">
+            <Image resource="battery_icon" />
+            <Variant mode="AMBIENT" target="alpha" value="190" />
         </PartImage>
-        <PartImage x="0" y="0" width="450" height="450">
-            <Image resource="tiger_pupils" />
+        <PartText name="live_battery" x="208" y="414" width="48" height="22">
+            <Text align="START" verticalAlign="CENTER">
+                <Font family="SYNC_TO_DEVICE" size="12" color="#211811" weight="BOLD">
+                    <Template>%s%%<Parameter expression="[BATTERY_PERCENT]" /></Template>
+                </Font>
+            </Text>
+            <Variant mode="AMBIENT" target="alpha" value="190" />
+        </PartText>
+
+        <Group name="hour_hand_group" x="0" y="0" width="450" height="450" pivotX="0.497777778" pivotY="0.460000000">
+            <Transform target="angle" value="(([HOUR_0_23_MINUTE] * 30) - 50.232272878132)">
+                <Animation duration="0.35" interpolation="EASE_IN_OUT" />
+            </Transform>
+            <PartImage name="hour_branch" x="0" y="0" width="450" height="450">
+                <Image resource="hojakdo_v4_hour_branch" />
+                <Variant mode="AMBIENT" target="alpha" value="185" />
+            </PartImage>
+            <Condition>
+                <Expressions>
+                    <Expression name="show_hour_large"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 0) && ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) && (((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) >= 4 && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) <= 8)]]></Expression>
+                </Expressions>
+                <Compare expression="show_hour_large">
+                    <Group name="hour_large_carrier" x="0" y="0" width="450" height="450"
+                        pivotX="0.677777778" pivotY="0.317777778">
+                        <Transform target="angle" value="-(([HOUR_0_23_MINUTE] * 30) - 50.232272878132)">
+                            <Animation duration="0.35" interpolation="EASE_IN_OUT" />
+                        </Transform>
+                        <PartImage name="hour_large_perch" x="247" y="73" width="87" height="101">
+                            <Image resource="magpie_large_perch_hand" />
+                            <Variant mode="AMBIENT" target="alpha" value="0" />
+                        </PartImage>
+                    </Group>
+                </Compare>
+            </Condition>
+            <Condition>
+                <Expressions>
+                    <Expression name="show_hour_small"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) && (((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) >= 4 && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) <= 8)]]></Expression>
+                </Expressions>
+                <Compare expression="show_hour_small">
+                    <Group name="hour_small_carrier" x="0" y="0" width="450" height="450"
+                        pivotX="0.671111111" pivotY="0.328888889">
+                        <Transform target="angle" value="-(([HOUR_0_23_MINUTE] * 30) - 50.232272878132)">
+                            <Animation duration="0.35" interpolation="EASE_IN_OUT" />
+                        </Transform>
+                        <PartImage name="hour_small_perch" x="269" y="100" width="55" height="62">
+                            <Image resource="magpie_small_perch_hand" />
+                            <Variant mode="AMBIENT" target="alpha" value="0" />
+                        </PartImage>
+                    </Group>
+                </Compare>
+            </Condition>
+        </Group>
+
+        <Group name="minute_hand_group" x="0" y="0" width="450" height="450" pivotX="0.497777778" pivotY="0.460000000">
+            <Transform target="angle" value="(([MINUTE_SECOND] * 6) - 325.271003720479)">
+                <Animation duration="0.35" interpolation="EASE_IN_OUT" />
+            </Transform>
+            <PartImage name="minute_branch" x="0" y="0" width="450" height="450">
+                <Image resource="hojakdo_v4_minute_branch" />
+                <Variant mode="AMBIENT" target="alpha" value="185" />
+            </PartImage>
+            <Condition>
+                <Expressions>
+                    <Expression name="show_minute_large"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 0) && ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5) && (((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) >= 4 && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) <= 8)]]></Expression>
+                </Expressions>
+                <Compare expression="show_minute_large">
+                    <Group name="minute_large_carrier" x="0" y="0" width="450" height="450"
+                        pivotX="0.353333333" pivotY="0.262222222">
+                        <Transform target="angle" value="-(([MINUTE_SECOND] * 6) - 325.271003720479)">
+                            <Animation duration="0.35" interpolation="EASE_IN_OUT" />
+                        </Transform>
+                        <PartImage name="minute_large_perch" x="101" y="48" width="87" height="101">
+                            <Image resource="magpie_large_perch_hand" />
+                            <Variant mode="AMBIENT" target="alpha" value="0" />
+                        </PartImage>
+                    </Group>
+                </Compare>
+            </Condition>
+            <Condition>
+                <Expressions>
+                    <Expression name="show_minute_small"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5) && (((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) >= 4 && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) <= 8)]]></Expression>
+                </Expressions>
+                <Compare expression="show_minute_small">
+                    <Group name="minute_small_carrier" x="0" y="0" width="450" height="450"
+                        pivotX="0.380000000" pivotY="0.271111111">
+                        <Transform target="angle" value="-(([MINUTE_SECOND] * 6) - 325.271003720479)">
+                            <Animation duration="0.35" interpolation="EASE_IN_OUT" />
+                        </Transform>
+                        <PartImage name="minute_small_perch" x="138" y="74" width="55" height="62">
+                            <Image resource="magpie_small_perch_hand" />
+                            <Variant mode="AMBIENT" target="alpha" value="0" />
+                        </PartImage>
+                    </Group>
+                </Compare>
+            </Condition>
+        </Group>
+
+        <Condition>
+            <Expressions>
+                <Expression name="large_plum_idle"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 0) && (!(((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) || ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5))) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) >= 3 && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) <= 8]]></Expression>
+                <Expression name="small_plum_idle"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && (!(((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) || ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5))) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) >= 3 && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) <= 8]]></Expression>
+                <Expression name="large_tiger_idle"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 0) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) >= 13 && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) <= 40]]></Expression>
+                <Expression name="small_tiger_idle"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) >= 15 && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) <= 40]]></Expression>
+                <Expression name="small_exit_fixed_flight"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 41]]></Expression>
+            </Expressions>
+            <Compare expression="large_plum_idle">
+                <PartImage name="large_plum_idle" x="92" y="268" width="88" height="98">
+                    <Image resource="magpie_large_walk_idle" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartImage>
+            </Compare>
+            <Compare expression="small_plum_idle">
+                <PartImage name="small_plum_idle" x="133" y="288" width="54" height="60">
+                    <Image resource="magpie_small_walk_idle" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartImage>
+            </Compare>
+            <Compare expression="large_tiger_idle">
+                <PartImage name="large_tiger_idle" x="278" y="163" width="83" height="103">
+                    <Image resource="magpie_large_perch_tiger" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartImage>
+            </Compare>
+            <Compare expression="small_tiger_idle">
+                <PartImage name="small_tiger_idle" x="309" y="170" width="52" height="61">
+                    <Image resource="magpie_small_perch_tiger" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartImage>
+            </Compare>
+            <Compare expression="small_exit_fixed_flight">
+                <PartImage name="small_exit_fixed_flight" x="277" y="150" width="100" height="78">
+                    <Image resource="magpie_small_flight_right_v4" />
+                    <Transform target="x" value="277 + (204 * ([SECOND_MILLISECOND] / 60))" />
+                    <Transform target="y" value="150 - (163 * ([SECOND_MILLISECOND] / 60)) + (96 * ([SECOND_MILLISECOND] / 60) * ([SECOND_MILLISECOND] / 60))" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartImage>
+            </Compare>
+        </Condition>
+
+        <Condition>
+            <Expressions>
+                <Expression name="show_magpie_large_fly_pine_to_hand"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 0) && (((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) || ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5)) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 2]]></Expression>
+                <Expression name="show_magpie_large_land_on_hand"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 0) && (((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) || ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5)) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 3]]></Expression>
+                <Expression name="show_magpie_large_walk_step"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 0) && (!(((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) || ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5))) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 2]]></Expression>
+                <Expression name="show_magpie_large_hop_to_tiger"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 0) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 9]]></Expression>
+                <Expression name="show_magpie_large_head_tilt"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 0) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 11]]></Expression>
+                <Expression name="show_magpie_large_turn_perch"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 0) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 12]]></Expression>
+                <Expression name="show_magpie_large_exit_right_jump"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 0) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 41]]></Expression>
+                <Expression name="show_magpie_small_fly_pine_to_hand"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && (((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) || ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5)) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 2]]></Expression>
+                <Expression name="show_magpie_small_land_on_hand"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && (((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) || ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5)) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 3]]></Expression>
+                <Expression name="show_magpie_small_walk_step"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && (!(((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) || ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5))) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 2]]></Expression>
+                <Expression name="show_magpie_small_hop_to_tiger"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 9]]></Expression>
+                <Expression name="show_magpie_small_head_scan"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 11]]></Expression>
+                <Expression name="show_magpie_small_look_plum"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 12]]></Expression>
+                <Expression name="show_magpie_small_turn_hop"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 13]]></Expression>
+                <Expression name="show_magpie_small_peck_tiger_ear"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 14]]></Expression>
+                <Expression name="show_tiger_head_eye_reaction"><![CDATA[((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 10]]></Expression>
+            </Expressions>
+            <Compare expression="show_magpie_large_fly_pine_to_hand">
+                <PartAnimatedImage name="magpie_large_fly_pine_to_hand" x="55" y="39" width="134" height="160">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+                    <AnimatedImage resource="magpie_large_fly_pine_to_hand" format="AGIF" thumbnail="magpie_large_fly_pine_to_hand_thumbnail" />
+                    <Thumbnail resource="magpie_large_fly_pine_to_hand_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
+            </Compare>
+            <Compare expression="show_magpie_large_land_on_hand">
+                <PartAnimatedImage name="magpie_large_land_on_hand" x="99" y="30" width="91" height="120">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+                    <AnimatedImage resource="magpie_large_land_on_hand" format="AGIF" thumbnail="magpie_large_land_on_hand_thumbnail" />
+                    <Thumbnail resource="magpie_large_land_on_hand_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
+            </Compare>
+            <Compare expression="show_magpie_large_walk_step">
+                <PartAnimatedImage name="magpie_large_walk_step" x="35" y="265" width="146" height="119">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+                    <AnimatedImage resource="magpie_large_walk_step" format="AGIF" thumbnail="magpie_large_walk_step_thumbnail" />
+                    <Thumbnail resource="magpie_large_walk_step_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
+            </Compare>
+            <Compare expression="show_magpie_large_hop_to_tiger">
+                <PartAnimatedImage name="magpie_large_hop_to_tiger" x="222" y="162" width="143" height="180">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+                    <AnimatedImage resource="magpie_large_hop_to_tiger" format="AGIF" thumbnail="magpie_large_hop_to_tiger_thumbnail" />
+                    <Thumbnail resource="magpie_large_hop_to_tiger_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
+            </Compare>
+            <Compare expression="show_magpie_large_head_tilt">
+                <PartAnimatedImage name="magpie_large_head_tilt" x="274" y="162" width="94" height="104">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+                    <AnimatedImage resource="magpie_large_head_tilt" format="AGIF" thumbnail="magpie_large_head_tilt_thumbnail" />
+                    <Thumbnail resource="magpie_large_head_tilt_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
+            </Compare>
+            <Compare expression="show_magpie_large_turn_perch">
+                <PartAnimatedImage name="magpie_large_turn_perch" x="276" y="158" width="119" height="107">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+                    <AnimatedImage resource="magpie_large_turn_perch" format="AGIF" thumbnail="magpie_large_turn_perch_thumbnail" />
+                    <Thumbnail resource="magpie_large_turn_perch_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
+            </Compare>
+            <Compare expression="show_magpie_large_exit_right_jump">
+                <PartAnimatedImage name="magpie_large_exit_right_jump" x="276" y="102" width="174" height="163">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+                    <AnimatedImage resource="magpie_large_exit_right_jump" format="AGIF" thumbnail="magpie_large_exit_right_jump_thumbnail" />
+                    <Thumbnail resource="magpie_large_exit_right_jump_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
+            </Compare>
+            <Compare expression="show_magpie_small_fly_pine_to_hand">
+                <PartAnimatedImage name="magpie_small_fly_pine_to_hand" x="34" y="49" width="174" height="151">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+                    <AnimatedImage resource="magpie_small_fly_pine_to_hand" format="AGIF" thumbnail="magpie_small_fly_pine_to_hand_thumbnail" />
+                    <Thumbnail resource="magpie_small_fly_pine_to_hand_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
+            </Compare>
+            <Compare expression="show_magpie_small_land_on_hand">
+                <PartAnimatedImage name="magpie_small_land_on_hand" x="100" y="51" width="108" height="89">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+                    <AnimatedImage resource="magpie_small_land_on_hand" format="AGIF" thumbnail="magpie_small_land_on_hand_thumbnail" />
+                    <Thumbnail resource="magpie_small_land_on_hand_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
+            </Compare>
+            <Compare expression="show_magpie_small_walk_step">
+                <PartAnimatedImage name="magpie_small_walk_step" x="67" y="287" width="123" height="82">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+                    <AnimatedImage resource="magpie_small_walk_step" format="AGIF" thumbnail="magpie_small_walk_step_thumbnail" />
+                    <Thumbnail resource="magpie_small_walk_step_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
+            </Compare>
+            <Compare expression="show_magpie_small_hop_to_tiger">
+                <PartAnimatedImage name="magpie_small_hop_to_tiger" x="250" y="167" width="113" height="130">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+                    <AnimatedImage resource="magpie_small_hop_to_tiger" format="AGIF" thumbnail="magpie_small_hop_to_tiger_thumbnail" />
+                    <Thumbnail resource="magpie_small_hop_to_tiger_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
+            </Compare>
+            <Compare expression="show_magpie_small_head_scan">
+                <PartAnimatedImage name="magpie_small_head_scan" x="305" y="169" width="61" height="65">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+                    <AnimatedImage resource="magpie_small_head_scan" format="AGIF" thumbnail="magpie_small_head_scan_thumbnail" />
+                    <Thumbnail resource="magpie_small_head_scan_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
+            </Compare>
+            <Compare expression="show_magpie_small_look_plum">
+                <PartAnimatedImage name="magpie_small_look_plum" x="305" y="169" width="61" height="64">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+                    <AnimatedImage resource="magpie_small_look_plum" format="AGIF" thumbnail="magpie_small_look_plum_thumbnail" />
+                    <Thumbnail resource="magpie_small_look_plum_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
+            </Compare>
+            <Compare expression="show_magpie_small_turn_hop">
+                <PartAnimatedImage name="magpie_small_turn_hop" x="306" y="164" width="69" height="69">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+                    <AnimatedImage resource="magpie_small_turn_hop" format="AGIF" thumbnail="magpie_small_turn_hop_thumbnail" />
+                    <Thumbnail resource="magpie_small_turn_hop_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
+            </Compare>
+            <Compare expression="show_magpie_small_peck_tiger_ear">
+                <PartAnimatedImage name="magpie_small_peck_tiger_ear" x="300" y="169" width="64" height="66">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+                    <AnimatedImage resource="magpie_small_peck_tiger_ear" format="AGIF" thumbnail="magpie_small_peck_tiger_ear_thumbnail" />
+                    <Thumbnail resource="magpie_small_peck_tiger_ear_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
+            </Compare>
+            <Compare expression="show_tiger_head_eye_reaction">
+                <PartAnimatedImage name="tiger_head_eye_reaction" x="280" y="222" width="108" height="108">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+                    <AnimatedImage resource="tiger_head_eye_reaction" format="AGIF" thumbnail="tiger_head_eye_reaction_thumbnail" />
+                    <Thumbnail resource="tiger_head_eye_reaction_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
+            </Compare>
+        </Condition>
+
+        <PartImage name="pine_foreground_mask" x="0" y="0" width="220" height="260">
+            <Image resource="pine_foreground_mask" />
+            <Variant mode="AMBIENT" target="alpha" value="145" />
+        </PartImage>
+
+        <PartImage name="plum_foreground_mask" x="0" y="226" width="205" height="224">
+            <Image resource="plum_foreground_mask" />
+            <Variant mode="AMBIENT" target="alpha" value="145" />
+        </PartImage>
+
+        <PartImage name="tiger_body_foreground_mask" x="184" y="269" width="266" height="181">
+            <Image resource="tiger_body_foreground_mask" />
+            <Variant mode="AMBIENT" target="alpha" value="145" />
+        </PartImage>
+
+        <PartImage name="tiger_head" x="0" y="0" width="450" height="450">
+            <Image resource="hojakdo_v4_tiger_head" />
+            <Variant mode="AMBIENT" target="alpha" value="145" />
+        </PartImage>
+
+        <PartImage name="tiger_pupils" x="0" y="0" width="450" height="450">
+            <Image resource="hojakdo_v4_tiger_pupils" />
+            <Variant mode="AMBIENT" target="alpha" value="155" />
         </PartImage>
     </Scene>
 </WatchFace>

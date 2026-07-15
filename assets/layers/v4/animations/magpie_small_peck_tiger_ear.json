@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "magpie_small_peck_tiger_ear",
+  "format": "AGIF",
+  "resource": "magpie_small_peck_tiger_ear.gif",
+  "thumbnail": "magpie_small_peck_tiger_ear_thumbnail.png",
+  "placementLogical": [
+    300,
+    169
+  ],
+  "sizeLogical": [
+    64,
+    66
+  ],
+  "anchorX": 0,
+  "anchorY": 0,
+  "anchorSemantics": "common_frame_canvas_top_left",
+  "cropX": 300,
+  "cropY": 169,
+  "cropWidth": 64,
+  "cropHeight": 66,
+  "facing": "SCENE_DIRECTED",
+  "startPose": "magpie_small_peck_tiger_ear:frame_00",
+  "endPose": "magpie_small_peck_tiger_ear:frame_06",
+  "loopCount": 1,
+  "frameCount": 7,
+  "frameDurationMs": 125,
+  "fps": 8.0,
+  "decodedBytesEstimate": 118272,
+  "sha256": "00e82b2b9af5c5db1a8c523853c8ab7b04257a42878036ce59705c6bf2a3e9b8"
+}

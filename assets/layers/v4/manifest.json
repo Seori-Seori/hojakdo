@@ -1,0 +1,764 @@
+{
+  "schemaVersion": 1,
+  "version": "4.0.0",
+  "status": "v4_complete_production_candidate",
+  "logicalCanvas": [
+    450,
+    450
+  ],
+  "smallFlight": {
+    "resource": "magpie_small_flight_right_v4.png",
+    "sizeLogical": [
+      100,
+      78
+    ],
+    "anchorLogical": [
+      67.0,
+      49.92
+    ],
+    "source": "assets/layers/mvp/magpie_small_flight_right_v31.png",
+    "motion": "fixed_whole_sprite_translation",
+    "wingFlaps": 0
+  },
+  "hourHandPolish": {
+    "perpendicularThickness": 1.24,
+    "brightness": 0.88,
+    "pivot": [
+      224.0,
+      207.0
+    ],
+    "landingAnchor": [
+      302.0,
+      148.0
+    ]
+  },
+  "titleSealShiftLogical": [
+    -20,
+    -3
+  ],
+  "staticPoses": [
+    {
+      "id": "magpie_large_perch_hand",
+      "resource": "magpie_large_perch_hand.png",
+      "sizeLogical": [
+        87,
+        101
+      ],
+      "anchorLogical": [
+        57.58,
+        69.582
+      ],
+      "sha256": "52348d842bcd03cb554bb262d157a77fef27d3eb13119fe3bfaa4cf3d15fd117"
+    },
+    {
+      "id": "magpie_large_walk_idle",
+      "resource": "magpie_large_walk_idle.png",
+      "sizeLogical": [
+        88,
+        98
+      ],
+      "anchorLogical": [
+        58.58,
+        68.582
+      ],
+      "sha256": "884ed2986eb01757217e88768a7aa94419b08af2f6c80393b6ea0f4f04e3915a"
+    },
+    {
+      "id": "magpie_large_perch_tiger",
+      "resource": "magpie_large_perch_tiger.png",
+      "sizeLogical": [
+        83,
+        103
+      ],
+      "anchorLogical": [
+        56.58,
+        69.582
+      ],
+      "sha256": "44a84b4c50ec4de925d89a96d172f93b43f6d8bfba3c6547f7ab58b02acf4350"
+    },
+    {
+      "id": "magpie_small_perch_hand",
+      "resource": "magpie_small_perch_hand.png",
+      "sizeLogical": [
+        55,
+        62
+      ],
+      "anchorLogical": [
+        33,
+        48
+      ],
+      "sha256": "ce69ae4029a261581d1e41c58666b8908bdec5b7c619d2fc761e0a10ad534023"
+    },
+    {
+      "id": "magpie_small_walk_idle",
+      "resource": "magpie_small_walk_idle.png",
+      "sizeLogical": [
+        54,
+        60
+      ],
+      "anchorLogical": [
+        22,
+        48
+      ],
+      "sha256": "34bcb4520084041f2a4e4596dc9dfd116d6250f5031d2dd801ead2f73c1a47da"
+    },
+    {
+      "id": "magpie_small_perch_tiger",
+      "resource": "magpie_small_perch_tiger.png",
+      "sizeLogical": [
+        52,
+        61
+      ],
+      "anchorLogical": [
+        31,
+        48
+      ],
+      "sha256": "513d5f33c20d2d1607f22361bb3b3f19532bef522ae61688ee3f5cd9a7e54304"
+    }
+  ],
+  "foregroundMasks": [
+    {
+      "id": "plum_foreground_mask",
+      "resource": "plum_foreground_mask.png",
+      "placementLogical": [
+        0,
+        226
+      ],
+      "sizeLogical": [
+        205,
+        224
+      ],
+      "sha256": "acda68700c442a695b7c6bbb1701e1d69670431acd8fdc2417ded7e33b961413"
+    },
+    {
+      "id": "pine_foreground_mask",
+      "resource": "pine_foreground_mask.png",
+      "placementLogical": [
+        0,
+        0
+      ],
+      "sizeLogical": [
+        220,
+        260
+      ],
+      "sha256": "847fbd3faecfe2c1b7135fdb7880f2b1ccbb3db8cf09ce58f1f33aa09f15a9cd"
+    },
+    {
+      "id": "tiger_body_foreground_mask",
+      "resource": "tiger_body_foreground_mask.png",
+      "placementLogical": [
+        184,
+        269
+      ],
+      "sizeLogical": [
+        266,
+        181
+      ],
+      "sha256": "f663ae096188463f31eaf8e9a4a01891769335ffa1d10d727327ccba1f172f97"
+    }
+  ],
+  "animations": [
+    {
+      "schemaVersion": 1,
+      "id": "magpie_large_fly_pine_to_hand",
+      "format": "AGIF",
+      "resource": "magpie_large_fly_pine_to_hand.gif",
+      "thumbnail": "magpie_large_fly_pine_to_hand_thumbnail.png",
+      "placementLogical": [
+        55,
+        39
+      ],
+      "sizeLogical": [
+        134,
+        160
+      ],
+      "anchorX": 0,
+      "anchorY": 0,
+      "anchorSemantics": "common_frame_canvas_top_left",
+      "cropX": 55,
+      "cropY": 39,
+      "cropWidth": 134,
+      "cropHeight": 160,
+      "facing": "SCENE_DIRECTED",
+      "startPose": "magpie_large_fly_pine_to_hand:frame_00",
+      "endPose": "magpie_large_fly_pine_to_hand:frame_07",
+      "loopCount": 1,
+      "frameCount": 8,
+      "frameDurationMs": 125,
+      "fps": 8.0,
+      "decodedBytesEstimate": 686080,
+      "sha256": "5293af07d11fa16f6abc8247b987b55212f4ecabe896b318138695bd57ebf1ff"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "magpie_large_land_on_hand",
+      "format": "AGIF",
+      "resource": "magpie_large_land_on_hand.gif",
+      "thumbnail": "magpie_large_land_on_hand_thumbnail.png",
+      "placementLogical": [
+        99,
+        30
+      ],
+      "sizeLogical": [
+        91,
+        120
+      ],
+      "anchorX": 0,
+      "anchorY": 0,
+      "anchorSemantics": "common_frame_canvas_top_left",
+      "cropX": 99,
+      "cropY": 30,
+      "cropWidth": 91,
+      "cropHeight": 120,
+      "facing": "SCENE_DIRECTED",
+      "startPose": "magpie_large_land_on_hand:frame_00",
+      "endPose": "magpie_large_land_on_hand:frame_05",
+      "loopCount": 1,
+      "frameCount": 6,
+      "frameDurationMs": 125,
+      "fps": 8.0,
+      "decodedBytesEstimate": 262080,
+      "sha256": "394792b50fe7e3e6261e2efd799574b8ed43f633fc92a021a8a492a665403266"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "magpie_large_walk_step",
+      "format": "AGIF",
+      "resource": "magpie_large_walk_step.gif",
+      "thumbnail": "magpie_large_walk_step_thumbnail.png",
+      "placementLogical": [
+        35,
+        265
+      ],
+      "sizeLogical": [
+        146,
+        119
+      ],
+      "anchorX": 0,
+      "anchorY": 0,
+      "anchorSemantics": "common_frame_canvas_top_left",
+      "cropX": 35,
+      "cropY": 265,
+      "cropWidth": 146,
+      "cropHeight": 119,
+      "facing": "SCENE_DIRECTED",
+      "startPose": "magpie_large_walk_step:frame_00",
+      "endPose": "magpie_large_walk_step:frame_07",
+      "loopCount": 1,
+      "frameCount": 8,
+      "frameDurationMs": 125,
+      "fps": 8.0,
+      "decodedBytesEstimate": 555968,
+      "sha256": "4d671aee378de6b33cb4104ad89ad11a5e29e9fe4425ac9b808f6919fe8a3bdd"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "magpie_large_hop_to_tiger",
+      "format": "AGIF",
+      "resource": "magpie_large_hop_to_tiger.gif",
+      "thumbnail": "magpie_large_hop_to_tiger_thumbnail.png",
+      "placementLogical": [
+        222,
+        162
+      ],
+      "sizeLogical": [
+        143,
+        180
+      ],
+      "anchorX": 0,
+      "anchorY": 0,
+      "anchorSemantics": "common_frame_canvas_top_left",
+      "cropX": 222,
+      "cropY": 162,
+      "cropWidth": 143,
+      "cropHeight": 180,
+      "facing": "SCENE_DIRECTED",
+      "startPose": "magpie_large_hop_to_tiger:frame_00",
+      "endPose": "magpie_large_hop_to_tiger:frame_07",
+      "loopCount": 1,
+      "frameCount": 8,
+      "frameDurationMs": 125,
+      "fps": 8.0,
+      "decodedBytesEstimate": 823680,
+      "sha256": "17151838afcedd8cc47cefbc183dfca5ece574b3eba187b2cc39af90a798fd59"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "magpie_large_exit_right_jump",
+      "format": "AGIF",
+      "resource": "magpie_large_exit_right_jump.gif",
+      "thumbnail": "magpie_large_exit_right_jump_thumbnail.png",
+      "placementLogical": [
+        276,
+        102
+      ],
+      "sizeLogical": [
+        174,
+        163
+      ],
+      "anchorX": 0,
+      "anchorY": 0,
+      "anchorSemantics": "common_frame_canvas_top_left",
+      "cropX": 276,
+      "cropY": 102,
+      "cropWidth": 174,
+      "cropHeight": 163,
+      "facing": "SCENE_DIRECTED",
+      "startPose": "magpie_large_exit_right_jump:frame_00",
+      "endPose": "magpie_large_exit_right_jump:frame_07",
+      "loopCount": 1,
+      "frameCount": 8,
+      "frameDurationMs": 125,
+      "fps": 8.0,
+      "decodedBytesEstimate": 907584,
+      "sha256": "5294653312de63094e7d00f339426439a9a79a5de525ac1f246fef57ccae4734"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "magpie_large_head_tilt",
+      "format": "AGIF",
+      "resource": "magpie_large_head_tilt.gif",
+      "thumbnail": "magpie_large_head_tilt_thumbnail.png",
+      "placementLogical": [
+        274,
+        162
+      ],
+      "sizeLogical": [
+        94,
+        104
+      ],
+      "anchorX": 0,
+      "anchorY": 0,
+      "anchorSemantics": "common_frame_canvas_top_left",
+      "cropX": 274,
+      "cropY": 162,
+      "cropWidth": 94,
+      "cropHeight": 104,
+      "facing": "SCENE_DIRECTED",
+      "startPose": "magpie_large_head_tilt:frame_00",
+      "endPose": "magpie_large_head_tilt:frame_06",
+      "loopCount": 1,
+      "frameCount": 7,
+      "frameDurationMs": 125,
+      "fps": 8.0,
+      "decodedBytesEstimate": 273728,
+      "sha256": "f463b48e6a35443bba1416b03bd70f7499a05d7c2820bd409e7acc5748fac4f7"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "magpie_large_turn_perch",
+      "format": "AGIF",
+      "resource": "magpie_large_turn_perch.gif",
+      "thumbnail": "magpie_large_turn_perch_thumbnail.png",
+      "placementLogical": [
+        276,
+        158
+      ],
+      "sizeLogical": [
+        119,
+        107
+      ],
+      "anchorX": 0,
+      "anchorY": 0,
+      "anchorSemantics": "common_frame_canvas_top_left",
+      "cropX": 276,
+      "cropY": 158,
+      "cropWidth": 119,
+      "cropHeight": 107,
+      "facing": "SCENE_DIRECTED",
+      "startPose": "magpie_large_turn_perch:frame_00",
+      "endPose": "magpie_large_turn_perch:frame_05",
+      "loopCount": 1,
+      "frameCount": 6,
+      "frameDurationMs": 125,
+      "fps": 8.0,
+      "decodedBytesEstimate": 305592,
+      "sha256": "6946aafed7982a7a71a6b399f4d50ef31a042a7ca6fc0f6d6261dfaf27916d79"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "magpie_small_fly_pine_to_hand",
+      "format": "AGIF",
+      "resource": "magpie_small_fly_pine_to_hand.gif",
+      "thumbnail": "magpie_small_fly_pine_to_hand_thumbnail.png",
+      "placementLogical": [
+        34,
+        49
+      ],
+      "sizeLogical": [
+        174,
+        151
+      ],
+      "anchorX": 0,
+      "anchorY": 0,
+      "anchorSemantics": "common_frame_canvas_top_left",
+      "cropX": 34,
+      "cropY": 49,
+      "cropWidth": 174,
+      "cropHeight": 151,
+      "facing": "SCENE_DIRECTED",
+      "startPose": "magpie_small_fly_pine_to_hand:frame_00",
+      "endPose": "magpie_small_fly_pine_to_hand:frame_07",
+      "loopCount": 1,
+      "frameCount": 8,
+      "frameDurationMs": 125,
+      "fps": 8.0,
+      "decodedBytesEstimate": 840768,
+      "sha256": "746c61c76fe696141780695fcbc9d87c552233144ec40e5618ec144c3a013ea5"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "magpie_small_land_on_hand",
+      "format": "AGIF",
+      "resource": "magpie_small_land_on_hand.gif",
+      "thumbnail": "magpie_small_land_on_hand_thumbnail.png",
+      "placementLogical": [
+        100,
+        51
+      ],
+      "sizeLogical": [
+        108,
+        89
+      ],
+      "anchorX": 0,
+      "anchorY": 0,
+      "anchorSemantics": "common_frame_canvas_top_left",
+      "cropX": 100,
+      "cropY": 51,
+      "cropWidth": 108,
+      "cropHeight": 89,
+      "facing": "SCENE_DIRECTED",
+      "startPose": "magpie_small_land_on_hand:frame_00",
+      "endPose": "magpie_small_land_on_hand:frame_06",
+      "loopCount": 1,
+      "frameCount": 7,
+      "frameDurationMs": 125,
+      "fps": 8.0,
+      "decodedBytesEstimate": 269136,
+      "sha256": "82e8a23a51c26453c906516c5c3457be3a56900d6c2b675a1350aa96bead7e8b"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "magpie_small_walk_step",
+      "format": "AGIF",
+      "resource": "magpie_small_walk_step.gif",
+      "thumbnail": "magpie_small_walk_step_thumbnail.png",
+      "placementLogical": [
+        67,
+        287
+      ],
+      "sizeLogical": [
+        123,
+        82
+      ],
+      "anchorX": 0,
+      "anchorY": 0,
+      "anchorSemantics": "common_frame_canvas_top_left",
+      "cropX": 67,
+      "cropY": 287,
+      "cropWidth": 123,
+      "cropHeight": 82,
+      "facing": "SCENE_DIRECTED",
+      "startPose": "magpie_small_walk_step:frame_00",
+      "endPose": "magpie_small_walk_step:frame_07",
+      "loopCount": 1,
+      "frameCount": 8,
+      "frameDurationMs": 125,
+      "fps": 8.0,
+      "decodedBytesEstimate": 322752,
+      "sha256": "68ff4ee869c5e6558006659dc8cfc69e243c508120ae62002fc446b3b8f96d6a"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "magpie_small_hop_to_tiger",
+      "format": "AGIF",
+      "resource": "magpie_small_hop_to_tiger.gif",
+      "thumbnail": "magpie_small_hop_to_tiger_thumbnail.png",
+      "placementLogical": [
+        250,
+        167
+      ],
+      "sizeLogical": [
+        113,
+        130
+      ],
+      "anchorX": 0,
+      "anchorY": 0,
+      "anchorSemantics": "common_frame_canvas_top_left",
+      "cropX": 250,
+      "cropY": 167,
+      "cropWidth": 113,
+      "cropHeight": 130,
+      "facing": "SCENE_DIRECTED",
+      "startPose": "magpie_small_hop_to_tiger:frame_00",
+      "endPose": "magpie_small_hop_to_tiger:frame_07",
+      "loopCount": 1,
+      "frameCount": 8,
+      "frameDurationMs": 125,
+      "fps": 8.0,
+      "decodedBytesEstimate": 470080,
+      "sha256": "0cb0d4d1fb49a60ce8a04a581bc2ecc9a0a2adc96f53245afc6d4495831b7c91"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "magpie_small_head_scan",
+      "format": "AGIF",
+      "resource": "magpie_small_head_scan.gif",
+      "thumbnail": "magpie_small_head_scan_thumbnail.png",
+      "placementLogical": [
+        305,
+        169
+      ],
+      "sizeLogical": [
+        61,
+        65
+      ],
+      "anchorX": 0,
+      "anchorY": 0,
+      "anchorSemantics": "common_frame_canvas_top_left",
+      "cropX": 305,
+      "cropY": 169,
+      "cropWidth": 61,
+      "cropHeight": 65,
+      "facing": "SCENE_DIRECTED",
+      "startPose": "magpie_small_head_scan:frame_00",
+      "endPose": "magpie_small_head_scan:frame_07",
+      "loopCount": 1,
+      "frameCount": 8,
+      "frameDurationMs": 125,
+      "fps": 8.0,
+      "decodedBytesEstimate": 126880,
+      "sha256": "f9e208dfacae4c97f9dd17f414a407013c29fc3f62376558162ef0fb5c75f679"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "magpie_small_look_plum",
+      "format": "AGIF",
+      "resource": "magpie_small_look_plum.gif",
+      "thumbnail": "magpie_small_look_plum_thumbnail.png",
+      "placementLogical": [
+        305,
+        169
+      ],
+      "sizeLogical": [
+        61,
+        64
+      ],
+      "anchorX": 0,
+      "anchorY": 0,
+      "anchorSemantics": "common_frame_canvas_top_left",
+      "cropX": 305,
+      "cropY": 169,
+      "cropWidth": 61,
+      "cropHeight": 64,
+      "facing": "SCENE_DIRECTED",
+      "startPose": "magpie_small_look_plum:frame_00",
+      "endPose": "magpie_small_look_plum:frame_06",
+      "loopCount": 1,
+      "frameCount": 7,
+      "frameDurationMs": 125,
+      "fps": 8.0,
+      "decodedBytesEstimate": 109312,
+      "sha256": "b5c7e3c0b5ea914be70d9ea28487534bf35938c92b2a6940c55875d687df4536"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "magpie_small_turn_hop",
+      "format": "AGIF",
+      "resource": "magpie_small_turn_hop.gif",
+      "thumbnail": "magpie_small_turn_hop_thumbnail.png",
+      "placementLogical": [
+        306,
+        164
+      ],
+      "sizeLogical": [
+        69,
+        69
+      ],
+      "anchorX": 0,
+      "anchorY": 0,
+      "anchorSemantics": "common_frame_canvas_top_left",
+      "cropX": 306,
+      "cropY": 164,
+      "cropWidth": 69,
+      "cropHeight": 69,
+      "facing": "SCENE_DIRECTED",
+      "startPose": "magpie_small_turn_hop:frame_00",
+      "endPose": "magpie_small_turn_hop:frame_05",
+      "loopCount": 1,
+      "frameCount": 6,
+      "frameDurationMs": 125,
+      "fps": 8.0,
+      "decodedBytesEstimate": 114264,
+      "sha256": "8c448008c4c5c41dfa0770fa40d878023d03e3016303664ab8a5e8dedd9c5a4e"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "magpie_small_peck_tiger_ear",
+      "format": "AGIF",
+      "resource": "magpie_small_peck_tiger_ear.gif",
+      "thumbnail": "magpie_small_peck_tiger_ear_thumbnail.png",
+      "placementLogical": [
+        300,
+        169
+      ],
+      "sizeLogical": [
+        64,
+        66
+      ],
+      "anchorX": 0,
+      "anchorY": 0,
+      "anchorSemantics": "common_frame_canvas_top_left",
+      "cropX": 300,
+      "cropY": 169,
+      "cropWidth": 64,
+      "cropHeight": 66,
+      "facing": "SCENE_DIRECTED",
+      "startPose": "magpie_small_peck_tiger_ear:frame_00",
+      "endPose": "magpie_small_peck_tiger_ear:frame_06",
+      "loopCount": 1,
+      "frameCount": 7,
+      "frameDurationMs": 125,
+      "fps": 8.0,
+      "decodedBytesEstimate": 118272,
+      "sha256": "00e82b2b9af5c5db1a8c523853c8ab7b04257a42878036ce59705c6bf2a3e9b8"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "tiger_head_eye_reaction",
+      "format": "AGIF",
+      "resource": "tiger_head_eye_reaction.gif",
+      "thumbnail": "tiger_head_eye_reaction_thumbnail.png",
+      "placementLogical": [
+        280,
+        222
+      ],
+      "sizeLogical": [
+        108,
+        108
+      ],
+      "anchorX": 0,
+      "anchorY": 0,
+      "anchorSemantics": "common_frame_canvas_top_left",
+      "cropX": 280,
+      "cropY": 222,
+      "cropWidth": 108,
+      "cropHeight": 108,
+      "facing": "SCENE_DIRECTED",
+      "startPose": "tiger_head_eye_reaction:frame_00",
+      "endPose": "tiger_head_eye_reaction:frame_06",
+      "loopCount": 1,
+      "frameCount": 7,
+      "frameDurationMs": 125,
+      "fps": 8.0,
+      "decodedBytesEstimate": 326592,
+      "sha256": "ba7bf2d1a2b3d5d692cd628f598befdf8a9f72a810caf5987d9306524e2884db"
+    }
+  ],
+  "plumBatteryStages": [
+    {
+      "stage": 1,
+      "minimumPercent": 0,
+      "maximumPercent": 15,
+      "resource": "plum_battery_stage_01.png",
+      "placementLogical": [
+        25,
+        154
+      ],
+      "sizeLogical": [
+        1,
+        1
+      ]
+    },
+    {
+      "stage": 2,
+      "minimumPercent": 16,
+      "maximumPercent": 35,
+      "resource": "plum_battery_stage_02.png",
+      "placementLogical": [
+        64,
+        242
+      ],
+      "sizeLogical": [
+        120,
+        112
+      ]
+    },
+    {
+      "stage": 3,
+      "minimumPercent": 36,
+      "maximumPercent": 55,
+      "resource": "plum_battery_stage_03.png",
+      "placementLogical": [
+        34,
+        163
+      ],
+      "sizeLogical": [
+        149,
+        226
+      ]
+    },
+    {
+      "stage": 4,
+      "minimumPercent": 56,
+      "maximumPercent": 80,
+      "resource": "plum_battery_stage_04.png",
+      "placementLogical": [
+        34,
+        163
+      ],
+      "sizeLogical": [
+        149,
+        226
+      ]
+    },
+    {
+      "stage": 5,
+      "minimumPercent": 81,
+      "maximumPercent": 100,
+      "resource": "plum_battery_stage_05.png",
+      "placementLogical": [
+        25,
+        156
+      ],
+      "sizeLogical": [
+        158,
+        243
+      ]
+    }
+  ],
+  "scene": {
+    "cycleMinutes": 43,
+    "cycleOffsetMinutes": 32,
+    "characterAlternation": "cycle_index_mod_2",
+    "handRouteSchedule": {
+      "periodCycles": 11,
+      "hourRouteRemainder": 0,
+      "minuteRouteRemainder": 5,
+      "otherRoute": "plum_walk",
+      "estimatedHandLandingsPerDay": 6.089
+    },
+    "stateless": true
+  },
+  "liveData": [
+    "HOUR_0_23_Z",
+    "MINUTE_Z",
+    "MONTH_Z",
+    "DAY_Z",
+    "DAY_OF_WEEK_S",
+    "BATTERY_PERCENT",
+    "YEAR",
+    "DAY_OF_YEAR",
+    "HOUR_0_23",
+    "MINUTE",
+    "MINUTE_SECOND",
+    "SECOND_MILLISECOND"
+  ],
+  "memoryEstimate": {
+    "staticDecodedBytes": 6169456,
+    "animatedDecodedBytes": 6512768,
+    "interactiveDecodedBytes": 12682224,
+    "officialInteractiveBudgetBytes": 104857600,
+    "officialAmbientBudgetBytes": 10485760
+  }
+}

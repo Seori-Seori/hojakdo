@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "magpie_large_head_tilt",
+  "format": "AGIF",
+  "resource": "magpie_large_head_tilt.gif",
+  "thumbnail": "magpie_large_head_tilt_thumbnail.png",
+  "placementLogical": [
+    274,
+    162
+  ],
+  "sizeLogical": [
+    94,
+    104
+  ],
+  "anchorX": 0,
+  "anchorY": 0,
+  "anchorSemantics": "common_frame_canvas_top_left",
+  "cropX": 274,
+  "cropY": 162,
+  "cropWidth": 94,
+  "cropHeight": 104,
+  "facing": "SCENE_DIRECTED",
+  "startPose": "magpie_large_head_tilt:frame_00",
+  "endPose": "magpie_large_head_tilt:frame_06",
+  "loopCount": 1,
+  "frameCount": 7,
+  "frameDurationMs": 125,
+  "fps": 8.0,
+  "decodedBytesEstimate": 273728,
+  "sha256": "f463b48e6a35443bba1416b03bd70f7499a05d7c2820bd409e7acc5748fac4f7"
+}
