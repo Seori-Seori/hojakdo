@@ -166,6 +166,13 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         self.assertIn("magpie_small_flight_right_v4", xml)
         self.assertIn("[SECOND_MILLISECOND]", xml)
         self.assertIn("small_exit_fixed_flight", xml)
+        live_index = xml.index('name="live_time"')
+        for decorative_part in (
+            'name="hour_hand_group"',
+            'name="minute_hand_group"',
+            'name="tiger_pupils"',
+        ):
+            self.assertGreater(live_index, xml.index(decorative_part))
 
     def test_all_wff_image_resources_exist_and_names_are_android_safe(self) -> None:
         available = {path.stem for path in DRAWABLE_DIR.glob("*.png")}
@@ -218,8 +225,31 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         catalog = OUTPUT_DIR / "hojakdo_v4_animation_catalog.png"
         for path in (static, board, catalog, MANIFEST_PATH):
             self.assertTrue(path.is_file(), path)
-        with Image.open(static) as image:
-            self.assertEqual((450, 450), image.size)
+        for path, expected_size in (
+            (static, (450, 450)),
+            (board, (940, 540)),
+            (catalog, (1040, 740)),
+        ):
+            with Image.open(path) as image:
+                image.verify()
+            with Image.open(path) as image:
+                self.assertEqual(expected_size, image.size)
+
+        quiet_zone = self.manifest["readoutQuietZone"]
+        self.assertEqual([175, 220, 275, 295], quiet_zone["boundsLogical"])
+        with Image.open(DRAWABLE_DIR / "hojakdo_v4_background.png") as source:
+            background = np.asarray(source.convert("RGB"), dtype=np.float32)
+        luma = (
+            0.2126 * background[..., 0]
+            + 0.7152 * background[..., 1]
+            + 0.0722 * background[..., 2]
+        )
+        # Ignore the pivot's two bottom rows and require the former readout and
+        # cloud-tail regions to contain paper texture rather than dark glyphs.
+        readout = luma[228:295, 175:275]
+        cloud_tail = luma[240:275, 148:202]
+        self.assertLessEqual(int((readout < 145).sum()), 1)
+        self.assertEqual(0, int((cloud_tail < 145).sum()))
 
 
 if __name__ == "__main__":

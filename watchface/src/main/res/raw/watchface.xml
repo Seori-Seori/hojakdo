@@ -48,49 +48,6 @@
             </Compare>
         </Condition>
 
-        <PartText name="live_time" x="183" y="226" width="84" height="31">
-            <Text align="CENTER" verticalAlign="CENTER">
-                <Font family="SYNC_TO_DEVICE" size="25" color="#211811" weight="BOLD" letterSpacing="0.03">
-                    <Template>%s:%s
-                        <Parameter expression="[HOUR_0_23_Z]" />
-                        <Parameter expression="[MINUTE_Z]" />
-                    </Template>
-                </Font>
-            </Text>
-            <Variant mode="AMBIENT" target="alpha" value="220" />
-        </PartText>
-        <PartText name="live_date" x="198" y="255" width="54" height="15">
-            <Text align="CENTER" verticalAlign="CENTER">
-                <Font family="SYNC_TO_DEVICE" size="11" color="#211811" weight="BOLD">
-                    <Template>%s.%s
-                        <Parameter expression="[MONTH_Z]" />
-                        <Parameter expression="[DAY_Z]" />
-                    </Template>
-                </Font>
-            </Text>
-            <Variant mode="AMBIENT" target="alpha" value="220" />
-        </PartText>
-        <PartText name="live_weekday" x="202" y="271" width="46" height="13">
-            <Text align="CENTER" verticalAlign="CENTER">
-                <Font family="SYNC_TO_DEVICE" size="9" color="#211811" weight="BOLD">
-                    <Upper><Template>%s<Parameter expression="[DAY_OF_WEEK_S]" /></Template></Upper>
-                </Font>
-            </Text>
-            <Variant mode="AMBIENT" target="alpha" value="220" />
-        </PartText>
-        <PartImage name="battery_icon" x="186" y="418" width="22" height="14">
-            <Image resource="battery_icon" />
-            <Variant mode="AMBIENT" target="alpha" value="190" />
-        </PartImage>
-        <PartText name="live_battery" x="208" y="414" width="48" height="22">
-            <Text align="START" verticalAlign="CENTER">
-                <Font family="SYNC_TO_DEVICE" size="12" color="#211811" weight="BOLD">
-                    <Template>%s%%<Parameter expression="[BATTERY_PERCENT]" /></Template>
-                </Font>
-            </Text>
-            <Variant mode="AMBIENT" target="alpha" value="190" />
-        </PartText>
-
         <Group name="hour_hand_group" x="0" y="0" width="450" height="450" pivotX="0.497777778" pivotY="0.460000000">
             <Transform target="angle" value="(([HOUR_0_23_MINUTE] * 30) - 50.232272878132)">
                 <Animation duration="0.35" interpolation="EASE_IN_OUT" />
@@ -410,5 +367,48 @@
             <Image resource="hojakdo_v4_tiger_pupils" />
             <Variant mode="AMBIENT" target="alpha" value="155" />
         </PartImage>
+
+        <PartText name="live_time" x="183" y="226" width="84" height="31">
+            <Text align="CENTER" verticalAlign="CENTER">
+                <Font family="SYNC_TO_DEVICE" size="25" color="#211811" weight="BOLD" letterSpacing="0.03">
+                    <Template>%s:%s
+                        <Parameter expression="[HOUR_0_23_Z]" />
+                        <Parameter expression="[MINUTE_Z]" />
+                    </Template>
+                </Font>
+            </Text>
+            <Variant mode="AMBIENT" target="alpha" value="220" />
+        </PartText>
+        <PartText name="live_date" x="198" y="255" width="54" height="15">
+            <Text align="CENTER" verticalAlign="CENTER">
+                <Font family="SYNC_TO_DEVICE" size="11" color="#211811" weight="BOLD">
+                    <Template>%s.%s
+                        <Parameter expression="[MONTH_Z]" />
+                        <Parameter expression="[DAY_Z]" />
+                    </Template>
+                </Font>
+            </Text>
+            <Variant mode="AMBIENT" target="alpha" value="220" />
+        </PartText>
+        <PartText name="live_weekday" x="202" y="271" width="46" height="13">
+            <Text align="CENTER" verticalAlign="CENTER">
+                <Font family="SYNC_TO_DEVICE" size="9" color="#211811" weight="BOLD">
+                    <Upper><Template>%s<Parameter expression="[DAY_OF_WEEK_S]" /></Template></Upper>
+                </Font>
+            </Text>
+            <Variant mode="AMBIENT" target="alpha" value="220" />
+        </PartText>
+        <PartImage name="battery_icon" x="186" y="418" width="22" height="14">
+            <Image resource="battery_icon" />
+            <Variant mode="AMBIENT" target="alpha" value="190" />
+        </PartImage>
+        <PartText name="live_battery" x="208" y="414" width="48" height="22">
+            <Text align="START" verticalAlign="CENTER">
+                <Font family="SYNC_TO_DEVICE" size="12" color="#211811" weight="BOLD">
+                    <Template>%s%%<Parameter expression="[BATTERY_PERCENT]" /></Template>
+                </Font>
+            </Text>
+            <Variant mode="AMBIENT" target="alpha" value="190" />
+        </PartText>
     </Scene>
 </WatchFace>

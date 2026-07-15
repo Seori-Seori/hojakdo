@@ -412,7 +412,6 @@ def generate() -> str:
     scene_parts = [
         background,
         _condition(plum_expressions),
-        _live_text(),
         hour_group,
         minute_group,
         static_condition,
@@ -420,6 +419,9 @@ def generate() -> str:
         *mask_parts,
         tiger_head,
         tiger_pupils,
+        # Keep live data above every decorative hand, character, and mask. The
+        # approved center is a quiet readout zone, not an animation surface.
+        _live_text(),
     ]
     xml = '''<?xml version="1.0" encoding="utf-8"?>
 <WatchFace width="450" height="450">

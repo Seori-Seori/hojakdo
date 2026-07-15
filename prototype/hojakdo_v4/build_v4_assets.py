@@ -78,6 +78,16 @@ def _save_png(image: Image.Image, path: Path) -> None:
     temporary.replace(path)
 
 
+def _save_rgb_png(image: Image.Image, path: Path) -> None:
+    """Atomically save a user-facing RGB preview and verify the PNG first."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    image.convert("RGB").save(temporary, format="PNG", optimize=True)
+    with Image.open(temporary) as written:
+        written.verify()
+    temporary.replace(path)
+
+
 def _logical_layer(path: Path, mode: str = "RGBA") -> Image.Image:
     with Image.open(path) as source:
         return source.convert(mode).resize(
@@ -86,19 +96,51 @@ def _logical_layer(path: Path, mode: str = "RGBA") -> Image.Image:
 
 
 def _remove_embedded_ui(background: Image.Image) -> Image.Image:
-    """Remove the V2.3 baked time/date/weekday and battery pixels."""
-    rgb = np.asarray(background.convert("RGB"), dtype=np.uint8)
-    values = rgb.astype(np.float32)
+    """Remove the V2.3 baked readout and battery pixels."""
+    values = np.asarray(background.convert("RGB"), dtype=np.float32)
+
+    # Replace the pale cloud tail beside the date with nearby clean paper
+    # texture. Pasting only the detected line pixels avoids a flat rectangular
+    # repair and preserves the adjacent plum branch.
+    cloud_box = (148, 240, 202, 275)
+    donor_box = (210, 100, 264, 135)
+    x0, y0, x1, y1 = cloud_box
+    cloud = values[y0:y1, x0:x1].copy()
+    donor = values[donor_box[1] : donor_box[3], donor_box[0] : donor_box[2]].copy()
+    cloud_luma = (
+        0.2126 * cloud[..., 0]
+        + 0.7152 * cloud[..., 1]
+        + 0.0722 * cloud[..., 2]
+    )
+    donor_luma = (
+        0.2126 * donor[..., 0]
+        + 0.7152 * donor[..., 1]
+        + 0.0722 * donor[..., 2]
+    )
+    cloud_paper = cloud[cloud_luma > 168]
+    donor_paper = donor[donor_luma > 168]
+    donor += np.median(cloud_paper, axis=0) - np.median(donor_paper, axis=0)
+    cloud_mask = cloud_luma < 167
+    cloud_mask = ndimage.binary_dilation(cloud_mask, iterations=2)
+    cloud_alpha = ndimage.gaussian_filter(cloud_mask.astype(np.float32), sigma=0.8)
+    values[y0:y1, x0:x1] = (
+        cloud * (1.0 - cloud_alpha[..., None])
+        + donor * cloud_alpha[..., None]
+    )
+
     luma = (
         0.2126 * values[..., 0]
         + 0.7152 * values[..., 1]
         + 0.0722 * values[..., 2]
     )
     mask = np.zeros(luma.shape, dtype=bool)
+    # The original center crop contains 14:18, 07.13, and SUN. Cover the full
+    # glyph bounds, including the anti-aliased last digit and weekday remnants
+    # that previously looked like a dark hook and a pale cloud behind V4 text.
+    # Keep these battery components separate: one broad rectangle also catches
+    # the tiger's front leg, which starts immediately to the right.
     for x0, y0, x1, y1, threshold in (
-        (190, 226, 260, 276, 122),
-        # Keep these battery components separate: one broad rectangle also
-        # catches the tiger's front leg, which starts immediately to the right.
+        (175, 220, 275, 295, 165),
         (187, 416, 220, 435, 118),
         (222, 421, 231, 435, 118),
         (231, 421, 240, 435, 118),
@@ -669,7 +711,7 @@ def _render_preview(
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     static_path = OUTPUT_DIR / "hojakdo_v4_integrated_static.png"
-    face.convert("RGB").save(static_path, optimize=True)
+    _save_rgb_png(face, static_path)
 
     board = Image.new("RGB", (940, 540), (20, 17, 13))
     board.paste(face.convert("RGB").resize((500, 500), Image.Resampling.LANCZOS), (20, 20))
@@ -693,7 +735,7 @@ def _render_preview(
         info.text((578, y), line, font=_font(12), fill=(226, 207, 168))
         y += 39
     info.text((555, 485), "V4 COMPLETE BUILD REVIEW", font=_font(11), fill=(129, 119, 101))
-    board.save(OUTPUT_DIR / "hojakdo_v4_review_board.png", optimize=True)
+    _save_rgb_png(board, OUTPUT_DIR / "hojakdo_v4_review_board.png")
 
 
 def _render_catalog(animations: list[dict[str, object]]) -> None:
@@ -732,7 +774,7 @@ def _render_catalog(animations: list[dict[str, object]]) -> None:
             fill=(151, 139, 118),
         )
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    sheet.save(OUTPUT_DIR / "hojakdo_v4_animation_catalog.png", optimize=True)
+    _save_rgb_png(sheet, OUTPUT_DIR / "hojakdo_v4_animation_catalog.png")
 
 
 def build() -> dict[str, object]:
@@ -845,6 +887,11 @@ def build() -> dict[str, object]:
             "landingAnchor": list(HOUR_ANCHOR),
         },
         "titleSealShiftLogical": [-20, -3],
+        "readoutQuietZone": {
+            "boundsLogical": [175, 220, 275, 295],
+            "removes": ["baked_time", "baked_date", "baked_weekday", "cloud_line"],
+            "liveTextLayer": "topmost",
+        },
         "staticPoses": static_poses,
         "foregroundMasks": masks,
         "animations": animations,

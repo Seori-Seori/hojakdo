@@ -36,6 +36,21 @@
     -20,
     -3
   ],
+  "readoutQuietZone": {
+    "boundsLogical": [
+      175,
+      220,
+      275,
+      295
+    ],
+    "removes": [
+      "baked_time",
+      "baked_date",
+      "baked_weekday",
+      "cloud_line"
+    ],
+    "liveTextLayer": "topmost"
+  },
   "staticPoses": [
     {
       "id": "magpie_large_perch_hand",
@@ -128,7 +143,7 @@
         205,
         224
       ],
-      "sha256": "acda68700c442a695b7c6bbb1701e1d69670431acd8fdc2417ded7e33b961413"
+      "sha256": "b2cc2aee3edb743616ae0fbebdcd1222907f42efcd1475bb07e8e519b430f52c"
     },
     {
       "id": "pine_foreground_mask",
@@ -141,7 +156,7 @@
         220,
         260
       ],
-      "sha256": "847fbd3faecfe2c1b7135fdb7880f2b1ccbb3db8cf09ce58f1f33aa09f15a9cd"
+      "sha256": "c1fc793420ff5ca2ed8c74e8e2d292dec610605385df51ea20333c69f63c8d02"
     },
     {
       "id": "tiger_body_foreground_mask",
@@ -154,7 +169,7 @@
         266,
         181
       ],
-      "sha256": "f663ae096188463f31eaf8e9a4a01891769335ffa1d10d727327ccba1f172f97"
+      "sha256": "b03cdbcffc39789820e004b4f2fa1175cf66e046747ae82ea7e4240a358fb3d6"
     }
   ],
   "animations": [
