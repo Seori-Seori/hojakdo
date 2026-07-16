@@ -102,6 +102,49 @@
             </Compare>
         </Condition>
 
+        <PartImage name="pine_foreground_mask" x="0" y="0" width="220" height="260">
+            <Image resource="pine_foreground_mask" />
+            <Variant mode="AMBIENT" target="alpha" value="145" />
+        </PartImage>
+
+        <PartImage name="tiger_body_foreground_mask" x="184" y="269" width="266" height="181">
+            <Image resource="tiger_body_foreground_mask" />
+            <Variant mode="AMBIENT" target="alpha" value="145" />
+        </PartImage>
+
+        <Condition>
+            <Expressions>
+                <Expression name="show_tiger_head_eye_reaction"><![CDATA[((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 10]]></Expression>
+            </Expressions>
+            <Compare expression="show_tiger_head_eye_reaction">
+                <PartImage name="tiger_head_reaction_ambient" alpha="0" x="0" y="0" width="450" height="450">
+                    <Image resource="hojakdo_v4_tiger_head" />
+                    <Variant mode="AMBIENT" target="alpha" value="145" />
+                </PartImage>
+                <PartImage name="tiger_pupils_reaction_ambient" alpha="0" x="0" y="0" width="450" height="450">
+                    <Image resource="hojakdo_v4_tiger_pupils" />
+                    <Variant mode="AMBIENT" target="alpha" value="155" />
+                </PartImage>
+                <PartAnimatedImage name="tiger_head_eye_reaction" x="280" y="222" width="108" height="108">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="FIRST_FRAME" />
+                    <AnimatedImage resource="tiger_head_eye_reaction" format="AGIF" thumbnail="tiger_head_eye_reaction_thumbnail" />
+                    <Thumbnail resource="tiger_head_eye_reaction_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
+            </Compare>
+            <Default>
+                <PartImage name="tiger_head" x="0" y="0" width="450" height="450">
+                    <Image resource="hojakdo_v4_tiger_head" />
+                    <Variant mode="AMBIENT" target="alpha" value="145" />
+                </PartImage>
+                <PartImage name="tiger_pupils" x="0" y="0" width="450" height="450">
+                    <Image resource="hojakdo_v4_tiger_pupils" />
+                    <Variant mode="AMBIENT" target="alpha" value="155" />
+                </PartImage>
+            </Default>
+        </Condition>
+
         <Group name="hour_hand_group" x="0" y="0" width="450" height="450" pivotX="0.497777778" pivotY="0.460000000">
             <Transform target="angle" value="(([HOUR_0_23_MINUTE] * 30) - 50.232272878132)">
                 <Animation duration="0.35" interpolation="EASE_IN_OUT" />
@@ -190,41 +233,6 @@
             </Condition>
         </Group>
 
-        <PartImage name="pine_foreground_mask" x="0" y="0" width="220" height="260">
-            <Image resource="pine_foreground_mask" />
-            <Variant mode="AMBIENT" target="alpha" value="145" />
-        </PartImage>
-
-        <PartImage name="tiger_body_foreground_mask" x="184" y="269" width="266" height="181">
-            <Image resource="tiger_body_foreground_mask" />
-            <Variant mode="AMBIENT" target="alpha" value="145" />
-        </PartImage>
-
-        <PartImage name="tiger_head" x="0" y="0" width="450" height="450">
-            <Image resource="hojakdo_v4_tiger_head" />
-            <Variant mode="AMBIENT" target="alpha" value="145" />
-        </PartImage>
-
-        <PartImage name="tiger_pupils" x="0" y="0" width="450" height="450">
-            <Image resource="hojakdo_v4_tiger_pupils" />
-            <Variant mode="AMBIENT" target="alpha" value="155" />
-        </PartImage>
-
-        <Condition>
-            <Expressions>
-                <Expression name="show_tiger_head_eye_reaction"><![CDATA[((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 10]]></Expression>
-            </Expressions>
-            <Compare expression="show_tiger_head_eye_reaction">
-                <PartAnimatedImage name="tiger_head_eye_reaction" x="280" y="222" width="108" height="108">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
-                    <AnimatedImage resource="tiger_head_eye_reaction" format="AGIF" thumbnail="tiger_head_eye_reaction_thumbnail" />
-                    <Thumbnail resource="tiger_head_eye_reaction_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
-            </Compare>
-        </Condition>
-
         <Condition>
             <Expressions>
                 <Expression name="large_tiger_idle"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 0) && (((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 10 || (((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) >= 13 && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) <= 40))]]></Expression>
@@ -238,16 +246,16 @@
                 </PartImage>
             </Compare>
             <Compare expression="small_tiger_idle">
-                <PartImage name="small_tiger_idle" x="309" y="187" width="52" height="61">
+                <PartImage name="small_tiger_idle" x="309" y="193" width="52" height="61">
                     <Image resource="magpie_small_perch_tiger" />
                     <Variant mode="AMBIENT" target="alpha" value="0" />
                 </PartImage>
             </Compare>
             <Compare expression="small_exit_fixed_flight">
-                <PartImage name="small_exit_fixed_flight" x="293" y="200" width="70" height="54">
+                <PartImage name="small_exit_fixed_flight" x="293" y="206" width="70" height="54">
                     <Image resource="magpie_small_flight_right_v4" />
                     <Transform target="x" value="293 + (204 * ([SECOND_MILLISECOND] / 60))" />
-                    <Transform target="y" value="200 - (163 * ([SECOND_MILLISECOND] / 60)) + (96 * ([SECOND_MILLISECOND] / 60) * ([SECOND_MILLISECOND] / 60))" />
+                    <Transform target="y" value="206 - (163 * ([SECOND_MILLISECOND] / 60)) + (96 * ([SECOND_MILLISECOND] / 60) * ([SECOND_MILLISECOND] / 60))" />
                     <Variant mode="AMBIENT" target="alpha" value="0" />
                 </PartImage>
             </Compare>
@@ -342,7 +350,7 @@
                 </PartAnimatedImage>
             </Compare>
             <Compare expression="show_magpie_small_hop_to_tiger">
-                <PartAnimatedImage name="magpie_small_hop_to_tiger" x="250" y="180" width="113" height="117">
+                <PartAnimatedImage name="magpie_small_hop_to_tiger" x="250" y="185" width="113" height="112">
                     <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
                         resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
                     <AnimatedImage resource="magpie_small_hop_to_tiger" format="AGIF" thumbnail="magpie_small_hop_to_tiger_thumbnail" />
@@ -351,7 +359,7 @@
                 </PartAnimatedImage>
             </Compare>
             <Compare expression="show_magpie_small_head_scan">
-                <PartAnimatedImage name="magpie_small_head_scan" x="305" y="186" width="61" height="65">
+                <PartAnimatedImage name="magpie_small_head_scan" x="305" y="192" width="61" height="65">
                     <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
                         resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
                     <AnimatedImage resource="magpie_small_head_scan" format="AGIF" thumbnail="magpie_small_head_scan_thumbnail" />
@@ -360,7 +368,7 @@
                 </PartAnimatedImage>
             </Compare>
             <Compare expression="show_magpie_small_look_plum">
-                <PartAnimatedImage name="magpie_small_look_plum" x="305" y="186" width="61" height="64">
+                <PartAnimatedImage name="magpie_small_look_plum" x="305" y="192" width="61" height="64">
                     <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
                         resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
                     <AnimatedImage resource="magpie_small_look_plum" format="AGIF" thumbnail="magpie_small_look_plum_thumbnail" />
@@ -369,7 +377,7 @@
                 </PartAnimatedImage>
             </Compare>
             <Compare expression="show_magpie_small_turn_hop">
-                <PartAnimatedImage name="magpie_small_turn_hop" x="306" y="181" width="69" height="69">
+                <PartAnimatedImage name="magpie_small_turn_hop" x="306" y="187" width="69" height="69">
                     <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
                         resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
                     <AnimatedImage resource="magpie_small_turn_hop" format="AGIF" thumbnail="magpie_small_turn_hop_thumbnail" />
@@ -378,7 +386,7 @@
                 </PartAnimatedImage>
             </Compare>
             <Compare expression="show_magpie_small_peck_tiger_ear">
-                <PartAnimatedImage name="magpie_small_peck_tiger_ear" x="300" y="186" width="64" height="66">
+                <PartAnimatedImage name="magpie_small_peck_tiger_ear" x="300" y="192" width="64" height="66">
                     <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
                         resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
                     <AnimatedImage resource="magpie_small_peck_tiger_ear" format="AGIF" thumbnail="magpie_small_peck_tiger_ear_thumbnail" />

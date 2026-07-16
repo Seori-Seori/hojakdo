@@ -537,19 +537,19 @@
       "thumbnail": "magpie_small_hop_to_tiger_thumbnail.png",
       "placementLogical": [
         250,
-        180
+        185
       ],
       "sizeLogical": [
         113,
-        117
+        112
       ],
       "anchorX": 0,
       "anchorY": 0,
       "anchorSemantics": "common_frame_canvas_top_left",
       "cropX": 250,
-      "cropY": 180,
+      "cropY": 185,
       "cropWidth": 113,
-      "cropHeight": 117,
+      "cropHeight": 112,
       "facing": "SCENE_DIRECTED",
       "startPose": "magpie_small_hop_to_tiger:frame_00",
       "endPose": "magpie_small_hop_to_tiger:frame_07",
@@ -557,8 +557,8 @@
       "frameCount": 8,
       "frameDurationMs": 125,
       "fps": 8.0,
-      "decodedBytesEstimate": 423072,
-      "sha256": "7a46ba1cb455fdb9f1eac5befda76edbf815392c54d6248f74eb31ab001420db"
+      "decodedBytesEstimate": 404992,
+      "sha256": "e0aed5bccb7dcfc51e8f041d5fbdb4ccc8166e34e0bc78a40e009c898e5f0206"
     },
     {
       "schemaVersion": 1,
@@ -568,7 +568,7 @@
       "thumbnail": "magpie_small_head_scan_thumbnail.png",
       "placementLogical": [
         305,
-        186
+        192
       ],
       "sizeLogical": [
         61,
@@ -578,7 +578,7 @@
       "anchorY": 0,
       "anchorSemantics": "common_frame_canvas_top_left",
       "cropX": 305,
-      "cropY": 186,
+      "cropY": 192,
       "cropWidth": 61,
       "cropHeight": 65,
       "facing": "SCENE_DIRECTED",
@@ -599,7 +599,7 @@
       "thumbnail": "magpie_small_look_plum_thumbnail.png",
       "placementLogical": [
         305,
-        186
+        192
       ],
       "sizeLogical": [
         61,
@@ -609,7 +609,7 @@
       "anchorY": 0,
       "anchorSemantics": "common_frame_canvas_top_left",
       "cropX": 305,
-      "cropY": 186,
+      "cropY": 192,
       "cropWidth": 61,
       "cropHeight": 64,
       "facing": "SCENE_DIRECTED",
@@ -630,7 +630,7 @@
       "thumbnail": "magpie_small_turn_hop_thumbnail.png",
       "placementLogical": [
         306,
-        181
+        187
       ],
       "sizeLogical": [
         69,
@@ -640,7 +640,7 @@
       "anchorY": 0,
       "anchorSemantics": "common_frame_canvas_top_left",
       "cropX": 306,
-      "cropY": 181,
+      "cropY": 187,
       "cropWidth": 69,
       "cropHeight": 69,
       "facing": "SCENE_DIRECTED",
@@ -661,7 +661,7 @@
       "thumbnail": "magpie_small_peck_tiger_ear_thumbnail.png",
       "placementLogical": [
         300,
-        186
+        192
       ],
       "sizeLogical": [
         64,
@@ -671,7 +671,7 @@
       "anchorY": 0,
       "anchorSemantics": "common_frame_canvas_top_left",
       "cropX": 300,
-      "cropY": 186,
+      "cropY": 192,
       "cropWidth": 64,
       "cropHeight": 66,
       "facing": "SCENE_DIRECTED",
@@ -807,7 +807,7 @@
       ],
       "SMALL": [
         340.0,
-        235.0
+        241.0
       ]
     },
     "layerOrder": [
@@ -816,12 +816,11 @@
       "plum_birds",
       "plum_foreground_mask",
       "plum_battery_stage",
-      "hour_hand",
-      "minute_hand",
       "pine_foreground_mask",
       "tiger_body_foreground_mask",
-      "tiger_head_and_pupils",
-      "tiger_reaction",
+      "tiger_head_or_reaction",
+      "hour_hand",
+      "minute_hand",
       "tiger_birds_and_exit",
       "bird_animations",
       "live_text"
@@ -843,9 +842,9 @@
     "SECOND_MILLISECOND"
   ],
   "memoryEstimate": {
-    "staticDecodedBytes": 6106788,
-    "animatedDecodedBytes": 6098320,
-    "interactiveDecodedBytes": 12205108,
+    "staticDecodedBytes": 6104528,
+    "animatedDecodedBytes": 6080240,
+    "interactiveDecodedBytes": 12184768,
     "officialInteractiveBudgetBytes": 104857600,
     "officialAmbientBudgetBytes": 10485760
   }

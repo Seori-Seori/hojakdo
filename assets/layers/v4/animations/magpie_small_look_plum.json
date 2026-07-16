@@ -6,7 +6,7 @@
   "thumbnail": "magpie_small_look_plum_thumbnail.png",
   "placementLogical": [
     305,
-    186
+    192
   ],
   "sizeLogical": [
     61,
@@ -16,7 +16,7 @@
   "anchorY": 0,
   "anchorSemantics": "common_frame_canvas_top_left",
   "cropX": 305,
-  "cropY": 186,
+  "cropY": 192,
   "cropWidth": 61,
   "cropHeight": 64,
   "facing": "SCENE_DIRECTED",

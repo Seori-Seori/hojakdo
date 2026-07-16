@@ -43,27 +43,31 @@ def _part_image(
     height: int,
     *,
     name: str | None = None,
+    alpha: int | None = None,
     ambient_alpha: int | None = None,
 ) -> str:
     name_attr = f' name="{name}"' if name else ""
+    alpha_attr = f' alpha="{alpha}"' if alpha is not None else ""
     children = [f'<Image resource="{resource}" />']
     if ambient_alpha is not None:
         children.append(_variant(ambient_alpha))
     inner = _indent("\n".join(children), 4)
     return (
-        f'<PartImage{name_attr} x="{x}" y="{y}" width="{width}" height="{height}">\n'
+        f'<PartImage{name_attr}{alpha_attr} x="{x}" y="{y}" width="{width}" height="{height}">\n'
         f"{inner}\n"
         "</PartImage>"
     )
 
 
-def _part_animation(metadata: dict[str, object]) -> str:
+def _part_animation(
+    metadata: dict[str, object], *, after_playing: str = "HIDE"
+) -> str:
     x, y = (int(value) for value in metadata["placementLogical"])
     width, height = (int(value) for value in metadata["sizeLogical"])
     name = str(metadata["id"])
     return f'''<PartAnimatedImage name="{name}" x="{x}" y="{y}" width="{width}" height="{height}">
     <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="{after_playing}" />
     <AnimatedImage resource="{name}" format="AGIF" thumbnail="{name}_thumbnail" />
     <Thumbnail resource="{name}_thumbnail" />
     {_variant(0)}
@@ -346,14 +350,11 @@ def generate() -> str:
             if name in walk_animation_names
         ]
     )
-    tiger_reaction_condition = _condition(
-        [
-            (
-                "show_tiger_head_eye_reaction",
-                animation_slots["tiger_head_eye_reaction"],
-                _part_animation(animations["tiger_head_eye_reaction"]),
-            )
-        ]
+    tiger_reaction_part = _part_animation(
+        animations["tiger_head_eye_reaction"],
+        # WFF supports FIRST_FRAME but not LAST_FRAME. Frame zero is the
+        # neutral pose, so it safely holds the tiger after the reaction.
+        after_playing="FIRST_FRAME",
     )
     high_animation_condition = _condition(
         [
@@ -454,6 +455,48 @@ def generate() -> str:
         name="tiger_pupils",
         ambient_alpha=155,
     )
+    # Animated images are transparent in ambient mode. These zero-alpha
+    # interactive fallbacks become visible only in AOD, preventing the tiger
+    # from losing its head during the one-minute reaction condition.
+    tiger_head_reaction_ambient = _part_image(
+        "hojakdo_v4_tiger_head",
+        0,
+        0,
+        450,
+        450,
+        name="tiger_head_reaction_ambient",
+        alpha=0,
+        ambient_alpha=145,
+    )
+    tiger_pupils_reaction_ambient = _part_image(
+        "hojakdo_v4_tiger_pupils",
+        0,
+        0,
+        450,
+        450,
+        name="tiger_pupils_reaction_ambient",
+        alpha=0,
+        ambient_alpha=155,
+    )
+    tiger_visual_condition = _condition(
+        [
+            (
+                "show_tiger_head_eye_reaction",
+                animation_slots["tiger_head_eye_reaction"],
+                "\n".join(
+                    (
+                        tiger_head_reaction_ambient,
+                        tiger_pupils_reaction_ambient,
+                        tiger_reaction_part,
+                    )
+                ),
+            )
+        ],
+        # The static head must not remain under the moving head. Keeping the
+        # two versions mutually exclusive makes the small tilt and pupil lag
+        # visible instead of averaging into an apparently frozen tiger.
+        default="\n".join((tiger_head, tiger_pupils)),
+    )
     hanji_patch = manifest["readoutHanjiPatch"]
     patch_x, patch_y = (int(value) for value in hanji_patch["placementLogical"])
     patch_width, patch_height = (
@@ -481,15 +524,16 @@ def generate() -> str:
         walk_animation_condition,
         mask_parts["plum_foreground_mask"],
         _condition(plum_expressions),
-        hour_group,
-        minute_group,
-        # Keep pine and tiger depth masks, but never let the plum bloom cover
-        # a branch hand. Tiger-perched birds are rendered after the head.
+        # Resolve all environmental depth before the hands. The previous
+        # order left the pine mask above a down-left minute hand, making it
+        # disappear around frames such as 11:42.
         mask_parts["pine_foreground_mask"],
         mask_parts["tiger_body_foreground_mask"],
-        tiger_head,
-        tiger_pupils,
-        tiger_reaction_condition,
+        tiger_visual_condition,
+        hour_group,
+        minute_group,
+        # Tiger-perched birds and active bird animations remain above the
+        # hands so feet, hops, and landings are not clipped.
         tiger_static_condition,
         high_animation_condition,
         _live_text(),

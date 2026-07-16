@@ -338,14 +338,25 @@ class DayReviewRenderer:
         bloom_name = Path(str(self.full_bloom["resource"])).stem
         face.alpha_composite(self.layers[bloom_name], bloom_placement)
 
-    def _composite_pine_and_tiger(self, face: Image.Image) -> None:
+    def _composite_pine_and_tiger(
+        self,
+        face: Image.Image,
+        state: TimelineState,
+        animation_frame: int | None,
+    ) -> None:
         masks = {item["id"]: item for item in self.manifest["foregroundMasks"]}
         for name in ("pine_foreground_mask", "tiger_body_foreground_mask"):
             metadata = masks[name]
             placement = tuple(int(value) for value in metadata["placementLogical"])
             face.alpha_composite(self.layers[name], placement)
-        face.alpha_composite(self.layers["hojakdo_v4_tiger_head"])
-        face.alpha_composite(self.layers["hojakdo_v4_tiger_pupils"])
+        if state.animation == "tiger_head_eye_reaction":
+            # The moving head replaces the static head for this slot. Drawing
+            # both versions at once visually averaged the motion into a
+            # frozen-looking tiger.
+            self._composite_animation(face, state, animation_frame)
+        else:
+            face.alpha_composite(self.layers["hojakdo_v4_tiger_head"])
+            face.alpha_composite(self.layers["hojakdo_v4_tiger_pupils"])
 
     def _draw_live_data(
         self, face: Image.Image, timestamp: datetime, state: TimelineState
@@ -403,18 +414,15 @@ class DayReviewRenderer:
             self.layers["hojakdo_v4_readout_hanji_patch"],
             tuple(int(value) for value in patch["placementLogical"]),
         )
-        # Mirror the production WFF order: walking birds sit among the plum
-        # branches, the bloom sits below both hands, and tiger birds sit above
-        # the head instead of being clipped by it.
+        # Mirror the production WFF order: resolve every environmental mask
+        # and the tiger before either hand, then keep active birds above them.
         self._composite_plum_bird(face, state)
         if state.animation is not None and state.animation.endswith("_walk_step"):
             self._composite_animation(face, state, animation_frame)
         self._composite_plum_foreground(face)
+        self._composite_pine_and_tiger(face, state, animation_frame)
         self._composite_hand(face, "hour", timestamp, state)
         self._composite_hand(face, "minute", timestamp, state)
-        self._composite_pine_and_tiger(face)
-        if state.animation == "tiger_head_eye_reaction":
-            self._composite_animation(face, state, animation_frame)
         self._composite_tiger_bird(face, state, exit_progress)
         if state.animation is not None and not (
             state.animation.endswith("_walk_step")
@@ -564,7 +572,10 @@ def render_day(
         "batteryPercent": battery_percent,
         "chunkHours": CHUNK_HOURS,
         "sampling": "every simulated minute; full AGIF frames at active minutes",
-        "sceneOrder": "matches current watchface.xml after hand and bird layer corrections",
+        "sceneOrder": (
+            "environment and tiger below both hands; tiger reaction replaces "
+            "the static head; active birds remain above the hands"
+        ),
         "emulatorReference": emulator_reference.serializable(),
         "chunks": chunks,
     }

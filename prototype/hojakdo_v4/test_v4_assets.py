@@ -169,7 +169,14 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         names = {part.attrib["name"] for part in animated_parts}
         self.assertEqual(EXPECTED_ANIMATIONS, names)
         for part in animated_parts:
-            self.assertIsNotNone(part.find("AnimationController"), part.attrib["name"])
+            controller = part.find("AnimationController")
+            self.assertIsNotNone(controller, part.attrib["name"])
+            expected_after = (
+                "FIRST_FRAME"
+                if part.attrib["name"] == "tiger_head_eye_reaction"
+                else "HIDE"
+            )
+            self.assertEqual(expected_after, controller.attrib["afterPlaying"])
             self.assertIsNotNone(part.find("AnimatedImage"), part.attrib["name"])
             self.assertIsNotNone(part.find("Thumbnail"), part.attrib["name"])
             ambient = part.find("Variant")
@@ -217,7 +224,7 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             xml.index('name="small_tiger_idle"'),
         )
         self.assertEqual(
-            {"LARGE": [335.0, 233.0], "SMALL": [340.0, 235.0]},
+            {"LARGE": [335.0, 233.0], "SMALL": [340.0, 241.0]},
             self.manifest["scene"]["tigerPerchAnchors"],
         )
         small_exit = next(
@@ -226,7 +233,7 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             if part.attrib.get("name") == "small_exit_fixed_flight"
         )
         self.assertEqual(
-            ("293", "200", "70", "54"),
+            ("293", "206", "70", "54"),
             tuple(
                 small_exit.attrib[key]
                 for key in ("x", "y", "width", "height")
@@ -257,6 +264,105 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             resource = element.attrib["resource"]
             self.assertRegex(resource, r"^[a-z][a-z0-9_]*$")
             self.assertIn(resource, available)
+
+    def test_hand_tiger_and_small_perch_regressions_are_locked(self) -> None:
+        xml = WATCHFACE_PATH.read_text(encoding="utf-8")
+        hour_index = xml.index('name="hour_hand_group"')
+        minute_index = xml.index('name="minute_hand_group"')
+        for environmental_part in (
+            'name="plum_stage_5"',
+            'name="pine_foreground_mask"',
+            'name="tiger_body_foreground_mask"',
+            'name="tiger_head_eye_reaction"',
+            'name="tiger_head"',
+        ):
+            self.assertLess(xml.index(environmental_part), hour_index)
+            self.assertLess(xml.index(environmental_part), minute_index)
+
+        tiger_conditions = [
+            condition
+            for condition in self.root.findall(".//Condition")
+            if condition.find(
+                './/PartAnimatedImage[@name="tiger_head_eye_reaction"]'
+            )
+            is not None
+        ]
+        self.assertEqual(1, len(tiger_conditions))
+        tiger_condition = tiger_conditions[0]
+        default = tiger_condition.find("Default")
+        self.assertIsNotNone(default)
+        self.assertIsNotNone(default.find('./PartImage[@name="tiger_head"]'))
+        self.assertIsNotNone(default.find('./PartImage[@name="tiger_pupils"]'))
+        compare = tiger_condition.find("Compare")
+        self.assertIsNotNone(compare)
+        for name, ambient_alpha in (
+            ("tiger_head_reaction_ambient", "145"),
+            ("tiger_pupils_reaction_ambient", "155"),
+        ):
+            fallback = compare.find(f'./PartImage[@name="{name}"]')
+            self.assertIsNotNone(fallback)
+            self.assertEqual("0", fallback.attrib["alpha"])
+            variant = fallback.find("Variant")
+            self.assertIsNotNone(variant)
+            self.assertEqual("AMBIENT", variant.attrib["mode"])
+            self.assertEqual("alpha", variant.attrib["target"])
+            self.assertEqual(ambient_alpha, variant.attrib["value"])
+
+        pose = next(
+            item
+            for item in self.manifest["staticPoses"]
+            if item["id"] == "magpie_small_perch_tiger"
+        )
+        with Image.open(DRAWABLE_DIR / pose["resource"]) as source:
+            bird_alpha = np.asarray(
+                source.convert("RGBA").getchannel("A"), dtype=np.uint8
+            )
+        with Image.open(DRAWABLE_DIR / "hojakdo_v4_tiger_head.png") as source:
+            head_alpha = np.asarray(
+                source.convert("RGBA").getchannel("A"), dtype=np.uint8
+            )
+        anchor_x, anchor_y = pose["anchorLogical"]
+        foot_x, foot_y = self.manifest["scene"]["tigerPerchAnchors"]["SMALL"]
+        left = round(foot_x - anchor_x)
+        top = round(foot_y - anchor_y)
+        bird_canvas = np.zeros_like(head_alpha)
+        bird_canvas[
+            top : top + bird_alpha.shape[0],
+            left : left + bird_alpha.shape[1],
+        ] = bird_alpha
+        contact_pixels = (bird_canvas > 128) & (head_alpha > 128)
+        self.assertGreaterEqual(int(contact_pixels.sum()), 80)
+
+        animation_by_name = {
+            item["id"]: item for item in self.manifest["animations"]
+        }
+        for name, minimum_contact in (
+            ("magpie_small_hop_to_tiger", 80),
+            ("magpie_small_head_scan", 80),
+            ("magpie_small_look_plum", 80),
+            ("magpie_small_turn_hop", 30),
+            ("magpie_small_peck_tiger_ear", 80),
+        ):
+            metadata = animation_by_name[name]
+            last_frame = (
+                FRAME_DIR
+                / name
+                / f"frame_{int(metadata['frameCount']) - 1:02d}.png"
+            )
+            with Image.open(last_frame) as source:
+                frame_alpha = np.asarray(
+                    source.convert("RGBA").getchannel("A"), dtype=np.uint8
+                )
+            x, y = metadata["placementLogical"]
+            frame_canvas = np.zeros_like(head_alpha)
+            frame_canvas[
+                y : y + frame_alpha.shape[0],
+                x : x + frame_alpha.shape[1],
+            ] = frame_alpha
+            overlap = (frame_canvas > 128) & (head_alpha > 128)
+            self.assertGreaterEqual(
+                int(overlap.sum()), minimum_contact, name
+            )
 
     def test_wff_expressions_have_balanced_parentheses(self) -> None:
         source_pattern = re.compile(r"\[[A-Z0-9_.]+\]")

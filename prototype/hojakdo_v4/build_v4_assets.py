@@ -34,7 +34,10 @@ HOUR_ANCHOR = (302.0, 148.0)
 # former 100x78 resource made the character grow visibly at takeoff/exit.
 SMALL_FLIGHT_WIDTH = 70
 LARGE_TIGER_FOOT = (335.0, 233.0)
-SMALL_TIGER_FOOT = (340.0, 235.0)
+# The former y=235 point touched only the very tip of the tiger's crown.
+# Overlap the foot by six logical pixels so the small bird reads as planted
+# on the head at watch size instead of optically floating above it.
+SMALL_TIGER_FOOT = (340.0, 241.0)
 FRAME_DURATION_MS = 125
 FPS = 1000 / FRAME_DURATION_MS
 READOUT_CENTER_X = FACE_SIZE // 2
@@ -705,12 +708,12 @@ def _animation_specs(
         small_sprite,
         small_anchor,
         [
-            (340, 235),
-            (340, 233),
-            (340, 230),
-            (340, 230),
-            (340, 233),
-            (340, 235),
+            (340, 241),
+            (340, 239),
+            (340, 236),
+            (340, 236),
+            (340, 239),
+            (340, 241),
         ],
         scale_x=(1.0, 0.58, 0.16, 0.16, 0.58, 1.0),
         mirrors=(True, True, True, False, False, False),
@@ -719,13 +722,13 @@ def _animation_specs(
         small_sprite,
         small_anchor,
         [
-            (340, 235),
-            (338, 237),
-            (335, 241),
-            (340, 235),
-            (336, 240),
-            (340, 235),
-            (340, 235),
+            (340, 241),
+            (338, 243),
+            (335, 247),
+            (340, 241),
+            (336, 246),
+            (340, 241),
+            (340, 241),
         ],
         angles=(0, 4, 10, 0, 9, 2, 0),
         mirrors=(True,) * 7,
@@ -863,6 +866,17 @@ def _compose_preview_face(
             source.convert("RGBA"), tuple(selected_plum["placementLogical"])
         )
 
+    for name in ("pine_foreground_mask", "tiger_body_foreground_mask"):
+        mask = masks_by_name[name]
+        with Image.open(DRAWABLE_DIR / str(mask["resource"])) as source:
+            face.alpha_composite(
+                source.convert("RGBA"), tuple(mask["placementLogical"])
+            )
+    face.alpha_composite(tiger_head)
+    face.alpha_composite(tiger_pupils)
+
+    # Match production: every environmental mask and the tiger resolve below
+    # the hands, so neither branch can disappear at any rotation.
     hour_angle = (hour * 60 + minute) * 0.5 - 50.232272878132
     minute_angle = (hour * 60 + minute) * 6.0 - 325.271003720479
     face.alpha_composite(
@@ -881,15 +895,6 @@ def _compose_preview_face(
             expand=False,
         )
     )
-
-    for name in ("pine_foreground_mask", "tiger_body_foreground_mask"):
-        mask = masks_by_name[name]
-        with Image.open(DRAWABLE_DIR / str(mask["resource"])) as source:
-            face.alpha_composite(
-                source.convert("RGBA"), tuple(mask["placementLogical"])
-            )
-    face.alpha_composite(tiger_head)
-    face.alpha_composite(tiger_pupils)
     bird, anchor = small_flight
     face.alpha_composite(bird, (round(357 - anchor[0]), round(156 - anchor[1])))
 
@@ -1205,12 +1210,11 @@ def build() -> dict[str, object]:
                 "plum_birds",
                 "plum_foreground_mask",
                 "plum_battery_stage",
-                "hour_hand",
-                "minute_hand",
                 "pine_foreground_mask",
                 "tiger_body_foreground_mask",
-                "tiger_head_and_pupils",
-                "tiger_reaction",
+                "tiger_head_or_reaction",
+                "hour_hand",
+                "minute_hand",
                 "tiger_birds_and_exit",
                 "bird_animations",
                 "live_text",

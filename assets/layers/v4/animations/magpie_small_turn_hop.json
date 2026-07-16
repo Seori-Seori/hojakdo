@@ -6,7 +6,7 @@
   "thumbnail": "magpie_small_turn_hop_thumbnail.png",
   "placementLogical": [
     306,
-    181
+    187
   ],
   "sizeLogical": [
     69,
@@ -16,7 +16,7 @@
   "anchorY": 0,
   "anchorSemantics": "common_frame_canvas_top_left",
   "cropX": 306,
-  "cropY": 181,
+  "cropY": 187,
   "cropWidth": 69,
   "cropHeight": 69,
   "facing": "SCENE_DIRECTED",
