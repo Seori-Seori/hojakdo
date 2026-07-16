@@ -45,6 +45,20 @@
     ],
     "method": "color_matched_paper_texture"
   },
+  "readoutHanjiPatch": {
+    "resource": "hojakdo_v4_readout_hanji_patch.png",
+    "placementLogical": [
+      188,
+      272
+    ],
+    "sizeLogical": [
+      82,
+      22
+    ],
+    "sha256": "7623ad597c6918277584bb9caaeedae5cc8f0b50f829c71f69194c3a9dc3206b",
+    "layer": "above_all_decorations_below_live_text",
+    "ambientBehavior": "hidden_clean_background_remains"
+  },
   "readoutQuietZone": {
     "sourceCleanupBoundsLogical": [
       175,
@@ -57,6 +71,12 @@
       250,
       252,
       300
+    ],
+    "dateFinalOverlayBoundsLogical": [
+      188,
+      272,
+      270,
+      294
     ],
     "liveTextShiftLogical": [
       0,
@@ -163,7 +183,7 @@
         205,
         224
       ],
-      "sha256": "b2cc2aee3edb743616ae0fbebdcd1222907f42efcd1475bb07e8e519b430f52c"
+      "sha256": "0a820a9a585290265d0269139d9ac18d3fd0af07d7d03c848f82a7d377b3fc15"
     },
     {
       "id": "pine_foreground_mask",
@@ -189,7 +209,7 @@
         266,
         181
       ],
-      "sha256": "0b51bc45b03cb531346033b8f87bab8770dc1f608cc281708c60ba9b3eb29273"
+      "sha256": "2b7d5cc97aff953bc1409048e432f660d7b0b0a4e790e539a23f7bd1ef8ebe17"
     }
   ],
   "animations": [
@@ -790,9 +810,9 @@
     "SECOND_MILLISECOND"
   ],
   "memoryEstimate": {
-    "staticDecodedBytes": 6169456,
+    "staticDecodedBytes": 6176672,
     "animatedDecodedBytes": 6512768,
-    "interactiveDecodedBytes": 12682224,
+    "interactiveDecodedBytes": 12689440,
     "officialInteractiveBudgetBytes": 104857600,
     "officialAmbientBudgetBytes": 10485760
   }

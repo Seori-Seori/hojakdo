@@ -173,6 +173,9 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             'name="tiger_pupils"',
         ):
             self.assertGreater(live_index, xml.index(decorative_part))
+        patch_index = xml.index('name="readout_hanji_patch"')
+        self.assertGreater(patch_index, xml.index('name="tiger_pupils"'))
+        self.assertGreater(live_index, patch_index)
         live_parts = {
             part.attrib["name"]: part.attrib for part in self.root.findall(".//PartText")
         }
@@ -248,12 +251,32 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             [198, 250, 252, 300],
             quiet_zone["dateCloudCleanupBoundsLogical"],
         )
+        self.assertEqual(
+            [188, 272, 270, 294],
+            quiet_zone["dateFinalOverlayBoundsLogical"],
+        )
         self.assertEqual([0, 20], quiet_zone["liveTextShiftLogical"])
         self.assertEqual(225, quiet_zone["liveTextCenterXLogical"])
         self.assertEqual(
             [282, 158, 306, 181],
             self.manifest["backgroundCleanup"]["pineSprigBoundsLogical"],
         )
+        patch_metadata = self.manifest["readoutHanjiPatch"]
+        self.assertEqual([188, 272], patch_metadata["placementLogical"])
+        self.assertEqual([82, 22], patch_metadata["sizeLogical"])
+        self.assertEqual(
+            "above_all_decorations_below_live_text", patch_metadata["layer"]
+        )
+        with Image.open(DRAWABLE_DIR / str(patch_metadata["resource"])) as source:
+            patch = np.asarray(source.convert("RGBA"), dtype=np.uint8)
+        self.assertEqual((22, 82, 4), patch.shape)
+        self.assertTrue(np.all(patch[2:-2, 2:-2, 3] == 255))
+        patch_luma = (
+            0.2126 * patch[..., 0]
+            + 0.7152 * patch[..., 1]
+            + 0.0722 * patch[..., 2]
+        )
+        self.assertEqual(0, int((patch_luma[2:-2, 2:-2] < 145).sum()))
         with Image.open(DRAWABLE_DIR / "hojakdo_v4_background.png") as source:
             background = np.asarray(source.convert("RGB"), dtype=np.float32)
         luma = (
@@ -266,10 +289,12 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         readout = luma[228:295, 175:275]
         cloud_tail = luma[240:275, 148:202]
         date_cloud = luma[255:295, 203:247]
+        forced_date = luma[274:292, 190:268]
         pine_sprig = luma[163:176, 287:301]
         self.assertLessEqual(int((readout < 145).sum()), 1)
         self.assertEqual(0, int((cloud_tail < 145).sum()))
         self.assertGreater(float(np.percentile(date_cloud, 1)), 164.0)
+        self.assertEqual(0, int((forced_date < 145).sum()))
         self.assertEqual(0, int((pine_sprig < 145).sum()))
 
 

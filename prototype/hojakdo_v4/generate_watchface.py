@@ -408,6 +408,22 @@ def generate() -> str:
         name="tiger_pupils",
         ambient_alpha=155,
     )
+    hanji_patch = manifest["readoutHanjiPatch"]
+    patch_x, patch_y = (int(value) for value in hanji_patch["placementLogical"])
+    patch_width, patch_height = (
+        int(value) for value in hanji_patch["sizeLogical"]
+    )
+    readout_hanji_patch = _part_image(
+        Path(str(hanji_patch["resource"])).stem,
+        patch_x,
+        patch_y,
+        patch_width,
+        patch_height,
+        name="readout_hanji_patch",
+        # The underlying background contains the same forced repair. Hiding
+        # this overlay in ambient avoids stacking two translucent paper layers.
+        ambient_alpha=0,
+    )
     scene_parts = [
         background,
         _condition(plum_expressions),
@@ -418,8 +434,9 @@ def generate() -> str:
         *mask_parts,
         tiger_head,
         tiger_pupils,
-        # Keep live data above every decorative hand, character, and mask. The
-        # approved center is a quiet readout zone, not an animation surface.
+        # Replace the live-date coordinates after every decorative layer, then
+        # keep live data above that final hanji backing.
+        readout_hanji_patch,
         _live_text(),
     ]
     xml = '''<?xml version="1.0" encoding="utf-8"?>

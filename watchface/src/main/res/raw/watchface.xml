@@ -368,6 +368,11 @@
             <Variant mode="AMBIENT" target="alpha" value="155" />
         </PartImage>
 
+        <PartImage name="readout_hanji_patch" x="188" y="272" width="82" height="22">
+            <Image resource="hojakdo_v4_readout_hanji_patch" />
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+        </PartImage>
+
         <PartText name="live_time" x="183" y="246" width="84" height="31">
             <Text align="CENTER" verticalAlign="CENTER">
                 <Font family="SYNC_TO_DEVICE" size="25" color="#211811" weight="BOLD" letterSpacing="0.03">

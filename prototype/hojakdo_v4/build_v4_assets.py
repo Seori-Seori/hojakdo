@@ -36,6 +36,7 @@ FPS = 1000 / FRAME_DURATION_MS
 READOUT_CENTER_X = FACE_SIZE // 2
 READOUT_SHIFT = (0, 20)
 DATE_CLOUD_CLEANUP_BOUNDS = (198, 250, 252, 300)
+DATE_HANJI_OVERLAY_BOUNDS = (188, 272, 270, 294)
 PINE_SPRIG_CLEANUP_BOUNDS = (282, 158, 306, 181)
 
 
@@ -205,6 +206,15 @@ def _remove_embedded_ui(background: Image.Image) -> Image.Image:
         DATE_CLOUD_CLEANUP_BOUNDS,
         (230, 45, 284, 95),
         feather_pixels=5.0,
+    )
+    # Force the entire live-date footprint and its right-side margin to clean
+    # hanji. This second, wider repair is not threshold-based: every pixel in
+    # the full-opacity interior is replaced, including any cloud-colored halo.
+    _replace_paper_texture(
+        result,
+        DATE_HANJI_OVERLAY_BOUNDS,
+        (200, 60, 282, 82),
+        feather_pixels=2.0,
     )
 
     # Remove the detached pine-needle fragment floating in the upper-right
@@ -715,6 +725,30 @@ def _build_battery_icon() -> None:
     _save_png(icon, DRAWABLE_DIR / "battery_icon.png")
 
 
+def _build_readout_hanji_patch(background: Image.Image) -> dict[str, object]:
+    """Build a final date backing that sits above every decorative layer."""
+    x0, y0, x1, y1 = DATE_HANJI_OVERLAY_BOUNDS
+    patch = background.crop(DATE_HANJI_OVERLAY_BOUNDS).convert("RGBA")
+    height, width = patch.height, patch.width
+    yy, xx = np.indices((height, width))
+    edge_distance = np.minimum.reduce((xx, yy, width - 1 - xx, height - 1 - yy))
+    alpha = np.clip(edge_distance.astype(np.float32) / 2.0, 0.0, 1.0)
+    alpha = alpha * alpha * (3.0 - 2.0 * alpha)
+    values = np.asarray(patch, dtype=np.uint8).copy()
+    values[..., 3] = np.clip(alpha * 255, 0, 255).astype(np.uint8)
+    patch = Image.fromarray(values, "RGBA")
+    path = DRAWABLE_DIR / "hojakdo_v4_readout_hanji_patch.png"
+    _save_png(patch, path)
+    return {
+        "resource": path.name,
+        "placementLogical": [x0, y0],
+        "sizeLogical": [x1 - x0, y1 - y0],
+        "sha256": _sha256(path),
+        "layer": "above_all_decorations_below_live_text",
+        "ambientBehavior": "hidden_clean_background_remains",
+    }
+
+
 def _compose_preview_face(
     background: Image.Image,
     hour_branch: Image.Image,
@@ -753,6 +787,12 @@ def _compose_preview_face(
     face.alpha_composite(bird, (round(357 - anchor[0]), round(156 - anchor[1])))
     face.alpha_composite(tiger_head)
     face.alpha_composite(tiger_pupils)
+    # This final backing replaces the date coordinates after every decorative
+    # layer has been composed. Live text is drawn immediately afterward.
+    with Image.open(DRAWABLE_DIR / "hojakdo_v4_readout_hanji_patch.png") as source:
+        face.alpha_composite(
+            source.convert("RGBA"), DATE_HANJI_OVERLAY_BOUNDS[:2]
+        )
 
     draw = ImageDraw.Draw(face)
     ink = (31, 24, 17, 255)
@@ -904,6 +944,7 @@ def build() -> dict[str, object]:
     _save_png(tiger_head, DRAWABLE_DIR / "hojakdo_v4_tiger_head.png")
     _save_png(tiger_pupils, DRAWABLE_DIR / "hojakdo_v4_tiger_pupils.png")
     _build_battery_icon()
+    readout_hanji_patch = _build_readout_hanji_patch(background)
 
     large_sprite, large_anchor, _ = renderer.birds["LARGE"]
     small_sprite, small_anchor, _ = renderer.birds["SMALL"]
@@ -1000,9 +1041,11 @@ def build() -> dict[str, object]:
             "pineSprigBoundsLogical": list(PINE_SPRIG_CLEANUP_BOUNDS),
             "method": "color_matched_paper_texture",
         },
+        "readoutHanjiPatch": readout_hanji_patch,
         "readoutQuietZone": {
             "sourceCleanupBoundsLogical": [175, 220, 275, 295],
             "dateCloudCleanupBoundsLogical": list(DATE_CLOUD_CLEANUP_BOUNDS),
+            "dateFinalOverlayBoundsLogical": list(DATE_HANJI_OVERLAY_BOUNDS),
             "liveTextShiftLogical": list(READOUT_SHIFT),
             "liveTextCenterXLogical": READOUT_CENTER_X,
             "removes": ["baked_time", "baked_date", "baked_weekday", "cloud_line"],
