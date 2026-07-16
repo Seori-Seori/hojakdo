@@ -9,12 +9,12 @@
   "smallFlight": {
     "resource": "magpie_small_flight_right_v4.png",
     "sizeLogical": [
-      100,
-      78
+      70,
+      54
     ],
     "anchorLogical": [
-      67.0,
-      49.92
+      46.9,
+      34.56
     ],
     "source": "assets/layers/mvp/magpie_small_flight_right_v31.png",
     "motion": "fixed_whole_sprite_translation",
@@ -443,20 +443,20 @@
       "resource": "magpie_small_fly_pine_to_hand.gif",
       "thumbnail": "magpie_small_fly_pine_to_hand_thumbnail.png",
       "placementLogical": [
-        34,
-        49
+        54,
+        65
       ],
       "sizeLogical": [
-        174,
-        151
+        144,
+        127
       ],
       "anchorX": 0,
       "anchorY": 0,
       "anchorSemantics": "common_frame_canvas_top_left",
-      "cropX": 34,
-      "cropY": 49,
-      "cropWidth": 174,
-      "cropHeight": 151,
+      "cropX": 54,
+      "cropY": 65,
+      "cropWidth": 144,
+      "cropHeight": 127,
       "facing": "SCENE_DIRECTED",
       "startPose": "magpie_small_fly_pine_to_hand:frame_00",
       "endPose": "magpie_small_fly_pine_to_hand:frame_07",
@@ -464,8 +464,8 @@
       "frameCount": 8,
       "frameDurationMs": 125,
       "fps": 8.0,
-      "decodedBytesEstimate": 840768,
-      "sha256": "746c61c76fe696141780695fcbc9d87c552233144ec40e5618ec144c3a013ea5"
+      "decodedBytesEstimate": 585216,
+      "sha256": "d83c985108f53db81797e0fffd85597bd7120afe03531d6734a97f2a624af4c4"
     },
     {
       "schemaVersion": 1,
@@ -474,20 +474,20 @@
       "resource": "magpie_small_land_on_hand.gif",
       "thumbnail": "magpie_small_land_on_hand_thumbnail.png",
       "placementLogical": [
-        100,
-        51
+        120,
+        65
       ],
       "sizeLogical": [
-        108,
-        89
+        78,
+        72
       ],
       "anchorX": 0,
       "anchorY": 0,
       "anchorSemantics": "common_frame_canvas_top_left",
-      "cropX": 100,
-      "cropY": 51,
-      "cropWidth": 108,
-      "cropHeight": 89,
+      "cropX": 120,
+      "cropY": 65,
+      "cropWidth": 78,
+      "cropHeight": 72,
       "facing": "SCENE_DIRECTED",
       "startPose": "magpie_small_land_on_hand:frame_00",
       "endPose": "magpie_small_land_on_hand:frame_06",
@@ -495,8 +495,8 @@
       "frameCount": 7,
       "frameDurationMs": 125,
       "fps": 8.0,
-      "decodedBytesEstimate": 269136,
-      "sha256": "82e8a23a51c26453c906516c5c3457be3a56900d6c2b675a1350aa96bead7e8b"
+      "decodedBytesEstimate": 157248,
+      "sha256": "1375e4d4ab8dc1c5e1a63c3ae35d3da8063a2be14ef5e7e06d08763bc2f1d2cd"
     },
     {
       "schemaVersion": 1,
@@ -537,19 +537,19 @@
       "thumbnail": "magpie_small_hop_to_tiger_thumbnail.png",
       "placementLogical": [
         250,
-        167
+        180
       ],
       "sizeLogical": [
         113,
-        130
+        117
       ],
       "anchorX": 0,
       "anchorY": 0,
       "anchorSemantics": "common_frame_canvas_top_left",
       "cropX": 250,
-      "cropY": 167,
+      "cropY": 180,
       "cropWidth": 113,
-      "cropHeight": 130,
+      "cropHeight": 117,
       "facing": "SCENE_DIRECTED",
       "startPose": "magpie_small_hop_to_tiger:frame_00",
       "endPose": "magpie_small_hop_to_tiger:frame_07",
@@ -557,8 +557,8 @@
       "frameCount": 8,
       "frameDurationMs": 125,
       "fps": 8.0,
-      "decodedBytesEstimate": 470080,
-      "sha256": "0cb0d4d1fb49a60ce8a04a581bc2ecc9a0a2adc96f53245afc6d4495831b7c91"
+      "decodedBytesEstimate": 423072,
+      "sha256": "7a46ba1cb455fdb9f1eac5befda76edbf815392c54d6248f74eb31ab001420db"
     },
     {
       "schemaVersion": 1,
@@ -568,7 +568,7 @@
       "thumbnail": "magpie_small_head_scan_thumbnail.png",
       "placementLogical": [
         305,
-        169
+        186
       ],
       "sizeLogical": [
         61,
@@ -578,7 +578,7 @@
       "anchorY": 0,
       "anchorSemantics": "common_frame_canvas_top_left",
       "cropX": 305,
-      "cropY": 169,
+      "cropY": 186,
       "cropWidth": 61,
       "cropHeight": 65,
       "facing": "SCENE_DIRECTED",
@@ -599,7 +599,7 @@
       "thumbnail": "magpie_small_look_plum_thumbnail.png",
       "placementLogical": [
         305,
-        169
+        186
       ],
       "sizeLogical": [
         61,
@@ -609,7 +609,7 @@
       "anchorY": 0,
       "anchorSemantics": "common_frame_canvas_top_left",
       "cropX": 305,
-      "cropY": 169,
+      "cropY": 186,
       "cropWidth": 61,
       "cropHeight": 64,
       "facing": "SCENE_DIRECTED",
@@ -630,7 +630,7 @@
       "thumbnail": "magpie_small_turn_hop_thumbnail.png",
       "placementLogical": [
         306,
-        164
+        181
       ],
       "sizeLogical": [
         69,
@@ -640,7 +640,7 @@
       "anchorY": 0,
       "anchorSemantics": "common_frame_canvas_top_left",
       "cropX": 306,
-      "cropY": 164,
+      "cropY": 181,
       "cropWidth": 69,
       "cropHeight": 69,
       "facing": "SCENE_DIRECTED",
@@ -661,7 +661,7 @@
       "thumbnail": "magpie_small_peck_tiger_ear_thumbnail.png",
       "placementLogical": [
         300,
-        169
+        186
       ],
       "sizeLogical": [
         64,
@@ -671,7 +671,7 @@
       "anchorY": 0,
       "anchorSemantics": "common_frame_canvas_top_left",
       "cropX": 300,
-      "cropY": 169,
+      "cropY": 186,
       "cropWidth": 64,
       "cropHeight": 66,
       "facing": "SCENE_DIRECTED",
@@ -788,7 +788,7 @@
       ]
     }
   ],
-  "plumBatteryLayer": "above_foreground_masks",
+  "plumBatteryLayer": "above_plum_foreground_mask_below_hands",
   "scene": {
     "cycleMinutes": 43,
     "cycleOffsetMinutes": 32,
@@ -800,6 +800,32 @@
       "otherRoute": "plum_walk",
       "estimatedHandLandingsPerDay": 6.089
     },
+    "tigerPerchAnchors": {
+      "LARGE": [
+        335.0,
+        233.0
+      ],
+      "SMALL": [
+        340.0,
+        235.0
+      ]
+    },
+    "layerOrder": [
+      "background",
+      "readout_hanji_patch",
+      "plum_birds",
+      "plum_foreground_mask",
+      "plum_battery_stage",
+      "hour_hand",
+      "minute_hand",
+      "pine_foreground_mask",
+      "tiger_body_foreground_mask",
+      "tiger_head_and_pupils",
+      "tiger_reaction",
+      "tiger_birds_and_exit",
+      "bird_animations",
+      "live_text"
+    ],
     "stateless": true
   },
   "liveData": [
@@ -817,9 +843,9 @@
     "SECOND_MILLISECOND"
   ],
   "memoryEstimate": {
-    "staticDecodedBytes": 6176672,
-    "animatedDecodedBytes": 6512768,
-    "interactiveDecodedBytes": 12689440,
+    "staticDecodedBytes": 6106788,
+    "animatedDecodedBytes": 6098320,
+    "interactiveDecodedBytes": 12205108,
     "officialInteractiveBudgetBytes": 104857600,
     "officialAmbientBudgetBytes": 10485760
   }

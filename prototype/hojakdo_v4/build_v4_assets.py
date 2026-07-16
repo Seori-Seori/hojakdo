@@ -30,7 +30,11 @@ MANIFEST_PATH = V4_ROOT / "manifest.json"
 
 PIVOT = (224.0, 207.0)
 HOUR_ANCHOR = (302.0, 148.0)
-SMALL_FLIGHT_WIDTH = 100
+# Match the flying pose to the 61 px-tall approved small static magpie. The
+# former 100x78 resource made the character grow visibly at takeoff/exit.
+SMALL_FLIGHT_WIDTH = 70
+LARGE_TIGER_FOOT = (335.0, 233.0)
+SMALL_TIGER_FOOT = (340.0, 235.0)
 FRAME_DURATION_MS = 125
 FPS = 1000 / FRAME_DURATION_MS
 READOUT_CENTER_X = FACE_SIZE // 2
@@ -609,26 +613,29 @@ def _animation_specs(
     specs["magpie_large_walk_step"] = _pose_sequence(
         large_sprite,
         large_anchor,
-        [(x, y - (3 if index in {2, 5} else 0)) for index, (x, y) in enumerate(large_walk)],
+        [
+            (x, y - (3 if index in {2, 5} else 0))
+            for index, (x, y) in enumerate(large_walk)
+        ],
         angles=(0, 2, 4, 1, -1, -3, -1, 0),
         scale_y=(1, 0.97, 1.02, 1, 0.97, 1.02, 1, 1),
     )
     specs["magpie_large_hop_to_tiger"] = _pose_sequence(
         large_sprite,
         large_anchor,
-        _curve((281, 310), (335, 233), 8, 24),
+        _curve((281, 310), LARGE_TIGER_FOOT, 8, 24),
         angles=(0, -2, -4, -2, 2, 4, 2, 0),
     )
     specs["magpie_large_exit_right_jump"] = _pose_sequence(
         large_sprite,
         large_anchor,
-        _curve((335, 233), (495, 175), 8, 26),
+        _curve(LARGE_TIGER_FOOT, (495, 175), 8, 26),
         angles=(0, -4, -7, -6, -3, 0, 2, 2),
     )
     specs["magpie_large_head_tilt"] = _pose_sequence(
         large_sprite,
         large_anchor,
-        [(335, 233)] * 7,
+        [LARGE_TIGER_FOOT] * 7,
         angles=(0, 1, 3, 4, 2, -1, 0),
     )
     specs["magpie_large_turn_perch"] = _pose_sequence(
@@ -667,41 +674,59 @@ def _animation_specs(
     specs["magpie_small_walk_step"] = _pose_sequence(
         small_sprite,
         small_anchor,
-        [(x, y - (2.2 if index in {2, 5} else 0)) for index, (x, y) in enumerate(small_walk)],
+        [
+            (x, y - (2.2 if index in {2, 5} else 0))
+            for index, (x, y) in enumerate(small_walk)
+        ],
         angles=(0, -2, -4, -1, 1, 3, 1, 0),
     )
     specs["magpie_small_hop_to_tiger"] = _pose_sequence(
         small_sprite,
         small_anchor,
-        _curve((284, 282), (340, 218), 8, 25),
+        _curve((284, 282), SMALL_TIGER_FOOT, 8, 25),
         angles=(0, 2, 4, 2, -2, -4, -2, 0),
         mirrors=(True,) * 8,
     )
     specs["magpie_small_head_scan"] = _pose_sequence(
         small_sprite,
         small_anchor,
-        [(340, 218)] * 8,
+        [SMALL_TIGER_FOOT] * 8,
         angles=(0, -3, -5, -2, 2, 5, 3, 0),
         mirrors=(True,) * 8,
     )
     specs["magpie_small_look_plum"] = _pose_sequence(
         small_sprite,
         small_anchor,
-        [(340, 218)] * 7,
+        [SMALL_TIGER_FOOT] * 7,
         angles=(0, 1, 4, 7, 5, 2, 0),
         mirrors=(True,) * 7,
     )
     specs["magpie_small_turn_hop"] = _pose_sequence(
         small_sprite,
         small_anchor,
-        [(340, 218), (340, 216), (340, 213), (340, 213), (340, 216), (340, 218)],
+        [
+            (340, 235),
+            (340, 233),
+            (340, 230),
+            (340, 230),
+            (340, 233),
+            (340, 235),
+        ],
         scale_x=(1.0, 0.58, 0.16, 0.16, 0.58, 1.0),
         mirrors=(True, True, True, False, False, False),
     )
     specs["magpie_small_peck_tiger_ear"] = _pose_sequence(
         small_sprite,
         small_anchor,
-        [(340, 218), (338, 220), (335, 224), (340, 218), (336, 223), (340, 218), (340, 218)],
+        [
+            (340, 235),
+            (338, 237),
+            (335, 241),
+            (340, 235),
+            (336, 240),
+            (340, 235),
+            (340, 235),
+        ],
         angles=(0, 4, 10, 0, 9, 2, 0),
         mirrors=(True,) * 7,
     )
@@ -818,6 +843,26 @@ def _compose_preview_face(
             source.convert("RGBA"), DATE_HANJI_OVERLAY_BOUNDS[:2]
         )
 
+    # Restore the plum branches and flowers first. Both clock hands must remain
+    # above the complete bloom or they disappear through the left half-dial.
+    masks_by_name = {str(mask["id"]): mask for mask in masks}
+    plum_mask = masks_by_name["plum_foreground_mask"]
+    with Image.open(DRAWABLE_DIR / str(plum_mask["resource"])) as source:
+        face.alpha_composite(
+            source.convert("RGBA"), tuple(plum_mask["placementLogical"])
+        )
+    selected_plum = next(
+        item
+        for item in plum
+        if int(item["minimumPercent"])
+        <= battery_percent
+        <= int(item["maximumPercent"])
+    )
+    with Image.open(DRAWABLE_DIR / str(selected_plum["resource"])) as source:
+        face.alpha_composite(
+            source.convert("RGBA"), tuple(selected_plum["placementLogical"])
+        )
+
     hour_angle = (hour * 60 + minute) * 0.5 - 50.232272878132
     minute_angle = (hour * 60 + minute) * 6.0 - 325.271003720479
     face.alpha_composite(
@@ -836,31 +881,17 @@ def _compose_preview_face(
             expand=False,
         )
     )
-    bird, anchor = small_flight
-    face.alpha_composite(bird, (round(357 - anchor[0]), round(156 - anchor[1])))
 
-    # Match the WFF foreground ordering in the static review. The battery plum
-    # must be applied after the bare-plum foreground mask; otherwise that mask
-    # restores the empty branches and hides every bloom stage at runtime.
-    for mask in masks:
+    for name in ("pine_foreground_mask", "tiger_body_foreground_mask"):
+        mask = masks_by_name[name]
         with Image.open(DRAWABLE_DIR / str(mask["resource"])) as source:
             face.alpha_composite(
                 source.convert("RGBA"), tuple(mask["placementLogical"])
             )
-    selected_plum = next(
-        item
-        for item in plum
-        if int(item["minimumPercent"])
-        <= battery_percent
-        <= int(item["maximumPercent"])
-    )
-    with Image.open(DRAWABLE_DIR / str(selected_plum["resource"])) as source:
-        face.alpha_composite(
-            source.convert("RGBA"), tuple(selected_plum["placementLogical"])
-        )
-
     face.alpha_composite(tiger_head)
     face.alpha_composite(tiger_pupils)
+    bird, anchor = small_flight
+    face.alpha_composite(bird, (round(357 - anchor[0]), round(156 - anchor[1])))
 
     draw = ImageDraw.Draw(face)
     ink = (31, 24, 17, 255)
@@ -961,7 +992,7 @@ def _render_preview(
     info.text((555, 91), "PRODUCTION INTEGRATION", font=_font(15, bold=True), fill=(194, 76, 42))
     info.line((555, 126, 900, 126), fill=(87, 72, 50), width=1)
     lines = (
-        "SMALL FLIGHT 100 x 78",
+        "SMALL FLIGHT 70 x 54",
         "HOUR HAND +24% / -12%",
         "TITLE + SEAL INSIDE DIAL",
         "LIVE TIME / DATE / WEEKDAY",
@@ -1152,7 +1183,7 @@ def build() -> dict[str, object]:
         "foregroundMasks": masks,
         "animations": animations,
         "plumBatteryStages": plum,
-        "plumBatteryLayer": "above_foreground_masks",
+        "plumBatteryLayer": "above_plum_foreground_mask_below_hands",
         "scene": {
             "cycleMinutes": 43,
             "cycleOffsetMinutes": 32,
@@ -1164,6 +1195,26 @@ def build() -> dict[str, object]:
                 "otherRoute": "plum_walk",
                 "estimatedHandLandingsPerDay": round(1440 / 43 * 2 / 11, 3),
             },
+            "tigerPerchAnchors": {
+                "LARGE": [round(value, 3) for value in LARGE_TIGER_FOOT],
+                "SMALL": [round(value, 3) for value in SMALL_TIGER_FOOT],
+            },
+            "layerOrder": [
+                "background",
+                "readout_hanji_patch",
+                "plum_birds",
+                "plum_foreground_mask",
+                "plum_battery_stage",
+                "hour_hand",
+                "minute_hand",
+                "pine_foreground_mask",
+                "tiger_body_foreground_mask",
+                "tiger_head_and_pupils",
+                "tiger_reaction",
+                "tiger_birds_and_exit",
+                "bird_animations",
+                "live_text",
+            ],
             "stateless": True,
         },
         "liveData": [

@@ -6,19 +6,19 @@
   "thumbnail": "magpie_small_hop_to_tiger_thumbnail.png",
   "placementLogical": [
     250,
-    167
+    180
   ],
   "sizeLogical": [
     113,
-    130
+    117
   ],
   "anchorX": 0,
   "anchorY": 0,
   "anchorSemantics": "common_frame_canvas_top_left",
   "cropX": 250,
-  "cropY": 167,
+  "cropY": 180,
   "cropWidth": 113,
-  "cropHeight": 130,
+  "cropHeight": 117,
   "facing": "SCENE_DIRECTED",
   "startPose": "magpie_small_hop_to_tiger:frame_00",
   "endPose": "magpie_small_hop_to_tiger:frame_07",
@@ -26,6 +26,6 @@
   "frameCount": 8,
   "frameDurationMs": 125,
   "fps": 8.0,
-  "decodedBytesEstimate": 470080,
-  "sha256": "0cb0d4d1fb49a60ce8a04a581bc2ecc9a0a2adc96f53245afc6d4495831b7c91"
+  "decodedBytesEstimate": 423072,
+  "sha256": "7a46ba1cb455fdb9f1eac5befda76edbf815392c54d6248f74eb31ab001420db"
 }

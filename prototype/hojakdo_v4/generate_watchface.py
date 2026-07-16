@@ -112,12 +112,18 @@ def _pose_part(
     )
 
 
-def _small_exit_part() -> str:
+def _small_exit_part(
+    flight: dict[str, object], tiger_foot: tuple[int, int]
+) -> str:
     progress = "([SECOND_MILLISECOND] / 60)"
-    return f'''<PartImage name="small_exit_fixed_flight" x="277" y="150" width="100" height="78">
+    width, height = (int(value) for value in flight["sizeLogical"])
+    anchor_x, anchor_y = (float(value) for value in flight["anchorLogical"])
+    start_x = round(tiger_foot[0] - anchor_x)
+    start_y = round(tiger_foot[1] - anchor_y)
+    return f'''<PartImage name="small_exit_fixed_flight" x="{start_x}" y="{start_y}" width="{width}" height="{height}">
     <Image resource="magpie_small_flight_right_v4" />
-    <Transform target="x" value="277 + (204 * {progress})" />
-    <Transform target="y" value="150 - (163 * {progress}) + (96 * {progress} * {progress})" />
+    <Transform target="x" value="{start_x} + (204 * {progress})" />
+    <Transform target="y" value="{start_y} - (163 * {progress}) + (96 * {progress} * {progress})" />
     {_variant(0)}
 </PartImage>'''
 
@@ -236,6 +242,11 @@ def generate() -> str:
     animations = {item["id"]: item for item in manifest["animations"]}
     poses = {item["id"]: item for item in manifest["staticPoses"]}
     masks = {item["id"]: item for item in manifest["foregroundMasks"]}
+    small_flight = manifest["smallFlight"]
+    tiger_anchors = {
+        name: tuple(int(round(float(value))) for value in point)
+        for name, point in manifest["scene"]["tigerPerchAnchors"].items()
+    }
 
     plum_expressions: list[tuple[str, str, str]] = []
     for stage in manifest["plumBatteryStages"]:
@@ -324,51 +335,86 @@ def generate() -> str:
         "magpie_small_peck_tiger_ear": f"{CHAR_SMALL} && {CYCLE_LOCAL} == 14",
         "tiger_head_eye_reaction": f"{CYCLE_LOCAL} == 10",
     }
-    animation_condition = _condition(
+    walk_animation_names = {
+        "magpie_large_walk_step",
+        "magpie_small_walk_step",
+    }
+    walk_animation_condition = _condition(
         [
             (f"show_{name}", expression, _part_animation(animations[name]))
             for name, expression in animation_slots.items()
+            if name in walk_animation_names
+        ]
+    )
+    tiger_reaction_condition = _condition(
+        [
+            (
+                "show_tiger_head_eye_reaction",
+                animation_slots["tiger_head_eye_reaction"],
+                _part_animation(animations["tiger_head_eye_reaction"]),
+            )
+        ]
+    )
+    high_animation_condition = _condition(
+        [
+            (f"show_{name}", expression, _part_animation(animations[name]))
+            for name, expression in animation_slots.items()
+            if name not in walk_animation_names
+            and name != "tiger_head_eye_reaction"
         ]
     )
 
-    static_expressions = [
-        (
-            "large_plum_idle",
-            f"{CHAR_LARGE} && {ROUTE_PLUM} && {CYCLE_LOCAL} >= 3 && {CYCLE_LOCAL} <= 8",
-            _pose_part(
-                poses["magpie_large_walk_idle"], (151, 337), "large_plum_idle"
+    plum_static_condition = _condition(
+        [
+            (
+                "large_plum_idle",
+                f"{CHAR_LARGE} && {ROUTE_PLUM} && {CYCLE_LOCAL} >= 3 && {CYCLE_LOCAL} <= 8",
+                _pose_part(
+                    poses["magpie_large_walk_idle"],
+                    (151, 337),
+                    "large_plum_idle",
+                ),
             ),
-        ),
-        (
-            "small_plum_idle",
-            f"{CHAR_SMALL} && {ROUTE_PLUM} && {CYCLE_LOCAL} >= 3 && {CYCLE_LOCAL} <= 8",
-            _pose_part(
-                poses["magpie_small_walk_idle"], (155, 336), "small_plum_idle"
+            (
+                "small_plum_idle",
+                f"{CHAR_SMALL} && {ROUTE_PLUM} && {CYCLE_LOCAL} >= 3 && {CYCLE_LOCAL} <= 8",
+                _pose_part(
+                    poses["magpie_small_walk_idle"],
+                    (155, 336),
+                    "small_plum_idle",
+                ),
             ),
-        ),
-        (
-            "large_tiger_idle",
-            f"{CHAR_LARGE} && {CYCLE_LOCAL} >= 13 && {CYCLE_LOCAL} <= 40",
-            _pose_part(
-                poses["magpie_large_perch_tiger"], (335, 233), "large_tiger_idle"
+        ]
+    )
+    tiger_static_condition = _condition(
+        [
+            (
+                "large_tiger_idle",
+                f"{CHAR_LARGE} && ({CYCLE_LOCAL} == 10 || ({CYCLE_LOCAL} >= 13 && {CYCLE_LOCAL} <= 40))",
+                _pose_part(
+                    poses["magpie_large_perch_tiger"],
+                    tiger_anchors["LARGE"],
+                    "large_tiger_idle",
+                ),
             ),
-        ),
-        (
-            "small_tiger_idle",
-            f"{CHAR_SMALL} && {CYCLE_LOCAL} >= 15 && {CYCLE_LOCAL} <= 40",
-            _pose_part(
-                poses["magpie_small_perch_tiger"], (340, 218), "small_tiger_idle"
+            (
+                "small_tiger_idle",
+                f"{CHAR_SMALL} && ({CYCLE_LOCAL} == 10 || ({CYCLE_LOCAL} >= 15 && {CYCLE_LOCAL} <= 40))",
+                _pose_part(
+                    poses["magpie_small_perch_tiger"],
+                    tiger_anchors["SMALL"],
+                    "small_tiger_idle",
+                ),
             ),
-        ),
-        (
-            "small_exit_fixed_flight",
-            f"{CHAR_SMALL} && {CYCLE_LOCAL} == 41",
-            _small_exit_part(),
-        ),
-    ]
-    static_condition = _condition(static_expressions)
+            (
+                "small_exit_fixed_flight",
+                f"{CHAR_SMALL} && {CYCLE_LOCAL} == 41",
+                _small_exit_part(small_flight, tiger_anchors["SMALL"]),
+            ),
+        ]
+    )
 
-    mask_parts = []
+    mask_parts: dict[str, str] = {}
     for name in (
         "pine_foreground_mask",
         "plum_foreground_mask",
@@ -377,8 +423,8 @@ def generate() -> str:
         mask = masks[name]
         x, y = (int(value) for value in mask["placementLogical"])
         width, height = (int(value) for value in mask["sizeLogical"])
-        mask_parts.append(
-            _part_image(name, x, y, width, height, name=name, ambient_alpha=145)
+        mask_parts[name] = _part_image(
+            name, x, y, width, height, name=name, ambient_alpha=145
         )
 
     background = _part_image(
@@ -429,16 +475,23 @@ def generate() -> str:
         # The repair patch must never cover a rotating hand. Keep it directly
         # above the base background and below every decorative/runtime layer.
         readout_hanji_patch,
+        # Plum-walking birds remain among the near branches. The selected
+        # bloom is restored above that mask but still below both clock hands.
+        plum_static_condition,
+        walk_animation_condition,
+        mask_parts["plum_foreground_mask"],
+        _condition(plum_expressions),
         hour_group,
         minute_group,
-        static_condition,
-        animation_condition,
-        *mask_parts,
-        # The bare-plum foreground mask is intentionally above moving birds.
-        # Apply the selected bloom after it so 16-100% stages remain visible.
-        _condition(plum_expressions),
+        # Keep pine and tiger depth masks, but never let the plum bloom cover
+        # a branch hand. Tiger-perched birds are rendered after the head.
+        mask_parts["pine_foreground_mask"],
+        mask_parts["tiger_body_foreground_mask"],
         tiger_head,
         tiger_pupils,
+        tiger_reaction_condition,
+        tiger_static_condition,
+        high_animation_condition,
         _live_text(),
     ]
     xml = '''<?xml version="1.0" encoding="utf-8"?>

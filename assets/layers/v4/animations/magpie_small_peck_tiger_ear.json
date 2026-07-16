@@ -6,7 +6,7 @@
   "thumbnail": "magpie_small_peck_tiger_ear_thumbnail.png",
   "placementLogical": [
     300,
-    169
+    186
   ],
   "sizeLogical": [
     64,
@@ -16,7 +16,7 @@
   "anchorY": 0,
   "anchorSemantics": "common_frame_canvas_top_left",
   "cropX": 300,
-  "cropY": 169,
+  "cropY": 186,
   "cropWidth": 64,
   "cropHeight": 66,
   "facing": "SCENE_DIRECTED",

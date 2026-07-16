@@ -65,11 +65,11 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         self.assertEqual("4.0.0", self.manifest["version"])
         self.assertEqual("v4_complete_production_candidate", self.manifest["status"])
         flight = self.manifest["smallFlight"]
-        self.assertEqual([100, 78], flight["sizeLogical"])
+        self.assertEqual([70, 54], flight["sizeLogical"])
         self.assertEqual(0, flight["wingFlaps"])
         self.assertEqual("fixed_whole_sprite_translation", flight["motion"])
         with Image.open(DRAWABLE_DIR / flight["resource"]) as image:
-            self.assertEqual((100, 78), image.size)
+            self.assertEqual((70, 54), image.size)
             self.assertIsNotNone(image.convert("RGBA").getchannel("A").getbbox())
 
     def test_six_static_poses_and_three_masks_are_complete(self) -> None:
@@ -132,7 +132,10 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             )
             self.assertTrue((DRAWABLE_DIR / item["resource"]).is_file())
         self.assertEqual(list(range(101)), coverage)
-        self.assertEqual("above_foreground_masks", self.manifest["plumBatteryLayer"])
+        self.assertEqual(
+            "above_plum_foreground_mask_below_hands",
+            self.manifest["plumBatteryLayer"],
+        )
         with Image.open(DRAWABLE_DIR / stages[-1]["resource"]) as source:
             full_bloom = np.asarray(source.convert("RGBA"), dtype=np.uint8)
         self.assertGreater(int((full_bloom[..., 3] > 0).sum()), 9000)
@@ -141,6 +144,14 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         self.assertGreater(
             xml.index('name="plum_stage_5"'),
             xml.index('name="plum_foreground_mask"'),
+        )
+        self.assertLess(
+            xml.index('name="plum_stage_5"'),
+            xml.index('name="hour_hand_group"'),
+        )
+        self.assertLess(
+            xml.index('name="plum_stage_5"'),
+            xml.index('name="minute_hand_group"'),
         )
         stage_five = next(
             expression
@@ -197,6 +208,38 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         self.assertLess(patch_index, xml.index('name="hour_hand_group"'))
         self.assertLess(patch_index, xml.index('name="minute_hand_group"'))
         self.assertGreater(live_index, xml.index('name="tiger_pupils"'))
+        self.assertLess(
+            xml.index('name="tiger_head"'),
+            xml.index('name="large_tiger_idle"'),
+        )
+        self.assertLess(
+            xml.index('name="tiger_head"'),
+            xml.index('name="small_tiger_idle"'),
+        )
+        self.assertEqual(
+            {"LARGE": [335.0, 233.0], "SMALL": [340.0, 235.0]},
+            self.manifest["scene"]["tigerPerchAnchors"],
+        )
+        small_exit = next(
+            part
+            for part in self.root.findall(".//PartImage")
+            if part.attrib.get("name") == "small_exit_fixed_flight"
+        )
+        self.assertEqual(
+            ("293", "200", "70", "54"),
+            tuple(
+                small_exit.attrib[key]
+                for key in ("x", "y", "width", "height")
+            ),
+        )
+        self.assertLess(
+            xml.index('name="tiger_head_eye_reaction"'),
+            xml.index('name="small_tiger_idle"'),
+        )
+        self.assertLess(
+            xml.index('name="small_tiger_idle"'),
+            xml.index('name="magpie_small_hop_to_tiger"'),
+        )
         live_parts = {
             part.attrib["name"]: part.attrib for part in self.root.findall(".//PartText")
         }
@@ -283,7 +326,9 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             (plum_pixels[..., 0] - plum_pixels[..., 1] > 60)
             & (plum_pixels[..., 0] - plum_pixels[..., 2] > 75)
         )
-        self.assertGreater(int(visible_blossoms.sum()), 2000)
+        # The hands now correctly cross above the full bloom, so a small number
+        # of blossom pixels are intentionally occluded in this 05:24 frame.
+        self.assertGreater(int(visible_blossoms.sum()), 1800)
 
         quiet_zone = self.manifest["readoutQuietZone"]
         self.assertEqual(
