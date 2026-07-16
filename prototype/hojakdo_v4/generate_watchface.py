@@ -426,17 +426,19 @@ def generate() -> str:
     )
     scene_parts = [
         background,
-        _condition(plum_expressions),
+        # The repair patch must never cover a rotating hand. Keep it directly
+        # above the base background and below every decorative/runtime layer.
+        readout_hanji_patch,
         hour_group,
         minute_group,
         static_condition,
         animation_condition,
         *mask_parts,
+        # The bare-plum foreground mask is intentionally above moving birds.
+        # Apply the selected bloom after it so 16-100% stages remain visible.
+        _condition(plum_expressions),
         tiger_head,
         tiger_pupils,
-        # Replace the live-date coordinates after every decorative layer, then
-        # keep live data above that final hanji backing.
-        readout_hanji_patch,
         _live_text(),
     ]
     xml = '''<?xml version="1.0" encoding="utf-8"?>

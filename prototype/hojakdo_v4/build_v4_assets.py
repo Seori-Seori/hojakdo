@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Iterable, Sequence
 
 import numpy as np
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 from scipy import ndimage
 
 from prototype.hojakdo_v2.render_prototype import FACE_SIZE, PrototypeRenderer
@@ -38,6 +38,17 @@ READOUT_SHIFT = (0, 20)
 DATE_CLOUD_CLEANUP_BOUNDS = (198, 250, 252, 300)
 DATE_HANJI_OVERLAY_BOUNDS = (188, 272, 270, 294)
 PINE_SPRIG_CLEANUP_BOUNDS = (282, 158, 306, 181)
+TIGER_HIND_LEG_GHOST_POLYGON = (
+    (195, 320),
+    (220, 309),
+    (231, 329),
+    (227, 380),
+    (222, 414),
+    (199, 414),
+    (191, 391),
+    (192, 345),
+)
+TIGER_HIND_LEG_GHOST_BOUNDS = (191, 309, 231, 414)
 
 
 @dataclass(frozen=True)
@@ -128,6 +139,43 @@ def _replace_paper_texture(
         target * (1.0 - patch_alpha[..., None])
         + donor * patch_alpha[..., None]
     )
+
+
+def _repair_tiger_hind_leg_ghost(background: Image.Image) -> Image.Image:
+    """Replace the exposed 100% tiger leg rim with the approved 94% source."""
+    with Image.open(REPO_ROOT / "assets/layers/mvp/clean_background.png") as source:
+        original = source.convert("RGBA").resize(
+            (FACE_SIZE, FACE_SIZE), Image.Resampling.LANCZOS
+        )
+
+    scale = 0.94
+    anchor_x, anchor_y = (300.0, 429.0)
+    inverse = 1.0 / scale
+    scaled = original.transform(
+        original.size,
+        Image.Transform.AFFINE,
+        (
+            inverse,
+            0.0,
+            anchor_x - anchor_x * inverse,
+            0.0,
+            inverse,
+            anchor_y - anchor_y * inverse,
+        ),
+        resample=Image.Resampling.BICUBIC,
+        fillcolor=(0, 0, 0, 0),
+    )
+
+    # V2.2's soft body window stopped just inside the old rear-leg outline,
+    # leaving a second pale/dark contour to the left of the approved 94% leg.
+    # Pull only that narrow contour from the correctly scaled source. Keep the
+    # live battery footprint outside the repair even at the feathered edge.
+    mask = Image.new("L", (FACE_SIZE, FACE_SIZE), 0)
+    draw = ImageDraw.Draw(mask)
+    draw.polygon(TIGER_HIND_LEG_GHOST_POLYGON, fill=255)
+    draw.rectangle((184, 414, 282, 449), fill=0)
+    mask = mask.filter(ImageFilter.GaussianBlur(radius=3.0))
+    return Image.composite(scaled, background.convert("RGBA"), mask).convert("RGB")
 
 
 def _remove_embedded_ui(background: Image.Image) -> Image.Image:
@@ -744,7 +792,7 @@ def _build_readout_hanji_patch(background: Image.Image) -> dict[str, object]:
         "placementLogical": [x0, y0],
         "sizeLogical": [x1 - x0, y1 - y0],
         "sha256": _sha256(path),
-        "layer": "above_all_decorations_below_live_text",
+        "layer": "above_background_below_hands_and_decorations",
         "ambientBehavior": "hidden_clean_background_remains",
     }
 
@@ -757,13 +805,18 @@ def _compose_preview_face(
     tiger_pupils: Image.Image,
     small_flight: tuple[Image.Image, tuple[float, float]],
     plum: list[dict[str, object]],
+    masks: list[dict[str, object]],
     hour: int,
     minute: int,
+    battery_percent: int = 85,
 ) -> Image.Image:
     face = background.convert("RGBA")
-    full_bloom = plum[-1]
-    with Image.open(DRAWABLE_DIR / str(full_bloom["resource"])) as source:
-        face.alpha_composite(source.convert("RGBA"), tuple(full_bloom["placementLogical"]))
+    # The hanji backing belongs directly above the repaired background. Hands,
+    # characters, masks, and live text must all remain visible above it.
+    with Image.open(DRAWABLE_DIR / "hojakdo_v4_readout_hanji_patch.png") as source:
+        face.alpha_composite(
+            source.convert("RGBA"), DATE_HANJI_OVERLAY_BOUNDS[:2]
+        )
 
     hour_angle = (hour * 60 + minute) * 0.5 - 50.232272878132
     minute_angle = (hour * 60 + minute) * 6.0 - 325.271003720479
@@ -785,14 +838,29 @@ def _compose_preview_face(
     )
     bird, anchor = small_flight
     face.alpha_composite(bird, (round(357 - anchor[0]), round(156 - anchor[1])))
+
+    # Match the WFF foreground ordering in the static review. The battery plum
+    # must be applied after the bare-plum foreground mask; otherwise that mask
+    # restores the empty branches and hides every bloom stage at runtime.
+    for mask in masks:
+        with Image.open(DRAWABLE_DIR / str(mask["resource"])) as source:
+            face.alpha_composite(
+                source.convert("RGBA"), tuple(mask["placementLogical"])
+            )
+    selected_plum = next(
+        item
+        for item in plum
+        if int(item["minimumPercent"])
+        <= battery_percent
+        <= int(item["maximumPercent"])
+    )
+    with Image.open(DRAWABLE_DIR / str(selected_plum["resource"])) as source:
+        face.alpha_composite(
+            source.convert("RGBA"), tuple(selected_plum["placementLogical"])
+        )
+
     face.alpha_composite(tiger_head)
     face.alpha_composite(tiger_pupils)
-    # This final backing replaces the date coordinates after every decorative
-    # layer has been composed. Live text is drawn immediately afterward.
-    with Image.open(DRAWABLE_DIR / "hojakdo_v4_readout_hanji_patch.png") as source:
-        face.alpha_composite(
-            source.convert("RGBA"), DATE_HANJI_OVERLAY_BOUNDS[:2]
-        )
 
     draw = ImageDraw.Draw(face)
     ink = (31, 24, 17, 255)
@@ -809,7 +877,7 @@ def _compose_preview_face(
     )
     _draw_centered(draw, 293, "WED", _font(9, bold=True), ink, READOUT_CENTER_X)
     battery_font = _font(12, bold=True)
-    battery_text = "85%"
+    battery_text = f"{battery_percent}%"
     battery_box = draw.textbbox((0, 0), battery_text, font=battery_font)
     battery_width = battery_box[2] - battery_box[0]
     x = 226 - battery_width / 2
@@ -828,6 +896,7 @@ def _render_preview(
     tiger_pupils: Image.Image,
     small_flight: tuple[Image.Image, tuple[float, float]],
     plum: list[dict[str, object]],
+    masks: list[dict[str, object]],
 ) -> None:
     face = _compose_preview_face(
         background,
@@ -837,6 +906,7 @@ def _render_preview(
         tiger_pupils,
         small_flight,
         plum,
+        masks,
         14,
         18,
     )
@@ -855,11 +925,33 @@ def _render_preview(
         tiger_pupils,
         small_flight,
         plum,
+        masks,
         12,
         0,
     )
     _save_rgb_png(
         hands_up, OUTPUT_DIR / "hojakdo_v4_readout_cleanup_review.png"
+    )
+
+    # Reproduce the first emulator report: 05:24, battery 100%. This single
+    # frame exposes all three regressions (rear-leg ghost, clipped hands, and
+    # the hidden full-bloom layer) without depending on an Android renderer.
+    emulator_review = _compose_preview_face(
+        background,
+        hour_branch,
+        minute_branch,
+        tiger_head,
+        tiger_pupils,
+        small_flight,
+        plum,
+        masks,
+        5,
+        24,
+        battery_percent=100,
+    )
+    _save_rgb_png(
+        emulator_review,
+        OUTPUT_DIR / "hojakdo_v4_emulator_regression_review.png",
     )
 
     board = Image.new("RGB", (940, 540), (20, 17, 13))
@@ -932,7 +1024,9 @@ def build() -> dict[str, object]:
 
     calculator = HojakdoSceneCalculator()
     renderer = PrototypeRenderer(calculator)
-    background = _remove_embedded_ui(_polished_background(renderer.background))
+    background = _remove_embedded_ui(
+        _repair_tiger_hind_leg_ghost(_polished_background(renderer.background))
+    )
     hour_branch = _polished_hour_hand(renderer.hour_branch, PIVOT, HOUR_ANCHOR)
     minute_branch = renderer.minute_branch.copy()
     tiger_head = renderer.tiger_head.copy()
@@ -1039,7 +1133,10 @@ def build() -> dict[str, object]:
         "titleSealShiftLogical": [-20, -3],
         "backgroundCleanup": {
             "pineSprigBoundsLogical": list(PINE_SPRIG_CLEANUP_BOUNDS),
-            "method": "color_matched_paper_texture",
+            "tigerHindLegGhostBoundsLogical": list(
+                TIGER_HIND_LEG_GHOST_BOUNDS
+            ),
+            "method": "color_matched_paper_texture_and_scaled_tiger_source",
         },
         "readoutHanjiPatch": readout_hanji_patch,
         "readoutQuietZone": {
@@ -1055,6 +1152,7 @@ def build() -> dict[str, object]:
         "foregroundMasks": masks,
         "animations": animations,
         "plumBatteryStages": plum,
+        "plumBatteryLayer": "above_foreground_masks",
         "scene": {
             "cycleMinutes": 43,
             "cycleOffsetMinutes": 32,
@@ -1102,6 +1200,7 @@ def build() -> dict[str, object]:
         tiger_pupils,
         (small_flight_sprite, small_flight_anchor),
         plum,
+        masks,
     )
     _render_catalog(animations)
     return manifest
@@ -1113,6 +1212,7 @@ def main() -> None:
     print(MANIFEST_PATH)
     print(OUTPUT_DIR / "hojakdo_v4_integrated_static.png")
     print(OUTPUT_DIR / "hojakdo_v4_readout_cleanup_review.png")
+    print(OUTPUT_DIR / "hojakdo_v4_emulator_regression_review.png")
     print(OUTPUT_DIR / "hojakdo_v4_review_board.png")
     print(OUTPUT_DIR / "hojakdo_v4_animation_catalog.png")
     print(

@@ -43,7 +43,13 @@
       306,
       181
     ],
-    "method": "color_matched_paper_texture"
+    "tigerHindLegGhostBoundsLogical": [
+      191,
+      309,
+      231,
+      414
+    ],
+    "method": "color_matched_paper_texture_and_scaled_tiger_source"
   },
   "readoutHanjiPatch": {
     "resource": "hojakdo_v4_readout_hanji_patch.png",
@@ -56,7 +62,7 @@
       22
     ],
     "sha256": "7623ad597c6918277584bb9caaeedae5cc8f0b50f829c71f69194c3a9dc3206b",
-    "layer": "above_all_decorations_below_live_text",
+    "layer": "above_background_below_hands_and_decorations",
     "ambientBehavior": "hidden_clean_background_remains"
   },
   "readoutQuietZone": {
@@ -183,7 +189,7 @@
         205,
         224
       ],
-      "sha256": "0a820a9a585290265d0269139d9ac18d3fd0af07d7d03c848f82a7d377b3fc15"
+      "sha256": "169411b87db37c76c4603c50d4030887695ce4ca9144c8686d05ad27d002d64d"
     },
     {
       "id": "pine_foreground_mask",
@@ -209,7 +215,7 @@
         266,
         181
       ],
-      "sha256": "2b7d5cc97aff953bc1409048e432f660d7b0b0a4e790e539a23f7bd1ef8ebe17"
+      "sha256": "53190d826f43db07e6a079866d44c02744f0c7d76ecaf26f94c9bf16b2119624"
     }
   ],
   "animations": [
@@ -782,6 +788,7 @@
       ]
     }
   ],
+  "plumBatteryLayer": "above_foreground_masks",
   "scene": {
     "cycleMinutes": 43,
     "cycleOffsetMinutes": 32,

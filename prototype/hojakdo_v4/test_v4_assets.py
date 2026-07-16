@@ -132,6 +132,25 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             )
             self.assertTrue((DRAWABLE_DIR / item["resource"]).is_file())
         self.assertEqual(list(range(101)), coverage)
+        self.assertEqual("above_foreground_masks", self.manifest["plumBatteryLayer"])
+        with Image.open(DRAWABLE_DIR / stages[-1]["resource"]) as source:
+            full_bloom = np.asarray(source.convert("RGBA"), dtype=np.uint8)
+        self.assertGreater(int((full_bloom[..., 3] > 0).sum()), 9000)
+
+        xml = WATCHFACE_PATH.read_text(encoding="utf-8")
+        self.assertGreater(
+            xml.index('name="plum_stage_5"'),
+            xml.index('name="plum_foreground_mask"'),
+        )
+        stage_five = next(
+            expression
+            for expression in self.root.findall(".//Expression")
+            if expression.attrib["name"] == "battery_stage_5"
+        )
+        self.assertEqual(
+            "[BATTERY_PERCENT] >= 81 && [BATTERY_PERCENT] <= 100",
+            (stage_five.text or "").strip(),
+        )
 
     def test_live_wff_connects_every_animation_and_data_source(self) -> None:
         animated_parts = self.root.findall(".//PartAnimatedImage")
@@ -174,8 +193,10 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         ):
             self.assertGreater(live_index, xml.index(decorative_part))
         patch_index = xml.index('name="readout_hanji_patch"')
-        self.assertGreater(patch_index, xml.index('name="tiger_pupils"'))
-        self.assertGreater(live_index, patch_index)
+        self.assertGreater(patch_index, xml.index('name="hojakdo_v4_background"'))
+        self.assertLess(patch_index, xml.index('name="hour_hand_group"'))
+        self.assertLess(patch_index, xml.index('name="minute_hand_group"'))
+        self.assertGreater(live_index, xml.index('name="tiger_pupils"'))
         live_parts = {
             part.attrib["name"]: part.attrib for part in self.root.findall(".//PartText")
         }
@@ -231,13 +252,22 @@ class HojakdoV4AssetsTest(unittest.TestCase):
     def test_review_outputs_exist_at_logical_resolution(self) -> None:
         static = OUTPUT_DIR / "hojakdo_v4_integrated_static.png"
         cleanup_review = OUTPUT_DIR / "hojakdo_v4_readout_cleanup_review.png"
+        emulator_review = OUTPUT_DIR / "hojakdo_v4_emulator_regression_review.png"
         board = OUTPUT_DIR / "hojakdo_v4_review_board.png"
         catalog = OUTPUT_DIR / "hojakdo_v4_animation_catalog.png"
-        for path in (static, cleanup_review, board, catalog, MANIFEST_PATH):
+        for path in (
+            static,
+            cleanup_review,
+            emulator_review,
+            board,
+            catalog,
+            MANIFEST_PATH,
+        ):
             self.assertTrue(path.is_file(), path)
         for path, expected_size in (
             (static, (450, 450)),
             (cleanup_review, (450, 450)),
+            (emulator_review, (450, 450)),
             (board, (940, 540)),
             (catalog, (1040, 740)),
         ):
@@ -245,6 +275,15 @@ class HojakdoV4AssetsTest(unittest.TestCase):
                 image.verify()
             with Image.open(path) as image:
                 self.assertEqual(expected_size, image.size)
+
+        with Image.open(emulator_review) as source:
+            emulator_pixels = np.asarray(source.convert("RGB"), dtype=np.int16)
+        plum_pixels = emulator_pixels[156:399, 25:183]
+        visible_blossoms = (
+            (plum_pixels[..., 0] - plum_pixels[..., 1] > 60)
+            & (plum_pixels[..., 0] - plum_pixels[..., 2] > 75)
+        )
+        self.assertGreater(int(visible_blossoms.sum()), 2000)
 
         quiet_zone = self.manifest["readoutQuietZone"]
         self.assertEqual(
@@ -261,11 +300,18 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             [282, 158, 306, 181],
             self.manifest["backgroundCleanup"]["pineSprigBoundsLogical"],
         )
+        self.assertEqual(
+            [191, 309, 231, 414],
+            self.manifest["backgroundCleanup"][
+                "tigerHindLegGhostBoundsLogical"
+            ],
+        )
         patch_metadata = self.manifest["readoutHanjiPatch"]
         self.assertEqual([188, 272], patch_metadata["placementLogical"])
         self.assertEqual([82, 22], patch_metadata["sizeLogical"])
         self.assertEqual(
-            "above_all_decorations_below_live_text", patch_metadata["layer"]
+            "above_background_below_hands_and_decorations",
+            patch_metadata["layer"],
         )
         with Image.open(DRAWABLE_DIR / str(patch_metadata["resource"])) as source:
             patch = np.asarray(source.convert("RGBA"), dtype=np.uint8)
@@ -291,11 +337,13 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         date_cloud = luma[255:295, 203:247]
         forced_date = luma[274:292, 190:268]
         pine_sprig = luma[163:176, 287:301]
+        tiger_hind_leg_ghost = luma[325:390, 195:210]
         self.assertLessEqual(int((readout < 145).sum()), 1)
         self.assertEqual(0, int((cloud_tail < 145).sum()))
         self.assertGreater(float(np.percentile(date_cloud, 1)), 164.0)
         self.assertEqual(0, int((forced_date < 145).sum()))
         self.assertEqual(0, int((pine_sprig < 145).sum()))
+        self.assertEqual(0, int((tiger_hind_leg_ghost < 130).sum()))
 
 
 if __name__ == "__main__":

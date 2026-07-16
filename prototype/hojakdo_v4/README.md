@@ -11,7 +11,9 @@
 - 매화: 배터리 5단계 정적 교체
 - 중앙 표시: 실시간 `HH:mm`, `MM.DD`, 대문자 요일
 - 중앙 표시: 구형 글자·구름선 제거 후 세로 20px를 내리고 가로 중심을 `x=225`에 정렬
-- 날짜 조용한 영역: 배경 복원에 더해 `(188, 272)~(270, 294)`를 모든 장식 위의 최종 한지 덮개로 강제 교체
+- 날짜 조용한 영역: 배경 복원에 더해 `(188, 272)~(270, 294)` 한지 덮개를 배경 바로 위·시침과 분침 아래에 배치
+- 호랑이: 94% 몸 뒤에 남은 원래 100% 뒷다리 외곽선 제거
+- 매화: 배터리 단계 꽃을 빈 가지 전경 가림막 위에 렌더해 100% 만개까지 실기기에서 유지
 - 상단 한지 여백: 고립된 솔잎 조각 `(282, 158)~(306, 181)`을 인접 종이 질감으로 복원
 - 하단 표시: 실시간 배터리 아이콘과 퍼센트
 
@@ -27,6 +29,7 @@ assets/layers/v4/
 prototype/hojakdo_v4/output/
   hojakdo_v4_integrated_static.png
   hojakdo_v4_readout_cleanup_review.png
+  hojakdo_v4_emulator_regression_review.png
   hojakdo_v4_review_board.png
   hojakdo_v4_animation_catalog.png
 ```
