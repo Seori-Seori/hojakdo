@@ -414,12 +414,13 @@ class DayReviewRenderer:
             self.layers["hojakdo_v4_readout_hanji_patch"],
             tuple(int(value) for value in patch["placementLogical"]),
         )
-        # Mirror the production WFF order: resolve every environmental mask
-        # and the tiger before either hand, then keep active birds above them.
+        # Mirror the production WFF order: restore the complete plum before
+        # its walking bird so neither branches nor battery blossoms can hide
+        # the bird. Resolve the remaining environment before both hands.
+        self._composite_plum_foreground(face)
         self._composite_plum_bird(face, state)
         if state.animation is not None and state.animation.endswith("_walk_step"):
             self._composite_animation(face, state, animation_frame)
-        self._composite_plum_foreground(face)
         self._composite_pine_and_tiger(face, state, animation_frame)
         self._composite_hand(face, "hour", timestamp, state)
         self._composite_hand(face, "minute", timestamp, state)

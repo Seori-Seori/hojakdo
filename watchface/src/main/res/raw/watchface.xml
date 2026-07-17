@@ -13,50 +13,6 @@
             <Variant mode="AMBIENT" target="alpha" value="0" />
         </PartImage>
 
-        <Condition>
-            <Expressions>
-                <Expression name="large_plum_idle"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 0) && (!(((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) || ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5))) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) >= 3 && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) <= 8]]></Expression>
-                <Expression name="small_plum_idle"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && (!(((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) || ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5))) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) >= 3 && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) <= 8]]></Expression>
-            </Expressions>
-            <Compare expression="large_plum_idle">
-                <PartImage name="large_plum_idle" x="92" y="268" width="88" height="98">
-                    <Image resource="magpie_large_walk_idle" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartImage>
-            </Compare>
-            <Compare expression="small_plum_idle">
-                <PartImage name="small_plum_idle" x="133" y="288" width="54" height="60">
-                    <Image resource="magpie_small_walk_idle" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartImage>
-            </Compare>
-        </Condition>
-
-        <Condition>
-            <Expressions>
-                <Expression name="show_magpie_large_walk_step"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 0) && (!(((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) || ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5))) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 2]]></Expression>
-                <Expression name="show_magpie_small_walk_step"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && (!(((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) || ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5))) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 2]]></Expression>
-            </Expressions>
-            <Compare expression="show_magpie_large_walk_step">
-                <PartAnimatedImage name="magpie_large_walk_step" x="35" y="265" width="146" height="119">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
-                    <AnimatedImage resource="magpie_large_walk_step" format="AGIF" thumbnail="magpie_large_walk_step_thumbnail" />
-                    <Thumbnail resource="magpie_large_walk_step_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
-            </Compare>
-            <Compare expression="show_magpie_small_walk_step">
-                <PartAnimatedImage name="magpie_small_walk_step" x="67" y="287" width="123" height="82">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
-                    <AnimatedImage resource="magpie_small_walk_step" format="AGIF" thumbnail="magpie_small_walk_step_thumbnail" />
-                    <Thumbnail resource="magpie_small_walk_step_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
-            </Compare>
-        </Condition>
-
         <PartImage name="plum_foreground_mask" x="0" y="226" width="205" height="224">
             <Image resource="plum_foreground_mask" />
             <Variant mode="AMBIENT" target="alpha" value="145" />
@@ -99,6 +55,50 @@
                     <Image resource="plum_battery_stage_05" />
                     <Variant mode="AMBIENT" target="alpha" value="133" />
                 </PartImage>
+            </Compare>
+        </Condition>
+
+        <Condition>
+            <Expressions>
+                <Expression name="large_plum_idle"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 0) && (!(((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) || ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5))) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) >= 3 && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) <= 8]]></Expression>
+                <Expression name="small_plum_idle"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && (!(((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) || ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5))) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) >= 3 && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) <= 8]]></Expression>
+            </Expressions>
+            <Compare expression="large_plum_idle">
+                <PartImage name="large_plum_idle" x="92" y="268" width="88" height="98">
+                    <Image resource="magpie_large_walk_idle" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartImage>
+            </Compare>
+            <Compare expression="small_plum_idle">
+                <PartImage name="small_plum_idle" x="133" y="288" width="54" height="60">
+                    <Image resource="magpie_small_walk_idle" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartImage>
+            </Compare>
+        </Condition>
+
+        <Condition>
+            <Expressions>
+                <Expression name="show_magpie_large_walk_step"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 0) && (!(((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) || ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5))) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 2]]></Expression>
+                <Expression name="show_magpie_small_walk_step"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && (!(((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) || ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5))) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 2]]></Expression>
+            </Expressions>
+            <Compare expression="show_magpie_large_walk_step">
+                <PartAnimatedImage name="magpie_large_walk_step" x="35" y="265" width="146" height="119">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+                    <AnimatedImage resource="magpie_large_walk_step" format="AGIF" thumbnail="magpie_large_walk_step_thumbnail" />
+                    <Thumbnail resource="magpie_large_walk_step_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
+            </Compare>
+            <Compare expression="show_magpie_small_walk_step">
+                <PartAnimatedImage name="magpie_small_walk_step" x="67" y="287" width="123" height="82">
+                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
+                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
+                    <AnimatedImage resource="magpie_small_walk_step" format="AGIF" thumbnail="magpie_small_walk_step_thumbnail" />
+                    <Thumbnail resource="magpie_small_walk_step_thumbnail" />
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                </PartAnimatedImage>
             </Compare>
         </Condition>
 

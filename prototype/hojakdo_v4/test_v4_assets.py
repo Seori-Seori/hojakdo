@@ -153,6 +153,37 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             xml.index('name="plum_stage_5"'),
             xml.index('name="minute_hand_group"'),
         )
+        plum_stage_index = xml.index('name="plum_stage_5"')
+        hour_index = xml.index('name="hour_hand_group"')
+        minute_index = xml.index('name="minute_hand_group"')
+        for bird_part in (
+            'name="large_plum_idle"',
+            'name="small_plum_idle"',
+            'name="magpie_large_walk_step"',
+            'name="magpie_small_walk_step"',
+        ):
+            bird_index = xml.index(bird_part)
+            self.assertGreater(bird_index, plum_stage_index)
+            self.assertLess(bird_index, hour_index)
+            self.assertLess(bird_index, minute_index)
+        self.assertEqual(
+            [
+                "background",
+                "readout_hanji_patch",
+                "plum_foreground_mask",
+                "plum_battery_stage",
+                "plum_birds",
+                "pine_foreground_mask",
+                "tiger_body_foreground_mask",
+                "tiger_head_or_reaction",
+                "hour_hand",
+                "minute_hand",
+                "tiger_birds_and_exit",
+                "bird_animations",
+                "live_text",
+            ],
+            self.manifest["scene"]["layerOrder"],
+        )
         stage_five = next(
             expression
             for expression in self.root.findall(".//Expression")

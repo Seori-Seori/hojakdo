@@ -1207,9 +1207,9 @@ def build() -> dict[str, object]:
             "layerOrder": [
                 "background",
                 "readout_hanji_patch",
-                "plum_birds",
                 "plum_foreground_mask",
                 "plum_battery_stage",
+                "plum_birds",
                 "pine_foreground_mask",
                 "tiger_body_foreground_mask",
                 "tiger_head_or_reaction",

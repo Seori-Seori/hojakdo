@@ -518,12 +518,13 @@ def generate() -> str:
         # The repair patch must never cover a rotating hand. Keep it directly
         # above the base background and below every decorative/runtime layer.
         readout_hanji_patch,
-        # Plum-walking birds remain among the near branches. The selected
-        # bloom is restored above that mask but still below both clock hands.
-        plum_static_condition,
-        walk_animation_condition,
+        # Restore the complete plum first, then keep both the walking
+        # animation and its idle pose visibly in front of every branch and
+        # battery-driven blossom. All of these layers remain below the hands.
         mask_parts["plum_foreground_mask"],
         _condition(plum_expressions),
+        plum_static_condition,
+        walk_animation_condition,
         # Resolve all environmental depth before the hands. The previous
         # order left the pine mask above a down-left minute hand, making it
         # disappear around frames such as 11:42.
