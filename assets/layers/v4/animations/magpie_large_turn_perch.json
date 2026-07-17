@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "magpie_large_turn_perch",
+  "format": "AGIF",
+  "resource": "magpie_large_turn_perch.gif",
+  "thumbnail": "magpie_large_turn_perch_thumbnail.png",
+  "placementLogical": [
+    276,
+    158
+  ],
+  "sizeLogical": [
+    119,
+    107
+  ],
+  "anchorX": 0,
+  "anchorY": 0,
+  "anchorSemantics": "common_frame_canvas_top_left",
+  "cropX": 276,
+  "cropY": 158,
+  "cropWidth": 119,
+  "cropHeight": 107,
+  "facing": "SCENE_DIRECTED",
+  "startPose": "magpie_large_turn_perch:frame_00",
+  "endPose": "magpie_large_turn_perch:frame_05",
+  "loopCount": 1,
+  "frameCount": 6,
+  "frameDurationMs": 125,
+  "fps": 8.0,
+  "decodedBytesEstimate": 305592,
+  "sha256": "6946aafed7982a7a71a6b399f4d50ef31a042a7ca6fc0f6d6261dfaf27916d79"
+}

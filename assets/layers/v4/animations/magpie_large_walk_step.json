@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "magpie_large_walk_step",
+  "format": "AGIF",
+  "resource": "magpie_large_walk_step.gif",
+  "thumbnail": "magpie_large_walk_step_thumbnail.png",
+  "placementLogical": [
+    35,
+    265
+  ],
+  "sizeLogical": [
+    146,
+    119
+  ],
+  "anchorX": 0,
+  "anchorY": 0,
+  "anchorSemantics": "common_frame_canvas_top_left",
+  "cropX": 35,
+  "cropY": 265,
+  "cropWidth": 146,
+  "cropHeight": 119,
+  "facing": "SCENE_DIRECTED",
+  "startPose": "magpie_large_walk_step:frame_00",
+  "endPose": "magpie_large_walk_step:frame_07",
+  "loopCount": 1,
+  "frameCount": 8,
+  "frameDurationMs": 125,
+  "fps": 8.0,
+  "decodedBytesEstimate": 555968,
+  "sha256": "4d671aee378de6b33cb4104ad89ad11a5e29e9fe4425ac9b808f6919fe8a3bdd"
+}

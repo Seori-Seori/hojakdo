@@ -1,6 +1,3 @@
-import java.awt.image.BufferedImage
-import javax.imageio.ImageIO
-
 plugins {
     id("com.android.application")
 }
@@ -13,8 +10,8 @@ android {
         applicationId = "com.seori.hojakdo"
         minSdk = 33
         targetSdk = 33
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 7
+        versionName = "4.3.0"
     }
 
     buildTypes {
@@ -30,24 +27,15 @@ android {
 }
 
 val generatedResDir = layout.buildDirectory.dir("generated/hojakdo-res")
-val sourceLayerDir = rootProject.file("assets/layers/mvp")
-val sourcePreview = rootProject.file("assets/hojakdo_basic_416.png")
-
-fun mirrorAroundAnchor(source: BufferedImage, anchorX: Double): BufferedImage {
-    val result = BufferedImage(source.width, source.height, BufferedImage.TYPE_INT_ARGB)
-    for (y in 0 until source.height) {
-        for (x in 0 until source.width) {
-            val targetX = kotlin.math.round(2.0 * anchorX - x).toInt()
-            if (targetX in 0 until source.width) {
-                result.setRGB(targetX, y, source.getRGB(x, y))
-            }
-        }
-    }
-    return result
-}
+val sourceLayerDir = rootProject.file("assets/layers/v4/drawable")
+val sourceAnimationDir = rootProject.file("assets/layers/v4/animations")
+val sourcePreview = rootProject.file(
+    "prototype/hojakdo_v4/output/hojakdo_v4_integrated_static.png"
+)
 
 val prepareHojakdoAssets by tasks.registering {
     inputs.dir(sourceLayerDir)
+    inputs.dir(sourceAnimationDir)
     inputs.file(sourcePreview)
     outputs.dir(generatedResDir)
 
@@ -55,35 +43,14 @@ val prepareHojakdoAssets by tasks.registering {
         val drawableDir = generatedResDir.get().dir("drawable-nodpi").asFile
         drawableDir.mkdirs()
 
-        val copied = listOf(
-            "clean_background",
-            "hour_branch",
-            "minute_branch",
-            "tiger_head",
-            "tiger_pupils"
-        )
-        copied.forEach { name ->
-            sourceLayerDir.resolve("$name.png").copyTo(drawableDir.resolve("$name.png"), overwrite = true)
-        }
-
-        sourceLayerDir.resolve("hour_magpie.png")
-            .copyTo(drawableDir.resolve("hour_magpie_normal.png"), overwrite = true)
-        sourceLayerDir.resolve("minute_magpie.png")
-            .copyTo(drawableDir.resolve("minute_magpie_normal.png"), overwrite = true)
-
-        val hourBird = ImageIO.read(sourceLayerDir.resolve("hour_magpie.png"))
-        val minuteBird = ImageIO.read(sourceLayerDir.resolve("minute_magpie.png"))
-
-        ImageIO.write(
-            mirrorAroundAnchor(hourBird, 305.0 * 1254.0 / 450.0),
-            "png",
-            drawableDir.resolve("hour_magpie_mirrored.png")
-        )
-        ImageIO.write(
-            mirrorAroundAnchor(minuteBird, 159.0 * 1254.0 / 450.0),
-            "png",
-            drawableDir.resolve("minute_magpie_mirrored.png")
-        )
+        sourceLayerDir.listFiles { file -> file.extension == "png" }
+            ?.forEach { file ->
+                file.copyTo(drawableDir.resolve(file.name), overwrite = true)
+            }
+        sourceAnimationDir.listFiles { file -> file.extension == "gif" }
+            ?.forEach { file ->
+                file.copyTo(drawableDir.resolve(file.name), overwrite = true)
+            }
 
         sourcePreview.copyTo(drawableDir.resolve("preview.png"), overwrite = true)
     }

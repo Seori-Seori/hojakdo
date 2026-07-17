@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "magpie_small_fly_pine_to_hand",
+  "format": "AGIF",
+  "resource": "magpie_small_fly_pine_to_hand.gif",
+  "thumbnail": "magpie_small_fly_pine_to_hand_thumbnail.png",
+  "placementLogical": [
+    54,
+    62
+  ],
+  "sizeLogical": [
+    141,
+    130
+  ],
+  "anchorX": 0,
+  "anchorY": 0,
+  "anchorSemantics": "common_frame_canvas_top_left",
+  "cropX": 54,
+  "cropY": 62,
+  "cropWidth": 141,
+  "cropHeight": 130,
+  "facing": "SCENE_DIRECTED",
+  "startPose": "magpie_small_fly_pine_to_hand:frame_00",
+  "endPose": "magpie_small_fly_pine_to_hand:frame_07",
+  "loopCount": 1,
+  "frameCount": 8,
+  "frameDurationMs": 125,
+  "fps": 8.0,
+  "decodedBytesEstimate": 586560,
+  "sha256": "feef24090b507057742149a49032c71a57b716fd16b4beb78a1fb47bd754e812"
+}

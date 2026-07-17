@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "tiger_head_eye_reaction",
+  "format": "AGIF",
+  "resource": "tiger_head_eye_reaction.gif",
+  "thumbnail": "tiger_head_eye_reaction_thumbnail.png",
+  "placementLogical": [
+    280,
+    222
+  ],
+  "sizeLogical": [
+    108,
+    108
+  ],
+  "anchorX": 0,
+  "anchorY": 0,
+  "anchorSemantics": "common_frame_canvas_top_left",
+  "cropX": 280,
+  "cropY": 222,
+  "cropWidth": 108,
+  "cropHeight": 108,
+  "facing": "SCENE_DIRECTED",
+  "startPose": "tiger_head_eye_reaction:frame_00",
+  "endPose": "tiger_head_eye_reaction:frame_06",
+  "loopCount": 1,
+  "frameCount": 7,
+  "frameDurationMs": 125,
+  "fps": 8.0,
+  "decodedBytesEstimate": 326592,
+  "sha256": "ba7bf2d1a2b3d5d692cd628f598befdf8a9f72a810caf5987d9306524e2884db"
+}

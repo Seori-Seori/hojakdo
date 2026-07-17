@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "version": "2.3",
+  "status": "approved_static_battery_plum",
+  "sourceCanvas": [
+    1254,
+    1254
+  ],
+  "logicalCanvas": [
+    450,
+    450
+  ],
+  "sourceCrop": [
+    70,
+    430,
+    520,
+    1150
+  ],
+  "backgroundComposite": "PLUM_STRUCTURE_MASK",
+  "structureDilationPixels": 5,
+  "baseBackground": "assets/layers/mvp/clean_background_v23.png",
+  "keepNumericBatteryIndicator": true,
+  "transition": "STATIC_LAYER_SWAP",
+  "animatedBloom": false,
+  "stages": [
+    {
+      "stage": 1,
+      "minimumPercent": 0,
+      "maximumPercent": 15,
+      "source": "assets/layers/source/environment/plum_battery_v23/plum_stage_01_bare.png",
+      "asset": null,
+      "positionSource": [
+        70,
+        430
+      ],
+      "sizeSource": [
+        0,
+        0
+      ],
+      "alphaPixels": 0
+    },
+    {
+      "stage": 2,
+      "minimumPercent": 16,
+      "maximumPercent": 35,
+      "source": "assets/layers/source/environment/plum_battery_v23/plum_stage_02_first_blooms.png",
+      "asset": "assets/layers/mvp/plum_battery_v23/plum_blossoms_stage_02.png",
+      "positionSource": [
+        177,
+        675
+      ],
+      "sizeSource": [
+        334,
+        313
+      ],
+      "alphaPixels": 17412
+    },
+    {
+      "stage": 3,
+      "minimumPercent": 36,
+      "maximumPercent": 55,
+      "source": "assets/layers/source/environment/plum_battery_v23/plum_stage_03_early_bloom.png",
+      "asset": "assets/layers/mvp/plum_battery_v23/plum_blossoms_stage_03.png",
+      "positionSource": [
+        95,
+        453
+      ],
+      "sizeSource": [
+        416,
+        631
+      ],
+      "alphaPixels": 35194
+    },
+    {
+      "stage": 4,
+      "minimumPercent": 56,
+      "maximumPercent": 80,
+      "source": "assets/layers/source/environment/plum_battery_v23/plum_stage_04_rich_bloom.png",
+      "asset": "assets/layers/mvp/plum_battery_v23/plum_blossoms_stage_04.png",
+      "positionSource": [
+        95,
+        453
+      ],
+      "sizeSource": [
+        416,
+        631
+      ],
+      "alphaPixels": 54635
+    },
+    {
+      "stage": 5,
+      "minimumPercent": 81,
+      "maximumPercent": 100,
+      "source": "assets/layers/source/environment/plum_battery_v23/plum_stage_05_full_bloom.png",
+      "asset": "assets/layers/mvp/plum_battery_v23/plum_blossoms_stage_05.png",
+      "positionSource": [
+        71,
+        435
+      ],
+      "sizeSource": [
+        440,
+        678
+      ],
+      "alphaPixels": 60645
+    }
+  ]
+}

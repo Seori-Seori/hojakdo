@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "magpie_large_exit_right_jump",
+  "format": "AGIF",
+  "resource": "magpie_large_exit_right_jump.gif",
+  "thumbnail": "magpie_large_exit_right_jump_thumbnail.png",
+  "placementLogical": [
+    276,
+    102
+  ],
+  "sizeLogical": [
+    174,
+    163
+  ],
+  "anchorX": 0,
+  "anchorY": 0,
+  "anchorSemantics": "common_frame_canvas_top_left",
+  "cropX": 276,
+  "cropY": 102,
+  "cropWidth": 174,
+  "cropHeight": 163,
+  "facing": "SCENE_DIRECTED",
+  "startPose": "magpie_large_exit_right_jump:frame_00",
+  "endPose": "magpie_large_exit_right_jump:frame_07",
+  "loopCount": 1,
+  "frameCount": 8,
+  "frameDurationMs": 125,
+  "fps": 8.0,
+  "decodedBytesEstimate": 907584,
+  "sha256": "5294653312de63094e7d00f339426439a9a79a5de525ac1f246fef57ccae4734"
+}

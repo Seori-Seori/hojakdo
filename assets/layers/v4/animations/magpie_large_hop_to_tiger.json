@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "magpie_large_hop_to_tiger",
+  "format": "AGIF",
+  "resource": "magpie_large_hop_to_tiger.gif",
+  "thumbnail": "magpie_large_hop_to_tiger_thumbnail.png",
+  "placementLogical": [
+    222,
+    162
+  ],
+  "sizeLogical": [
+    143,
+    180
+  ],
+  "anchorX": 0,
+  "anchorY": 0,
+  "anchorSemantics": "common_frame_canvas_top_left",
+  "cropX": 222,
+  "cropY": 162,
+  "cropWidth": 143,
+  "cropHeight": 180,
+  "facing": "SCENE_DIRECTED",
+  "startPose": "magpie_large_hop_to_tiger:frame_00",
+  "endPose": "magpie_large_hop_to_tiger:frame_07",
+  "loopCount": 1,
+  "frameCount": 8,
+  "frameDurationMs": 125,
+  "fps": 8.0,
+  "decodedBytesEstimate": 823680,
+  "sha256": "17151838afcedd8cc47cefbc183dfca5ece574b3eba187b2cc39af90a798fd59"
+}

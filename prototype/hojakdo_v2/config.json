@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 6,
+  "version": "3.1",
+  "status": "approved_v3_1_fixed_small_magpie_flight",
+  "logicalCanvas": {
+    "width": 450,
+    "height": 450
+  },
+  "timeline": {
+    "epoch": "2026-01-01T00:00:00",
+    "cycleMinutes": 43,
+    "cycleOffsetMinutes": 32,
+    "hiddenMinutes": 2
+  },
+  "durationsMinutes": {
+    "spawnPine": 1,
+    "flyPineToHand": 1,
+    "landOnHand": 1,
+    "perchHand": 1,
+    "waitHandMeet": 1,
+    "hopHandToHand": 1,
+    "spawnPlum": 2,
+    "landOnTiger": 1,
+    "perchTiger": 3,
+    "exitRight": 1,
+    "minimumHourRide": 5,
+    "minimumMinuteRideAfterTransfer": 4,
+    "longRideThreshold": 8
+  },
+  "geometry": {
+    "clockPivot": [224, 207],
+    "hourHandAngleOffset": -50.232272878132,
+    "minuteHandAngleOffset": -325.271003720479,
+    "hourHandAnchorAtZero": {
+      "LARGE": [305, 143],
+      "SMALL": [302, 148]
+    },
+    "minuteHandAnchorAtZero": {
+      "LARGE": [159, 118],
+      "SMALL": [171, 122]
+    },
+    "pineSpawn": {
+      "LARGE": [112, 166],
+      "SMALL": [105, 169]
+    },
+    "plumSpawn": {
+      "LARGE": [94, 352],
+      "SMALL": [89, 354]
+    },
+    "tigerApproach": {
+      "LARGE": [281, 310],
+      "SMALL": [288, 296]
+    },
+    "tigerPerch": {
+      "LARGE": [335, 233],
+      "SMALL": [340, 218]
+    },
+    "screenExitRight": {
+      "LARGE": [535, 174],
+      "SMALL": [510, 151]
+    },
+    "birdAssetAnchorAtZero": {
+      "LARGE": [159, 118],
+      "SMALL": [316, 144]
+    },
+    "birdLogicalBoundsAtZero": {
+      "LARGE": [100, 42, 186, 150],
+      "SMALL": [298, 99, 347, 155]
+    },
+    "selectionReference": {
+      "hourHandAnchorAtZero": {
+        "LARGE": [305, 143],
+        "SMALL": [320, 132]
+      },
+      "minuteHandAnchorAtZero": {
+        "LARGE": [159, 118],
+        "SMALL": [149, 104]
+      },
+      "tigerApproach": {
+        "LARGE": [280, 302],
+        "SMALL": [287, 287]
+      },
+      "birdLogicalBoundsAtZero": {
+        "LARGE": [98, 39, 187, 151],
+        "SMALL": [298, 99, 347, 155]
+      }
+    },
+    "plumWalkWaypoints": {
+      "LARGE": [
+        [94, 352], [122, 344], [151, 337], [181, 331],
+        [211, 323], [241, 315], [268, 307], [289, 289]
+      ],
+      "SMALL": [
+        [89, 354], [111, 348], [133, 342], [155, 336],
+        [178, 329], [202, 321], [228, 311], [254, 298], [284, 282]
+      ]
+    }
+  },
+  "selection": {
+    "idealQuadrantAngle": 315,
+    "quadrantStartAngle": 268,
+    "quadrantEndAngle": 358,
+    "tigerApproachBaseDistance": 43,
+    "tigerApproachExtendedDistance": 46,
+    "borderlineOpportunityPercent": 74,
+    "tigerArrivalEarlyToleranceMinutes": 4,
+    "handMeetingMaxDistance": 90,
+    "largeHourPreferencePercent": 62,
+    "smallHourPreferencePercent": 38,
+    "weights": {
+      "quadrant": 60,
+      "idealAngle": 35,
+      "pineAccess": 20,
+      "screenMargin": 15,
+      "cycleCompletion": 30,
+      "arrivalTiming": 18,
+      "largeHourBias": 5,
+      "smallMinuteBias": 5
+    }
+  },
+  "motion": {
+    "walkStepMotionFraction": {
+      "LARGE": 0.16,
+      "SMALL": 0.11
+    },
+    "reactionDurationMinutes": 0.75,
+    "flightArcHeight": {
+      "LARGE": 28,
+      "SMALL": 39
+    },
+    "hopArcHeight": {
+      "LARGE": 18,
+      "SMALL": 25
+    },
+    "exitArcHeight": {
+      "LARGE": 24,
+      "SMALL": 48
+    },
+    "microActionDurationMinutes": {
+      "LARGE": 0.9,
+      "SMALL": 0.55,
+      "PECK_TIGER_EAR": 0.72
+    },
+    "turnNeedPercent": {
+      "LARGE": 36,
+      "SMALL": 44
+    },
+    "movementFacingSampleMinutes": 0.12,
+    "smallTigerTurnDurationMinutes": 0.55,
+    "smallExitWingFlaps": 0
+  },
+  "smallExit": {
+    "approvedSource": "assets/layers/source/drafts/magpie_small_flight_right_v3_approved.png",
+    "approvedSourceSha256": "7c267cc9dddd42365970c3c35be5597acd454a4af88b5c91b52bc08f4fa2aa10",
+    "alignedMaster": "assets/layers/source/characters/magpie_small_flight_right_v31_master.png",
+    "runtimeSprite": "assets/layers/mvp/magpie_small_flight_right_v31.png",
+    "metadata": "assets/layers/source/characters/magpie_small_flight_right_v31.json",
+    "runtimeWidthLogical": 138,
+    "sourcePaddingPixels": 12,
+    "anchorNormalized": [0.67, 0.64],
+    "bodyCoreOffsetFromTigerPerch": [4, -18],
+    "endAnchorLogical": [548, 133],
+    "offscreenPaddingLogical": 5,
+    "arcHeightLogical": 48,
+    "easing": "SMOOTHSTEP",
+    "animation": "STATIC_SPRITE_TRANSLATION",
+    "wingFlaps": 0,
+    "rotationDegrees": 0,
+    "scaleStart": 1,
+    "scaleEnd": 1
+  },
+  "preservedDisplay": {
+    "source": "assets/layers/mvp/clean_background_v23.png",
+    "sourceSha256": "069df1bc2e510ec52ad3abdc15f4506645b4441cea747854ce823df343189b8f",
+    "centerCropSource": [510, 570, 760, 760],
+    "centerCropRgbSha256": "9b5979e97274a617cac43801237a350ed22cfc121924f20ea66d1c3f5fc7080a",
+    "preserveTimeWeekdayLayout": true,
+    "sampleTextRemainsStaticUntilWff": true
+  },
+  "batteryPlum": {
+    "manifest": "assets/layers/source/environment/plum_battery_v23/manifest.json",
+    "stageRanges": [
+      [0, 15],
+      [16, 35],
+      [36, 55],
+      [56, 80],
+      [81, 100]
+    ],
+    "transition": "STATIC_LAYER_SWAP",
+    "animatedBloom": false,
+    "keepNumericIndicator": true,
+    "visibleInAod": true,
+    "aodOpacity": 0.52
+  },
+  "render": {
+    "sourceDate": "2026-07-15",
+    "largeBirdScale": 0.85728,
+    "tigerScale": 0.94,
+    "tigerScaleAnchor": [300, 429],
+    "dayStepMinutes": 12,
+    "dayFrameDurationMs": 72,
+    "dayGifColors": 48,
+    "detailStepMinutes": 0.25,
+    "detailFrameDurationMs": 105,
+    "gifColors": 96
+  }
+}

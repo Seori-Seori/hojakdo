@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "magpie_small_look_plum",
+  "format": "AGIF",
+  "resource": "magpie_small_look_plum.gif",
+  "thumbnail": "magpie_small_look_plum_thumbnail.png",
+  "placementLogical": [
+    305,
+    192
+  ],
+  "sizeLogical": [
+    61,
+    64
+  ],
+  "anchorX": 0,
+  "anchorY": 0,
+  "anchorSemantics": "common_frame_canvas_top_left",
+  "cropX": 305,
+  "cropY": 192,
+  "cropWidth": 61,
+  "cropHeight": 64,
+  "facing": "SCENE_DIRECTED",
+  "startPose": "magpie_small_look_plum:frame_00",
+  "endPose": "magpie_small_look_plum:frame_06",
+  "loopCount": 1,
+  "frameCount": 7,
+  "frameDurationMs": 125,
+  "fps": 8.0,
+  "decodedBytesEstimate": 109312,
+  "sha256": "b5c7e3c0b5ea914be70d9ea28487534bf35938c92b2a6940c55875d687df4536"
+}

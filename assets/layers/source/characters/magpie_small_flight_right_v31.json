@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "status": "v3_1_fixed_flight_runtime_approved",
+  "approvedSource": "assets/layers/source/drafts/magpie_small_flight_right_v3_approved.png",
+  "approvedSourceSha256": "7c267cc9dddd42365970c3c35be5597acd454a4af88b5c91b52bc08f4fa2aa10",
+  "sourceCanvas": [
+    1254,
+    1254
+  ],
+  "visibleBoundsSource": [
+    137,
+    215,
+    1086,
+    947
+  ],
+  "safeCropSource": [
+    125,
+    203,
+    1098,
+    959
+  ],
+  "sourcePaddingPixels": 12,
+  "alignedMaster": "assets/layers/source/characters/magpie_small_flight_right_v31_master.png",
+  "alignedMasterSha256": "9c155d358c80daf11c557b4a24b28c24c09dfead99d921cb6355573825192648",
+  "runtimeSprite": "assets/layers/mvp/magpie_small_flight_right_v31.png",
+  "runtimeSpriteSha256": "75756b4ba4da6623d3ec4d3d121ef97b79c8ec4bdc9ae8fe9b489b319fb8884c",
+  "runtimeSizeLogical": [
+    138,
+    107
+  ],
+  "anchorNormalized": [
+    0.67,
+    0.64
+  ],
+  "anchorRuntimeLogical": [
+    92.46,
+    68.48
+  ],
+  "animation": "STATIC_SPRITE_TRANSLATION",
+  "easing": "SMOOTHSTEP",
+  "arcHeightLogical": 48.0,
+  "rotationDegrees": 0,
+  "scaleStart": 1.0,
+  "scaleEnd": 1.0,
+  "wingFlaps": 0,
+  "wholeSpriteMoves": true,
+  "fullyTransparentRgbPixels": 0
+}
