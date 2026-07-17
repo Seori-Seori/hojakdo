@@ -25,6 +25,15 @@ ROUTE_MINUTE = f"(({CYCLE_INDEX} % 11) == 5)"
 ROUTE_HAND = f"({ROUTE_HOUR} || {ROUTE_MINUTE})"
 ROUTE_PLUM = f"(!{ROUTE_HAND})"
 
+# These two source animations used a horizontal squeeze through an almost
+# zero-width silhouette to change facing direction. On a real watch that
+# intermediate frame reads as a broken or mirrored bird. Runtime playback uses
+# a deliberate paper-theatre cut from the first pose to the final pose instead.
+HARD_CUT_TURN_ANIMATIONS = {
+    "magpie_large_turn_perch",
+    "magpie_small_turn_hop",
+}
+
 
 def _indent(block: str, spaces: int) -> str:
     prefix = " " * spaces
@@ -59,19 +68,88 @@ def _part_image(
     )
 
 
-def _part_animation(
-    metadata: dict[str, object], *, after_playing: str = "HIDE"
-) -> str:
+def frame_resource_name(animation_name: str, frame_index: int) -> str:
+    return f"{animation_name}_frame_{frame_index:02d}"
+
+
+def runtime_frame_windows(
+    metadata: dict[str, object],
+) -> tuple[tuple[int, float, float | None], ...]:
+    """Return absolute-second frame windows, holding the final pose.
+
+    Watch Face Format's ON_VISIBLE controller restarts when the face becomes
+    visible again. Selecting PNG frames from SECOND_MILLISECOND instead makes
+    the rendered pose a pure function of wall-clock time, so screen and face
+    switches restore the same frame instead of replaying an animation.
+    """
+
+    name = str(metadata["id"])
+    frame_count = int(metadata["frameCount"])
+    frame_seconds = float(metadata["frameDurationMs"]) / 1000.0
+    if frame_count < 1 or frame_seconds <= 0:
+        raise ValueError(f"Invalid runtime animation metadata: {name}")
+
+    if name in HARD_CUT_TURN_ANIMATIONS:
+        cut_at = (frame_count // 2) * frame_seconds
+        return ((0, 0.0, cut_at), (frame_count - 1, cut_at, None))
+
+    windows: list[tuple[int, float, float | None]] = []
+    for frame_index in range(frame_count):
+        start = frame_index * frame_seconds
+        end = None if frame_index == frame_count - 1 else start + frame_seconds
+        windows.append((frame_index, start, end))
+    return tuple(windows)
+
+
+def runtime_frame_index(
+    metadata: dict[str, object], second_millisecond: float
+) -> int:
+    if not 0.0 <= second_millisecond < 60.0:
+        raise ValueError("second_millisecond must be in [0, 60)")
+    for frame_index, start, end in runtime_frame_windows(metadata):
+        if second_millisecond >= start and (
+            end is None or second_millisecond < end
+        ):
+            return frame_index
+    raise AssertionError(f"No runtime frame for {metadata['id']}")
+
+
+def _format_second(value: float) -> str:
+    return f"{value:.3f}".rstrip("0").rstrip(".")
+
+
+def _timeline_animation(metadata: dict[str, object]) -> str:
     x, y = (int(value) for value in metadata["placementLogical"])
     width, height = (int(value) for value in metadata["sizeLogical"])
     name = str(metadata["id"])
-    return f'''<PartAnimatedImage name="{name}" x="{x}" y="{y}" width="{width}" height="{height}">
-    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="{after_playing}" />
-    <AnimatedImage resource="{name}" format="AGIF" thumbnail="{name}_thumbnail" />
-    <Thumbnail resource="{name}_thumbnail" />
-    {_variant(0)}
-</PartAnimatedImage>'''
+    expressions: list[tuple[str, str, str]] = []
+    for slot, (frame_index, start, end) in enumerate(
+        runtime_frame_windows(metadata)
+    ):
+        bounds = []
+        if start > 0:
+            bounds.append(
+                f"[SECOND_MILLISECOND] >= {_format_second(start)}"
+            )
+        if end is not None:
+            bounds.append(f"[SECOND_MILLISECOND] < {_format_second(end)}")
+        expression = " && ".join(bounds) if bounds else "[SECOND_MILLISECOND] >= 0"
+        part = _part_image(
+            frame_resource_name(name, frame_index),
+            x,
+            y,
+            width,
+            height,
+            name=f"{name}_runtime_slot_{slot:02d}",
+            ambient_alpha=0,
+        )
+        expressions.append(
+            (f"show_{name}_runtime_slot_{slot:02d}", expression, part)
+        )
+
+    return f'''<Group name="{name}" x="0" y="0" width="450" height="450">
+{_indent(_condition(expressions), 4)}
+</Group>'''
 
 
 def _condition(
@@ -354,20 +432,17 @@ def generate() -> str:
     }
     walk_animation_condition = _condition(
         [
-            (f"show_{name}", expression, _part_animation(animations[name]))
+            (f"show_{name}", expression, _timeline_animation(animations[name]))
             for name, expression in animation_slots.items()
             if name in walk_animation_names
         ]
     )
-    tiger_reaction_part = _part_animation(
-        animations["tiger_head_eye_reaction"],
-        # WFF supports FIRST_FRAME but not LAST_FRAME. Frame zero is the
-        # neutral pose, so it safely holds the tiger after the reaction.
-        after_playing="FIRST_FRAME",
+    tiger_reaction_part = _timeline_animation(
+        animations["tiger_head_eye_reaction"]
     )
     high_animation_condition = _condition(
         [
-            (f"show_{name}", expression, _part_animation(animations[name]))
+            (f"show_{name}", expression, _timeline_animation(animations[name]))
             for name, expression in animation_slots.items()
             if name not in walk_animation_names
             and name != "tiger_head_eye_reaction"
