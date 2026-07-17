@@ -393,10 +393,13 @@ class DayReviewRenderer:
             self.date_weekday_font,
             ink,
         )
-        face.alpha_composite(self.layers["battery_icon"], (186, 418))
+        face.alpha_composite(self.layers["battery_icon"], (194, 418))
+        battery_text = f"{self.battery_percent}%"
+        battery_box = draw.textbbox((0, 0), battery_text, font=self.battery_font)
+        battery_width = battery_box[2] - battery_box[0]
         draw.text(
-            (208, 416),
-            f"{self.battery_percent}%",
+            (236 - battery_width / 2, 416),
+            battery_text,
             font=self.battery_font,
             fill=ink,
         )

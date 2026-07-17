@@ -228,10 +228,10 @@ def _live_text(layout: dict[str, object]) -> str:
     <Variant mode="AMBIENT" target="alpha" value="220" />
 </PartText>'''
     battery_icon = _part_image(
-        "battery_icon", 186, 418, 22, 14, name="battery_icon", ambient_alpha=190
+        "battery_icon", 194, 418, 22, 14, name="battery_icon", ambient_alpha=190
     )
-    battery_part = '''<PartText name="live_battery" x="208" y="414" width="48" height="22">
-    <Text align="START" verticalAlign="CENTER">
+    battery_part = '''<PartText name="live_battery" x="216" y="414" width="40" height="22">
+    <Text align="CENTER" verticalAlign="CENTER">
         <Font family="SYNC_TO_DEVICE" size="12" color="#211811" weight="BOLD">
             <Template>%s%%<Parameter expression="[BATTERY_PERCENT]" /></Template>
         </Font>

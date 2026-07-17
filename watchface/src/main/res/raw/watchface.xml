@@ -396,9 +396,9 @@
             </Compare>
         </Condition>
 
-        <PartText name="live_time" x="142" y="78" width="166" height="58">
+        <PartText name="live_time" x="131" y="74" width="188" height="66">
             <Text align="CENTER" verticalAlign="CENTER">
-                <Font family="SYNC_TO_DEVICE" size="46" color="#211811" weight="BOLD" letterSpacing="0.03">
+                <Font family="SYNC_TO_DEVICE" size="52" color="#211811" weight="BOLD" letterSpacing="0.03">
                     <Template>%s:%s
                         <Parameter expression="[HOUR_0_23_Z]" />
                         <Parameter expression="[MINUTE_Z]" />
@@ -419,12 +419,12 @@
             </Text>
             <Variant mode="AMBIENT" target="alpha" value="220" />
         </PartText>
-        <PartImage name="battery_icon" x="186" y="418" width="22" height="14">
+        <PartImage name="battery_icon" x="194" y="418" width="22" height="14">
             <Image resource="battery_icon" />
             <Variant mode="AMBIENT" target="alpha" value="190" />
         </PartImage>
-        <PartText name="live_battery" x="208" y="414" width="48" height="22">
-            <Text align="START" verticalAlign="CENTER">
+        <PartText name="live_battery" x="216" y="414" width="40" height="22">
+            <Text align="CENTER" verticalAlign="CENTER">
                 <Font family="SYNC_TO_DEVICE" size="12" color="#211811" weight="BOLD">
                     <Template>%s%%<Parameter expression="[BATTERY_PERCENT]" /></Template>
                 </Font>

@@ -101,12 +101,12 @@
     "zOrder": "above_hands_birds_and_animations",
     "time": {
       "yLogical": 85,
-      "fontSize": 46,
+      "fontSize": 52,
       "wffBoundsLogical": [
-        142,
-        78,
-        166,
-        58
+        131,
+        74,
+        188,
+        66
       ]
     },
     "dateWeekday": {

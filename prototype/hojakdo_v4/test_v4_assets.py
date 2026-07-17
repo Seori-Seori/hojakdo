@@ -337,7 +337,7 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             set(live_parts),
         )
         self.assertEqual(
-            ("142", "78", "166", "58"),
+            ("131", "74", "188", "66"),
             tuple(
                 live_parts["live_time"][key]
                 for key in ("x", "y", "width", "height")
@@ -360,8 +360,32 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             for part in self.root.findall(".//PartText")
             if part.attrib["name"] == "live_date_weekday"
         )
-        self.assertEqual("46", time_font.attrib["size"])
+        self.assertEqual("52", time_font.attrib["size"])
         self.assertEqual("16", date_weekday_font.attrib["size"])
+        battery_icon = self.root.find('.//PartImage[@name="battery_icon"]')
+        self.assertIsNotNone(battery_icon)
+        self.assertEqual(
+            ("194", "418", "22", "14"),
+            tuple(
+                battery_icon.attrib[key]
+                for key in ("x", "y", "width", "height")
+            ),
+        )
+        self.assertEqual(
+            ("216", "414", "40", "22"),
+            tuple(
+                live_parts["live_battery"][key]
+                for key in ("x", "y", "width", "height")
+            ),
+        )
+        self.assertEqual(
+            "CENTER",
+            next(
+                part.find("Text")
+                for part in self.root.findall(".//PartText")
+                if part.attrib["name"] == "live_battery"
+            ).attrib["align"],
+        )
 
     def test_all_wff_image_resources_exist_and_names_are_android_safe(self) -> None:
         available = {path.stem for path in DRAWABLE_DIR.glob("*.png")}
@@ -563,8 +587,8 @@ class HojakdoV4AssetsTest(unittest.TestCase):
                 "zOrder": "above_hands_birds_and_animations",
                 "time": {
                     "yLogical": 85,
-                    "fontSize": 46,
-                    "wffBoundsLogical": [142, 78, 166, 58],
+                    "fontSize": 52,
+                    "wffBoundsLogical": [131, 74, 188, 66],
                 },
                 "dateWeekday": {
                     "yLogical": 132,

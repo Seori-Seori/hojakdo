@@ -57,12 +57,15 @@ FRAME_DURATION_MS = 125
 FPS = 1000 / FRAME_DURATION_MS
 READOUT_CENTER_X = FACE_SIZE // 2
 READOUT_TIME_Y = 85
-READOUT_TIME_FONT_SIZE = 46
+READOUT_TIME_FONT_SIZE = 52
 READOUT_DATE_WEEKDAY_Y = 132
 READOUT_DATE_WEEKDAY_FONT_SIZE = 16
 READOUT_DATE_WEEKDAY_SEPARATOR = "  "
-READOUT_TIME_WFF_BOUNDS = (142, 78, 166, 58)
+READOUT_TIME_WFF_BOUNDS = (131, 74, 188, 66)
 READOUT_DATE_WEEKDAY_WFF_BOUNDS = (166, 129, 118, 25)
+BATTERY_ICON_POSITION = (194, 418)
+BATTERY_TEXT_CENTER_X = 236
+BATTERY_TEXT_Y = 416
 DATE_CLOUD_CLEANUP_BOUNDS = (198, 250, 252, 300)
 DATE_HANJI_OVERLAY_BOUNDS = (188, 272, 270, 294)
 PINE_SPRIG_CLEANUP_BOUNDS = (282, 158, 306, 181)
@@ -1034,11 +1037,17 @@ def _compose_preview_face(
     battery_text = f"{battery_percent}%"
     battery_box = draw.textbbox((0, 0), battery_text, font=battery_font)
     battery_width = battery_box[2] - battery_box[0]
-    x = 226 - battery_width / 2
-    draw.rounded_rectangle((x - 25, 419, x - 7, 430), radius=2, outline=ink, width=2)
-    draw.rectangle((x - 5, 422, x - 3, 427), fill=ink)
-    draw.rectangle((x - 22, 422, x - 10, 427), fill=ink)
-    draw.text((x, 416), battery_text, font=battery_font, fill=ink)
+    text_x = BATTERY_TEXT_CENTER_X - battery_width / 2
+    icon_x, icon_y = BATTERY_ICON_POSITION
+    draw.rounded_rectangle(
+        (icon_x + 1, icon_y + 1, icon_x + 18, icon_y + 12),
+        radius=2,
+        outline=ink,
+        width=2,
+    )
+    draw.rectangle((icon_x + 19, icon_y + 4, icon_x + 21, icon_y + 9), fill=ink)
+    draw.rectangle((icon_x + 4, icon_y + 4, icon_x + 15, icon_y + 9), fill=ink)
+    draw.text((text_x, BATTERY_TEXT_Y), battery_text, font=battery_font, fill=ink)
     return face
 
 
