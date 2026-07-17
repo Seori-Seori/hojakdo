@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Iterable, Sequence
 
 import numpy as np
-from PIL import Image, ImageDraw, ImageFilter, ImageFont
+from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont
 from scipy import ndimage
 
 from prototype.hojakdo_v2.render_prototype import FACE_SIZE, PrototypeRenderer
@@ -29,7 +29,22 @@ OUTPUT_DIR = PACKAGE_DIR / "output"
 MANIFEST_PATH = V4_ROOT / "manifest.json"
 
 PIVOT = (224.0, 207.0)
-HOUR_ANCHOR = (302.0, 148.0)
+HOUR_POLISH_ANCHOR = (302.0, 148.0)
+SOURCE_HAND_PERCH_ANCHORS = {
+    "HOUR": {
+        "LARGE": (305.0, 143.0),
+        "SMALL": (302.0, 148.0),
+    },
+    "MINUTE": {
+        "LARGE": (159.0, 118.0),
+        "SMALL": (171.0, 122.0),
+    },
+}
+HOUR_HAND_TARGET_LENGTH = 92.0
+MINUTE_HAND_TARGET_LENGTH = 126.0
+HOUR_HAND_BRIGHTNESS = 0.78
+V4_BASE_HOUR_BRIGHTNESS = 0.88
+HAND_ALPHA_THRESHOLD = 16
 # Match the flying pose to the 61 px-tall approved small static magpie. The
 # former 100x78 resource made the character grow visibly at takeoff/exit.
 SMALL_FLIGHT_WIDTH = 70
@@ -67,6 +82,29 @@ class Pose:
     scale_x: float = 1.0
     scale_y: float = 1.0
     mirror: bool = False
+
+
+@dataclass(frozen=True)
+class HandLengthTransform:
+    source_length: float
+    target_length: float
+    axis: tuple[float, float]
+
+    @property
+    def scale(self) -> float:
+        return self.target_length / self.source_length
+
+    def map_point(self, point: tuple[float, float]) -> tuple[float, float]:
+        ux, uy = self.axis
+        vx, vy = -uy, ux
+        dx = point[0] - PIVOT[0]
+        dy = point[1] - PIVOT[1]
+        along = dx * ux + dy * uy
+        across = dx * vx + dy * vy
+        return (
+            PIVOT[0] + along * self.scale * ux + across * vx,
+            PIVOT[1] + along * self.scale * uy + across * vy,
+        )
 
 
 def _font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
@@ -116,6 +154,63 @@ def _logical_layer(path: Path, mode: str = "RGBA") -> Image.Image:
         return source.convert(mode).resize(
             (FACE_SIZE, FACE_SIZE), Image.Resampling.LANCZOS
         )
+
+
+def _hand_length_transform(
+    layer: Image.Image, target_length: float
+) -> HandLengthTransform:
+    alpha = np.asarray(layer.convert("RGBA").getchannel("A"), dtype=np.uint8)
+    y, x = np.where(alpha > HAND_ALPHA_THRESHOLD)
+    if len(x) == 0:
+        raise ValueError("Clock-hand layer has no visible pixels")
+    dx = x.astype(np.float64) - PIVOT[0]
+    dy = y.astype(np.float64) - PIVOT[1]
+    distances = np.hypot(dx, dy)
+    tip = int(np.argmax(distances))
+    source_length = float(distances[tip])
+    return HandLengthTransform(
+        source_length=source_length,
+        target_length=target_length,
+        axis=(float(dx[tip] / source_length), float(dy[tip] / source_length)),
+    )
+
+
+def _apply_hand_length_transform(
+    layer: Image.Image, transform: HandLengthTransform
+) -> Image.Image:
+    ux, uy = transform.axis
+    vx, vy = -uy, ux
+    inverse_scale = 1.0 / transform.scale
+    a = inverse_scale * ux * ux + vx * vx
+    b = inverse_scale * ux * uy + vx * vy
+    d = inverse_scale * uy * ux + vy * vx
+    e = inverse_scale * uy * uy + vy * vy
+    c = PIVOT[0] - a * PIVOT[0] - b * PIVOT[1]
+    f = PIVOT[1] - d * PIVOT[0] - e * PIVOT[1]
+    return layer.convert("RGBA").transform(
+        layer.size,
+        Image.Transform.AFFINE,
+        (a, b, c, d, e, f),
+        resample=Image.Resampling.BICUBIC,
+        fillcolor=(0, 0, 0, 0),
+    )
+
+
+def _mapped_hand_perch_anchors(
+    hour_transform: HandLengthTransform,
+    minute_transform: HandLengthTransform,
+) -> dict[str, dict[str, tuple[int, int]]]:
+    transforms = {"HOUR": hour_transform, "MINUTE": minute_transform}
+    return {
+        hand: {
+            character: tuple(
+                int(round(value))
+                for value in transforms[hand].map_point(source_anchor)
+            )
+            for character, source_anchor in anchors.items()
+        }
+        for hand, anchors in SOURCE_HAND_PERCH_ANCHORS.items()
+    }
 
 
 def _replace_paper_texture(
@@ -592,23 +687,31 @@ def _animation_specs(
     large: tuple[Image.Image, tuple[float, float]],
     small: tuple[Image.Image, tuple[float, float]],
     small_flight: tuple[Image.Image, tuple[float, float]],
+    hand_perch_anchors: dict[str, dict[str, tuple[int, int]]],
 ) -> dict[str, list[Image.Image]]:
     large_sprite, large_anchor = large
     small_sprite, small_anchor = small
     flight_sprite, flight_anchor = small_flight
+    large_minute_anchor = hand_perch_anchors["MINUTE"]["LARGE"]
+    small_minute_anchor = hand_perch_anchors["MINUTE"]["SMALL"]
     specs: dict[str, list[Image.Image]] = {}
 
     specs["magpie_large_fly_pine_to_hand"] = _pose_sequence(
         large_sprite,
         large_anchor,
-        _curve((112, 166), (159, 118), 8, 28),
+        _curve((112, 166), large_minute_anchor, 8, 28),
         angles=(-5, -4, -2, 1, 3, 2, 0, 0),
         scale_y=(0.94, 0.98, 1.02, 1.05, 1.02, 0.98, 0.96, 1.0),
     )
     specs["magpie_large_land_on_hand"] = _pose_sequence(
         large_sprite,
         large_anchor,
-        _curve((159, 103), (159, 118), 6, 2),
+        _curve(
+            (large_minute_anchor[0], large_minute_anchor[1] - 15),
+            large_minute_anchor,
+            6,
+            2,
+        ),
         angles=(-3, -2, 1, 3, 1, 0),
         scale_y=(1.03, 1.01, 0.97, 0.94, 0.98, 1.0),
     )
@@ -652,10 +755,15 @@ def _animation_specs(
     specs["magpie_small_fly_pine_to_hand"] = _pose_sequence(
         flight_sprite,
         flight_anchor,
-        _curve((105, 169), (171, 122), 8, 39),
+        _curve((105, 169), small_minute_anchor, 8, 39),
         angles=(1, 0, -1, -1, 0, 1, 1, 0),
     )
-    landing_points = _curve((171, 106), (171, 122), 7, 3)
+    landing_points = _curve(
+        (small_minute_anchor[0], small_minute_anchor[1] - 16),
+        small_minute_anchor,
+        7,
+        3,
+    )
     landing_frames = _pose_sequence(
         flight_sprite,
         flight_anchor,
@@ -1063,8 +1171,24 @@ def build() -> dict[str, object]:
     background = _remove_embedded_ui(
         _repair_tiger_hind_leg_ghost(_polished_background(renderer.background))
     )
-    hour_branch = _polished_hour_hand(renderer.hour_branch, PIVOT, HOUR_ANCHOR)
-    minute_branch = renderer.minute_branch.copy()
+    hour_source = _polished_hour_hand(
+        renderer.hour_branch, PIVOT, HOUR_POLISH_ANCHOR
+    )
+    hour_source = ImageEnhance.Brightness(hour_source).enhance(
+        HOUR_HAND_BRIGHTNESS / V4_BASE_HOUR_BRIGHTNESS
+    )
+    hour_transform = _hand_length_transform(
+        hour_source, HOUR_HAND_TARGET_LENGTH
+    )
+    minute_source = renderer.minute_branch.copy()
+    minute_transform = _hand_length_transform(
+        minute_source, MINUTE_HAND_TARGET_LENGTH
+    )
+    hour_branch = _apply_hand_length_transform(hour_source, hour_transform)
+    minute_branch = _apply_hand_length_transform(minute_source, minute_transform)
+    hand_perch_anchors = _mapped_hand_perch_anchors(
+        hour_transform, minute_transform
+    )
     tiger_head = renderer.tiger_head.copy()
     tiger_pupils = renderer.tiger_pupils.copy()
 
@@ -1136,6 +1260,7 @@ def build() -> dict[str, object]:
         (large_sprite, large_anchor),
         (small_sprite, small_anchor),
         (small_flight_sprite, small_flight_anchor),
+        hand_perch_anchors,
     )
     specs["tiger_head_eye_reaction"] = _build_tiger_reaction(
         tiger_head, tiger_pupils
@@ -1149,8 +1274,8 @@ def build() -> dict[str, object]:
     animation_decoded = sum(int(item["decodedBytesEstimate"]) for item in animations)
     manifest: dict[str, object] = {
         "schemaVersion": 1,
-        "version": "4.0.0",
-        "status": "v4_complete_production_candidate",
+        "version": "4.1.0",
+        "status": "v4_1_hand_readability_candidate",
         "logicalCanvas": [FACE_SIZE, FACE_SIZE],
         "smallFlight": {
             "resource": "magpie_small_flight_right_v4.png",
@@ -1162,9 +1287,27 @@ def build() -> dict[str, object]:
         },
         "hourHandPolish": {
             "perpendicularThickness": 1.24,
-            "brightness": 0.88,
+            "brightness": HOUR_HAND_BRIGHTNESS,
             "pivot": list(PIVOT),
-            "landingAnchor": list(HOUR_ANCHOR),
+            "sourceRadialLength": round(hour_transform.source_length, 3),
+            "targetRadialLength": HOUR_HAND_TARGET_LENGTH,
+            "longitudinalScale": round(hour_transform.scale, 6),
+            "landingAnchorsAtZero": {
+                character: list(anchor)
+                for character, anchor in hand_perch_anchors["HOUR"].items()
+            },
+        },
+        "minuteHandPolish": {
+            "perpendicularThickness": 1.0,
+            "brightness": 1.0,
+            "pivot": list(PIVOT),
+            "sourceRadialLength": round(minute_transform.source_length, 3),
+            "targetRadialLength": MINUTE_HAND_TARGET_LENGTH,
+            "longitudinalScale": round(minute_transform.scale, 6),
+            "landingAnchorsAtZero": {
+                character: list(anchor)
+                for character, anchor in hand_perch_anchors["MINUTE"].items()
+            },
         },
         "titleSealShiftLogical": [-20, -3],
         "backgroundCleanup": {
@@ -1203,6 +1346,13 @@ def build() -> dict[str, object]:
             "tigerPerchAnchors": {
                 "LARGE": [round(value, 3) for value in LARGE_TIGER_FOOT],
                 "SMALL": [round(value, 3) for value in SMALL_TIGER_FOOT],
+            },
+            "handPerchAnchorsAtZero": {
+                hand: {
+                    character: list(anchor)
+                    for character, anchor in anchors.items()
+                }
+                for hand, anchors in hand_perch_anchors.items()
             },
             "layerOrder": [
                 "background",

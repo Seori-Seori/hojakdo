@@ -5,8 +5,8 @@
   "resource": "magpie_small_land_on_hand.gif",
   "thumbnail": "magpie_small_land_on_hand_thumbnail.png",
   "placementLogical": [
-    120,
-    65
+    117,
+    61
   ],
   "sizeLogical": [
     78,
@@ -15,8 +15,8 @@
   "anchorX": 0,
   "anchorY": 0,
   "anchorSemantics": "common_frame_canvas_top_left",
-  "cropX": 120,
-  "cropY": 65,
+  "cropX": 117,
+  "cropY": 61,
   "cropWidth": 78,
   "cropHeight": 72,
   "facing": "SCENE_DIRECTED",

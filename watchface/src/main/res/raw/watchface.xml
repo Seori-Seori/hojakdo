@@ -159,11 +159,11 @@
                 </Expressions>
                 <Compare expression="show_hour_large">
                     <Group name="hour_large_carrier" x="0" y="0" width="450" height="450"
-                        pivotX="0.677777778" pivotY="0.317777778">
+                        pivotX="0.651111111" pivotY="0.337777778">
                         <Transform target="angle" value="-(([HOUR_0_23_MINUTE] * 30) - 50.232272878132)">
                             <Animation duration="0.35" interpolation="EASE_IN_OUT" />
                         </Transform>
-                        <PartImage name="hour_large_perch" x="247" y="73" width="87" height="101">
+                        <PartImage name="hour_large_perch" x="235" y="82" width="87" height="101">
                             <Image resource="magpie_large_perch_hand" />
                             <Variant mode="AMBIENT" target="alpha" value="0" />
                         </PartImage>
@@ -176,11 +176,11 @@
                 </Expressions>
                 <Compare expression="show_hour_small">
                     <Group name="hour_small_carrier" x="0" y="0" width="450" height="450"
-                        pivotX="0.671111111" pivotY="0.328888889">
+                        pivotX="0.644444444" pivotY="0.348888889">
                         <Transform target="angle" value="-(([HOUR_0_23_MINUTE] * 30) - 50.232272878132)">
                             <Animation duration="0.35" interpolation="EASE_IN_OUT" />
                         </Transform>
-                        <PartImage name="hour_small_perch" x="269" y="100" width="55" height="62">
+                        <PartImage name="hour_small_perch" x="257" y="109" width="55" height="62">
                             <Image resource="magpie_small_perch_hand" />
                             <Variant mode="AMBIENT" target="alpha" value="0" />
                         </PartImage>
@@ -203,11 +203,11 @@
                 </Expressions>
                 <Compare expression="show_minute_large">
                     <Group name="minute_large_carrier" x="0" y="0" width="450" height="450"
-                        pivotX="0.353333333" pivotY="0.262222222">
+                        pivotX="0.344444444" pivotY="0.253333333">
                         <Transform target="angle" value="-(([MINUTE_SECOND] * 6) - 325.271003720479)">
                             <Animation duration="0.35" interpolation="EASE_IN_OUT" />
                         </Transform>
-                        <PartImage name="minute_large_perch" x="101" y="48" width="87" height="101">
+                        <PartImage name="minute_large_perch" x="97" y="44" width="87" height="101">
                             <Image resource="magpie_large_perch_hand" />
                             <Variant mode="AMBIENT" target="alpha" value="0" />
                         </PartImage>
@@ -220,11 +220,11 @@
                 </Expressions>
                 <Compare expression="show_minute_small">
                     <Group name="minute_small_carrier" x="0" y="0" width="450" height="450"
-                        pivotX="0.380000000" pivotY="0.271111111">
+                        pivotX="0.373333333" pivotY="0.262222222">
                         <Transform target="angle" value="-(([MINUTE_SECOND] * 6) - 325.271003720479)">
                             <Animation duration="0.35" interpolation="EASE_IN_OUT" />
                         </Transform>
-                        <PartImage name="minute_small_perch" x="138" y="74" width="55" height="62">
+                        <PartImage name="minute_small_perch" x="135" y="70" width="55" height="62">
                             <Image resource="magpie_small_perch_hand" />
                             <Variant mode="AMBIENT" target="alpha" value="0" />
                         </PartImage>
@@ -278,7 +278,7 @@
                 <Expression name="show_magpie_small_peck_tiger_ear"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 14]]></Expression>
             </Expressions>
             <Compare expression="show_magpie_large_fly_pine_to_hand">
-                <PartAnimatedImage name="magpie_large_fly_pine_to_hand" x="55" y="39" width="134" height="160">
+                <PartAnimatedImage name="magpie_large_fly_pine_to_hand" x="55" y="36" width="130" height="163">
                     <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
                         resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
                     <AnimatedImage resource="magpie_large_fly_pine_to_hand" format="AGIF" thumbnail="magpie_large_fly_pine_to_hand_thumbnail" />
@@ -287,7 +287,7 @@
                 </PartAnimatedImage>
             </Compare>
             <Compare expression="show_magpie_large_land_on_hand">
-                <PartAnimatedImage name="magpie_large_land_on_hand" x="99" y="30" width="91" height="120">
+                <PartAnimatedImage name="magpie_large_land_on_hand" x="95" y="26" width="91" height="120">
                     <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
                         resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
                     <AnimatedImage resource="magpie_large_land_on_hand" format="AGIF" thumbnail="magpie_large_land_on_hand_thumbnail" />
@@ -332,7 +332,7 @@
                 </PartAnimatedImage>
             </Compare>
             <Compare expression="show_magpie_small_fly_pine_to_hand">
-                <PartAnimatedImage name="magpie_small_fly_pine_to_hand" x="54" y="65" width="144" height="127">
+                <PartAnimatedImage name="magpie_small_fly_pine_to_hand" x="54" y="62" width="141" height="130">
                     <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
                         resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
                     <AnimatedImage resource="magpie_small_fly_pine_to_hand" format="AGIF" thumbnail="magpie_small_fly_pine_to_hand_thumbnail" />
@@ -341,7 +341,7 @@
                 </PartAnimatedImage>
             </Compare>
             <Compare expression="show_magpie_small_land_on_hand">
-                <PartAnimatedImage name="magpie_small_land_on_hand" x="120" y="65" width="78" height="72">
+                <PartAnimatedImage name="magpie_small_land_on_hand" x="117" y="61" width="78" height="72">
                     <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
                         resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
                     <AnimatedImage resource="magpie_small_land_on_hand" format="AGIF" thumbnail="magpie_small_land_on_hand_thumbnail" />

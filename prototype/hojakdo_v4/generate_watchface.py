@@ -135,7 +135,7 @@ def _small_exit_part(
 def _carrier(
     hand: str,
     pose: dict[str, object],
-    anchor: tuple[int, int],
+    anchor: tuple[float, float],
     expression: str,
     character: str,
 ) -> str:
@@ -251,6 +251,15 @@ def generate() -> str:
         name: tuple(int(round(float(value))) for value in point)
         for name, point in manifest["scene"]["tigerPerchAnchors"].items()
     }
+    hand_anchors = {
+        hand: {
+            character: tuple(float(value) for value in point)
+            for character, point in anchors.items()
+        }
+        for hand, anchors in manifest["scene"][
+            "handPerchAnchorsAtZero"
+        ].items()
+    }
 
     plum_expressions: list[tuple[str, str, str]] = []
     for stage in manifest["plumBatteryStages"]:
@@ -287,14 +296,14 @@ def generate() -> str:
             _carrier(
                 "hour",
                 poses["magpie_large_perch_hand"],
-                (305, 143),
+                hand_anchors["HOUR"]["LARGE"],
                 hour_large,
                 "large",
             ),
             _carrier(
                 "hour",
                 poses["magpie_small_perch_hand"],
-                (302, 148),
+                hand_anchors["HOUR"]["SMALL"],
                 hour_small,
                 "small",
             ),
@@ -307,14 +316,14 @@ def generate() -> str:
             _carrier(
                 "minute",
                 poses["magpie_large_perch_hand"],
-                (159, 118),
+                hand_anchors["MINUTE"]["LARGE"],
                 minute_large,
                 "large",
             ),
             _carrier(
                 "minute",
                 poses["magpie_small_perch_hand"],
-                (171, 122),
+                hand_anchors["MINUTE"]["SMALL"],
                 minute_small,
                 "small",
             ),

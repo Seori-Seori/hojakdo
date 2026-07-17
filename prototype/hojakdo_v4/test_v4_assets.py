@@ -13,8 +13,12 @@ from .build_v4_assets import (
     ANIMATION_DIR,
     DRAWABLE_DIR,
     FRAME_DIR,
+    HAND_ALPHA_THRESHOLD,
+    HOUR_HAND_TARGET_LENGTH,
     MANIFEST_PATH,
+    MINUTE_HAND_TARGET_LENGTH,
     OUTPUT_DIR,
+    PIVOT,
     REPO_ROOT,
     build,
 )
@@ -62,8 +66,10 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         cls.root = ET.parse(WATCHFACE_PATH).getroot()
 
     def test_v4_manifest_and_approved_small_flight_size(self) -> None:
-        self.assertEqual("4.0.0", self.manifest["version"])
-        self.assertEqual("v4_complete_production_candidate", self.manifest["status"])
+        self.assertEqual("4.1.0", self.manifest["version"])
+        self.assertEqual(
+            "v4_1_hand_readability_candidate", self.manifest["status"]
+        )
         flight = self.manifest["smallFlight"]
         self.assertEqual([70, 54], flight["sizeLogical"])
         self.assertEqual(0, flight["wingFlaps"])
@@ -71,6 +77,50 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         with Image.open(DRAWABLE_DIR / flight["resource"]) as image:
             self.assertEqual((70, 54), image.size)
             self.assertIsNotNone(image.convert("RGBA").getchannel("A").getbbox())
+
+    def test_v41_hands_have_clear_length_hierarchy_and_synced_anchors(self) -> None:
+        measurements: dict[str, tuple[float, int]] = {}
+        for hand in ("hour", "minute"):
+            path = DRAWABLE_DIR / f"hojakdo_v4_{hand}_branch.png"
+            with Image.open(path) as source:
+                rgba = np.asarray(source.convert("RGBA"), dtype=np.uint8)
+            y, x = np.where(rgba[..., 3] > HAND_ALPHA_THRESHOLD)
+            radial = np.hypot(x - PIVOT[0], y - PIVOT[1])
+            measurements[hand] = (float(radial.max()), int(len(x)))
+
+        hour_length, hour_pixels = measurements["hour"]
+        minute_length, minute_pixels = measurements["minute"]
+        self.assertAlmostEqual(HOUR_HAND_TARGET_LENGTH, hour_length, delta=2.0)
+        self.assertAlmostEqual(
+            MINUTE_HAND_TARGET_LENGTH, minute_length, delta=2.0
+        )
+        self.assertLess(hour_length / minute_length, 0.76)
+        self.assertGreater(hour_pixels, int(minute_pixels * 1.25))
+
+        expected_anchors = {
+            "HOUR": {"LARGE": [293, 152], "SMALL": [290, 157]},
+            "MINUTE": {"LARGE": [155, 114], "SMALL": [168, 118]},
+        }
+        self.assertEqual(
+            expected_anchors,
+            self.manifest["scene"]["handPerchAnchorsAtZero"],
+        )
+        for hand, characters in expected_anchors.items():
+            for character, anchor in characters.items():
+                carrier = self.root.find(
+                    f'.//Group[@name="{hand.lower()}_{character.lower()}_carrier"]'
+                )
+                self.assertIsNotNone(carrier)
+                self.assertAlmostEqual(
+                    anchor[0] / 450,
+                    float(carrier.attrib["pivotX"]),
+                    places=8,
+                )
+                self.assertAlmostEqual(
+                    anchor[1] / 450,
+                    float(carrier.attrib["pivotY"]),
+                    places=8,
+                )
 
     def test_six_static_poses_and_three_masks_are_complete(self) -> None:
         poses = {item["id"] for item in self.manifest["staticPoses"]}

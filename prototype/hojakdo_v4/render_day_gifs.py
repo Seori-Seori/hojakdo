@@ -184,6 +184,15 @@ class DayReviewRenderer:
             name: tuple(float(value) for value in point)
             for name, point in self.manifest["scene"]["tigerPerchAnchors"].items()
         }
+        self.hand_anchors = {
+            hand: {
+                character: tuple(float(value) for value in point)
+                for character, point in anchors.items()
+            }
+            for hand, anchors in self.manifest["scene"][
+                "handPerchAnchorsAtZero"
+            ].items()
+        }
         self.layers = {
             path.stem: self._load(path)
             for path in DRAWABLE_DIR.glob("*.png")
@@ -255,11 +264,9 @@ class DayReviewRenderer:
         if state.route != hand.upper() or not 4 <= state.cycle_local <= 8:
             return
 
-        if hand == "hour":
-            anchors = {"LARGE": (305.0, 143.0), "SMALL": (302.0, 148.0)}
-        else:
-            anchors = {"LARGE": (159.0, 118.0), "SMALL": (171.0, 122.0)}
-        foot = _rotate_point(anchors[state.character], angle)
+        foot = _rotate_point(
+            self.hand_anchors[hand.upper()][state.character], angle
+        )
         pose_id = (
             "magpie_large_perch_hand"
             if state.character == "LARGE"

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "4.0.0",
-  "status": "v4_complete_production_candidate",
+  "version": "4.1.0",
+  "status": "v4_1_hand_readability_candidate",
   "logicalCanvas": [
     450,
     450
@@ -22,15 +22,45 @@
   },
   "hourHandPolish": {
     "perpendicularThickness": 1.24,
-    "brightness": 0.88,
+    "brightness": 0.78,
     "pivot": [
       224.0,
       207.0
     ],
-    "landingAnchor": [
-      302.0,
-      148.0
-    ]
+    "sourceRadialLength": 108.005,
+    "targetRadialLength": 92.0,
+    "longitudinalScale": 0.851815,
+    "landingAnchorsAtZero": {
+      "LARGE": [
+        293,
+        152
+      ],
+      "SMALL": [
+        290,
+        157
+      ]
+    }
+  },
+  "minuteHandPolish": {
+    "perpendicularThickness": 1.0,
+    "brightness": 1.0,
+    "pivot": [
+      224.0,
+      207.0
+    ],
+    "sourceRadialLength": 119.971,
+    "targetRadialLength": 126.0,
+    "longitudinalScale": 1.050255,
+    "landingAnchorsAtZero": {
+      "LARGE": [
+        155,
+        114
+      ],
+      "SMALL": [
+        168,
+        118
+      ]
+    }
   },
   "titleSealShiftLogical": [
     -20,
@@ -227,19 +257,19 @@
       "thumbnail": "magpie_large_fly_pine_to_hand_thumbnail.png",
       "placementLogical": [
         55,
-        39
+        36
       ],
       "sizeLogical": [
-        134,
-        160
+        130,
+        163
       ],
       "anchorX": 0,
       "anchorY": 0,
       "anchorSemantics": "common_frame_canvas_top_left",
       "cropX": 55,
-      "cropY": 39,
-      "cropWidth": 134,
-      "cropHeight": 160,
+      "cropY": 36,
+      "cropWidth": 130,
+      "cropHeight": 163,
       "facing": "SCENE_DIRECTED",
       "startPose": "magpie_large_fly_pine_to_hand:frame_00",
       "endPose": "magpie_large_fly_pine_to_hand:frame_07",
@@ -247,8 +277,8 @@
       "frameCount": 8,
       "frameDurationMs": 125,
       "fps": 8.0,
-      "decodedBytesEstimate": 686080,
-      "sha256": "5293af07d11fa16f6abc8247b987b55212f4ecabe896b318138695bd57ebf1ff"
+      "decodedBytesEstimate": 678080,
+      "sha256": "e3a7915431b85aacf1bca8cc732312df782c1d0fd317ed8e228f18a9ed59af46"
     },
     {
       "schemaVersion": 1,
@@ -257,8 +287,8 @@
       "resource": "magpie_large_land_on_hand.gif",
       "thumbnail": "magpie_large_land_on_hand_thumbnail.png",
       "placementLogical": [
-        99,
-        30
+        95,
+        26
       ],
       "sizeLogical": [
         91,
@@ -267,8 +297,8 @@
       "anchorX": 0,
       "anchorY": 0,
       "anchorSemantics": "common_frame_canvas_top_left",
-      "cropX": 99,
-      "cropY": 30,
+      "cropX": 95,
+      "cropY": 26,
       "cropWidth": 91,
       "cropHeight": 120,
       "facing": "SCENE_DIRECTED",
@@ -444,19 +474,19 @@
       "thumbnail": "magpie_small_fly_pine_to_hand_thumbnail.png",
       "placementLogical": [
         54,
-        65
+        62
       ],
       "sizeLogical": [
-        144,
-        127
+        141,
+        130
       ],
       "anchorX": 0,
       "anchorY": 0,
       "anchorSemantics": "common_frame_canvas_top_left",
       "cropX": 54,
-      "cropY": 65,
-      "cropWidth": 144,
-      "cropHeight": 127,
+      "cropY": 62,
+      "cropWidth": 141,
+      "cropHeight": 130,
       "facing": "SCENE_DIRECTED",
       "startPose": "magpie_small_fly_pine_to_hand:frame_00",
       "endPose": "magpie_small_fly_pine_to_hand:frame_07",
@@ -464,8 +494,8 @@
       "frameCount": 8,
       "frameDurationMs": 125,
       "fps": 8.0,
-      "decodedBytesEstimate": 585216,
-      "sha256": "d83c985108f53db81797e0fffd85597bd7120afe03531d6734a97f2a624af4c4"
+      "decodedBytesEstimate": 586560,
+      "sha256": "feef24090b507057742149a49032c71a57b716fd16b4beb78a1fb47bd754e812"
     },
     {
       "schemaVersion": 1,
@@ -474,8 +504,8 @@
       "resource": "magpie_small_land_on_hand.gif",
       "thumbnail": "magpie_small_land_on_hand_thumbnail.png",
       "placementLogical": [
-        120,
-        65
+        117,
+        61
       ],
       "sizeLogical": [
         78,
@@ -484,8 +514,8 @@
       "anchorX": 0,
       "anchorY": 0,
       "anchorSemantics": "common_frame_canvas_top_left",
-      "cropX": 120,
-      "cropY": 65,
+      "cropX": 117,
+      "cropY": 61,
       "cropWidth": 78,
       "cropHeight": 72,
       "facing": "SCENE_DIRECTED",
@@ -810,6 +840,28 @@
         241.0
       ]
     },
+    "handPerchAnchorsAtZero": {
+      "HOUR": {
+        "LARGE": [
+          293,
+          152
+        ],
+        "SMALL": [
+          290,
+          157
+        ]
+      },
+      "MINUTE": {
+        "LARGE": [
+          155,
+          114
+        ],
+        "SMALL": [
+          168,
+          118
+        ]
+      }
+    },
     "layerOrder": [
       "background",
       "readout_hanji_patch",
@@ -842,9 +894,9 @@
     "SECOND_MILLISECOND"
   ],
   "memoryEstimate": {
-    "staticDecodedBytes": 6104528,
-    "animatedDecodedBytes": 6080240,
-    "interactiveDecodedBytes": 12184768,
+    "staticDecodedBytes": 6103696,
+    "animatedDecodedBytes": 6073584,
+    "interactiveDecodedBytes": 12177280,
     "officialInteractiveBudgetBytes": 104857600,
     "officialAmbientBudgetBytes": 10485760
   }
