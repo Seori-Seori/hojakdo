@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "4.1.0",
-  "status": "v4_1_hand_readability_candidate",
+  "version": "4.2.0",
+  "status": "v4_2_top_readout_candidate",
   "logicalCanvas": [
     450,
     450
@@ -95,6 +95,32 @@
     "layer": "above_background_below_hands_and_decorations",
     "ambientBehavior": "hidden_clean_background_remains"
   },
+  "readoutLayout": {
+    "layout": "top_two_rows_time_then_date_weekday",
+    "centerXLogical": 225,
+    "zOrder": "above_hands_birds_and_animations",
+    "time": {
+      "yLogical": 38,
+      "fontSize": 36,
+      "wffBoundsLogical": [
+        155,
+        33,
+        140,
+        44
+      ]
+    },
+    "dateWeekday": {
+      "yLogical": 79,
+      "fontSize": 13,
+      "separator": "  ",
+      "wffBoundsLogical": [
+        174,
+        77,
+        102,
+        22
+      ]
+    }
+  },
   "readoutQuietZone": {
     "sourceCleanupBoundsLogical": [
       175,
@@ -113,10 +139,6 @@
       272,
       270,
       294
-    ],
-    "liveTextShiftLogical": [
-      0,
-      20
     ],
     "liveTextCenterXLogical": 225,
     "removes": [

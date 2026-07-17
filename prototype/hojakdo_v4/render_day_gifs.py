@@ -205,9 +205,13 @@ class DayReviewRenderer:
             <= battery_percent
             <= int(item["maximumPercent"])
         )
-        self.time_font = _font(25, bold=True)
-        self.date_font = _font(11, bold=True)
-        self.weekday_font = _font(9, bold=True)
+        self.readout_layout = self.manifest["readoutLayout"]
+        self.time_font = _font(
+            int(self.readout_layout["time"]["fontSize"]), bold=True
+        )
+        self.date_weekday_font = _font(
+            int(self.readout_layout["dateWeekday"]["fontSize"]), bold=True
+        )
         self.battery_font = _font(12, bold=True)
         self.debug_font = _font(9, bold=True)
 
@@ -372,23 +376,21 @@ class DayReviewRenderer:
         ink = (31, 24, 17, 255)
         _draw_centered(
             draw,
-            250,
+            int(self.readout_layout["time"]["yLogical"]),
             timestamp.strftime("%H:%M"),
             self.time_font,
             ink,
         )
+        separator = str(self.readout_layout["dateWeekday"]["separator"])
         _draw_centered(
             draw,
-            278,
-            timestamp.strftime("%m.%d"),
-            self.date_font,
-            ink,
-        )
-        _draw_centered(
-            draw,
-            293,
-            timestamp.strftime("%a").upper(),
-            self.weekday_font,
+            int(self.readout_layout["dateWeekday"]["yLogical"]),
+            (
+                timestamp.strftime("%m.%d")
+                + separator
+                + timestamp.strftime("%a").upper()
+            ),
+            self.date_weekday_font,
             ink,
         )
         face.alpha_composite(self.layers["battery_icon"], (186, 418))

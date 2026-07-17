@@ -196,10 +196,17 @@ def _hand_group(
     return "\n".join(body)
 
 
-def _live_text() -> str:
-    time_part = '''<PartText name="live_time" x="183" y="246" width="84" height="31">
+def _live_text(layout: dict[str, object]) -> str:
+    time_layout = layout["time"]
+    date_weekday_layout = layout["dateWeekday"]
+    time_x, time_y, time_width, time_height = time_layout["wffBoundsLogical"]
+    date_x, date_y, date_width, date_height = date_weekday_layout[
+        "wffBoundsLogical"
+    ]
+    separator = str(date_weekday_layout["separator"])
+    time_part = f'''<PartText name="live_time" x="{time_x}" y="{time_y}" width="{time_width}" height="{time_height}">
     <Text align="CENTER" verticalAlign="CENTER">
-        <Font family="SYNC_TO_DEVICE" size="25" color="#211811" weight="BOLD" letterSpacing="0.03">
+        <Font family="SYNC_TO_DEVICE" size="{time_layout["fontSize"]}" color="#211811" weight="BOLD" letterSpacing="0.03">
             <Template>%s:%s
                 <Parameter expression="[HOUR_0_23_Z]" />
                 <Parameter expression="[MINUTE_Z]" />
@@ -208,21 +215,14 @@ def _live_text() -> str:
     </Text>
     <Variant mode="AMBIENT" target="alpha" value="220" />
 </PartText>'''
-    date_part = '''<PartText name="live_date" x="198" y="275" width="54" height="15">
+    date_weekday_part = f'''<PartText name="live_date_weekday" x="{date_x}" y="{date_y}" width="{date_width}" height="{date_height}">
     <Text align="CENTER" verticalAlign="CENTER">
-        <Font family="SYNC_TO_DEVICE" size="11" color="#211811" weight="BOLD">
-            <Template>%s.%s
-                <Parameter expression="[MONTH_Z]" />
-                <Parameter expression="[DAY_Z]" />
-            </Template>
-        </Font>
-    </Text>
-    <Variant mode="AMBIENT" target="alpha" value="220" />
-</PartText>'''
-    weekday_part = '''<PartText name="live_weekday" x="202" y="291" width="46" height="13">
-    <Text align="CENTER" verticalAlign="CENTER">
-        <Font family="SYNC_TO_DEVICE" size="9" color="#211811" weight="BOLD">
-            <Upper><Template>%s<Parameter expression="[DAY_OF_WEEK_S]" /></Template></Upper>
+        <Font family="SYNC_TO_DEVICE" size="{date_weekday_layout["fontSize"]}" color="#211811" weight="BOLD">
+            <Upper><Template>%s.%s{separator}%s
+                    <Parameter expression="[MONTH_Z]" />
+                    <Parameter expression="[DAY_Z]" />
+                    <Parameter expression="[DAY_OF_WEEK_S]" />
+            </Template></Upper>
         </Font>
     </Text>
     <Variant mode="AMBIENT" target="alpha" value="220" />
@@ -238,7 +238,7 @@ def _live_text() -> str:
     </Text>
     <Variant mode="AMBIENT" target="alpha" value="190" />
 </PartText>'''
-    return "\n".join((time_part, date_part, weekday_part, battery_icon, battery_part))
+    return "\n".join((time_part, date_weekday_part, battery_icon, battery_part))
 
 
 def generate() -> str:
@@ -546,7 +546,7 @@ def generate() -> str:
         # hands so feet, hops, and landings are not clipped.
         tiger_static_condition,
         high_animation_condition,
-        _live_text(),
+        _live_text(manifest["readoutLayout"]),
     ]
     xml = '''<?xml version="1.0" encoding="utf-8"?>
 <WatchFace width="450" height="450">

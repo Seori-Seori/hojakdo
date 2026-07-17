@@ -65,10 +65,10 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         generate()
         cls.root = ET.parse(WATCHFACE_PATH).getroot()
 
-    def test_v4_manifest_and_approved_small_flight_size(self) -> None:
-        self.assertEqual("4.1.0", self.manifest["version"])
+    def test_v42_manifest_and_approved_small_flight_size(self) -> None:
+        self.assertEqual("4.2.0", self.manifest["version"])
         self.assertEqual(
-            "v4_1_hand_readability_candidate", self.manifest["status"]
+            "v4_2_top_readout_candidate", self.manifest["status"]
         )
         flight = self.manifest["smallFlight"]
         self.assertEqual([70, 54], flight["sizeLogical"])
@@ -278,7 +278,7 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             "MINUTE",
         ):
             self.assertIn(f"[{source}]", xml)
-        self.assertEqual(4, len(self.root.findall(".//PartText")))
+        self.assertEqual(3, len(self.root.findall(".//PartText")))
         self.assertIn("hojakdo_v4_hour_branch", xml)
         self.assertIn("hojakdo_v4_minute_branch", xml)
         self.assertIn("magpie_small_flight_right_v4", xml)
@@ -331,9 +331,36 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         live_parts = {
             part.attrib["name"]: part.attrib for part in self.root.findall(".//PartText")
         }
-        self.assertEqual(("183", "246"), (live_parts["live_time"]["x"], live_parts["live_time"]["y"]))
-        self.assertEqual(("198", "275"), (live_parts["live_date"]["x"], live_parts["live_date"]["y"]))
-        self.assertEqual(("202", "291"), (live_parts["live_weekday"]["x"], live_parts["live_weekday"]["y"]))
+        self.assertEqual(
+            {"live_time", "live_date_weekday", "live_battery"},
+            set(live_parts),
+        )
+        self.assertEqual(
+            ("155", "33", "140", "44"),
+            tuple(
+                live_parts["live_time"][key]
+                for key in ("x", "y", "width", "height")
+            ),
+        )
+        self.assertEqual(
+            ("174", "77", "102", "22"),
+            tuple(
+                live_parts["live_date_weekday"][key]
+                for key in ("x", "y", "width", "height")
+            ),
+        )
+        time_font = next(
+            part.find(".//Font")
+            for part in self.root.findall(".//PartText")
+            if part.attrib["name"] == "live_time"
+        )
+        date_weekday_font = next(
+            part.find(".//Font")
+            for part in self.root.findall(".//PartText")
+            if part.attrib["name"] == "live_date_weekday"
+        )
+        self.assertEqual("36", time_font.attrib["size"])
+        self.assertEqual("13", date_weekday_font.attrib["size"])
 
     def test_all_wff_image_resources_exist_and_names_are_android_safe(self) -> None:
         available = {path.stem for path in DRAWABLE_DIR.glob("*.png")}
@@ -526,8 +553,27 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             [188, 272, 270, 294],
             quiet_zone["dateFinalOverlayBoundsLogical"],
         )
-        self.assertEqual([0, 20], quiet_zone["liveTextShiftLogical"])
         self.assertEqual(225, quiet_zone["liveTextCenterXLogical"])
+        self.assertNotIn("liveTextShiftLogical", quiet_zone)
+        self.assertEqual(
+            {
+                "layout": "top_two_rows_time_then_date_weekday",
+                "centerXLogical": 225,
+                "zOrder": "above_hands_birds_and_animations",
+                "time": {
+                    "yLogical": 38,
+                    "fontSize": 36,
+                    "wffBoundsLogical": [155, 33, 140, 44],
+                },
+                "dateWeekday": {
+                    "yLogical": 79,
+                    "fontSize": 13,
+                    "separator": "  ",
+                    "wffBoundsLogical": [174, 77, 102, 22],
+                },
+            },
+            self.manifest["readoutLayout"],
+        )
         self.assertEqual(
             [282, 158, 306, 181],
             self.manifest["backgroundCleanup"]["pineSprigBoundsLogical"],
