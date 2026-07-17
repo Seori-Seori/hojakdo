@@ -83,22 +83,132 @@
                 <Expression name="show_magpie_small_walk_step"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && (!(((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 0) || ((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 11) == 5))) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 2]]></Expression>
             </Expressions>
             <Compare expression="show_magpie_large_walk_step">
-                <PartAnimatedImage name="magpie_large_walk_step" x="35" y="265" width="146" height="119">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
-                    <AnimatedImage resource="magpie_large_walk_step" format="AGIF" thumbnail="magpie_large_walk_step_thumbnail" />
-                    <Thumbnail resource="magpie_large_walk_step_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
+                <Group name="magpie_large_walk_step" x="0" y="0" width="450" height="450">
+                    <Condition>
+                        <Expressions>
+                            <Expression name="show_magpie_large_walk_step_runtime_slot_00"><![CDATA[[SECOND_MILLISECOND] < 0.125]]></Expression>
+                            <Expression name="show_magpie_large_walk_step_runtime_slot_01"><![CDATA[[SECOND_MILLISECOND] >= 0.125 && [SECOND_MILLISECOND] < 0.25]]></Expression>
+                            <Expression name="show_magpie_large_walk_step_runtime_slot_02"><![CDATA[[SECOND_MILLISECOND] >= 0.25 && [SECOND_MILLISECOND] < 0.375]]></Expression>
+                            <Expression name="show_magpie_large_walk_step_runtime_slot_03"><![CDATA[[SECOND_MILLISECOND] >= 0.375 && [SECOND_MILLISECOND] < 0.5]]></Expression>
+                            <Expression name="show_magpie_large_walk_step_runtime_slot_04"><![CDATA[[SECOND_MILLISECOND] >= 0.5 && [SECOND_MILLISECOND] < 0.625]]></Expression>
+                            <Expression name="show_magpie_large_walk_step_runtime_slot_05"><![CDATA[[SECOND_MILLISECOND] >= 0.625 && [SECOND_MILLISECOND] < 0.75]]></Expression>
+                            <Expression name="show_magpie_large_walk_step_runtime_slot_06"><![CDATA[[SECOND_MILLISECOND] >= 0.75 && [SECOND_MILLISECOND] < 0.875]]></Expression>
+                            <Expression name="show_magpie_large_walk_step_runtime_slot_07"><![CDATA[[SECOND_MILLISECOND] >= 0.875]]></Expression>
+                        </Expressions>
+                        <Compare expression="show_magpie_large_walk_step_runtime_slot_00">
+                            <PartImage name="magpie_large_walk_step_runtime_slot_00" x="35" y="265" width="146" height="119">
+                                <Image resource="magpie_large_walk_step_frame_00" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_walk_step_runtime_slot_01">
+                            <PartImage name="magpie_large_walk_step_runtime_slot_01" x="35" y="265" width="146" height="119">
+                                <Image resource="magpie_large_walk_step_frame_01" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_walk_step_runtime_slot_02">
+                            <PartImage name="magpie_large_walk_step_runtime_slot_02" x="35" y="265" width="146" height="119">
+                                <Image resource="magpie_large_walk_step_frame_02" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_walk_step_runtime_slot_03">
+                            <PartImage name="magpie_large_walk_step_runtime_slot_03" x="35" y="265" width="146" height="119">
+                                <Image resource="magpie_large_walk_step_frame_03" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_walk_step_runtime_slot_04">
+                            <PartImage name="magpie_large_walk_step_runtime_slot_04" x="35" y="265" width="146" height="119">
+                                <Image resource="magpie_large_walk_step_frame_04" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_walk_step_runtime_slot_05">
+                            <PartImage name="magpie_large_walk_step_runtime_slot_05" x="35" y="265" width="146" height="119">
+                                <Image resource="magpie_large_walk_step_frame_05" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_walk_step_runtime_slot_06">
+                            <PartImage name="magpie_large_walk_step_runtime_slot_06" x="35" y="265" width="146" height="119">
+                                <Image resource="magpie_large_walk_step_frame_06" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_walk_step_runtime_slot_07">
+                            <PartImage name="magpie_large_walk_step_runtime_slot_07" x="35" y="265" width="146" height="119">
+                                <Image resource="magpie_large_walk_step_frame_07" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                    </Condition>
+                </Group>
             </Compare>
             <Compare expression="show_magpie_small_walk_step">
-                <PartAnimatedImage name="magpie_small_walk_step" x="67" y="287" width="123" height="82">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
-                    <AnimatedImage resource="magpie_small_walk_step" format="AGIF" thumbnail="magpie_small_walk_step_thumbnail" />
-                    <Thumbnail resource="magpie_small_walk_step_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
+                <Group name="magpie_small_walk_step" x="0" y="0" width="450" height="450">
+                    <Condition>
+                        <Expressions>
+                            <Expression name="show_magpie_small_walk_step_runtime_slot_00"><![CDATA[[SECOND_MILLISECOND] < 0.125]]></Expression>
+                            <Expression name="show_magpie_small_walk_step_runtime_slot_01"><![CDATA[[SECOND_MILLISECOND] >= 0.125 && [SECOND_MILLISECOND] < 0.25]]></Expression>
+                            <Expression name="show_magpie_small_walk_step_runtime_slot_02"><![CDATA[[SECOND_MILLISECOND] >= 0.25 && [SECOND_MILLISECOND] < 0.375]]></Expression>
+                            <Expression name="show_magpie_small_walk_step_runtime_slot_03"><![CDATA[[SECOND_MILLISECOND] >= 0.375 && [SECOND_MILLISECOND] < 0.5]]></Expression>
+                            <Expression name="show_magpie_small_walk_step_runtime_slot_04"><![CDATA[[SECOND_MILLISECOND] >= 0.5 && [SECOND_MILLISECOND] < 0.625]]></Expression>
+                            <Expression name="show_magpie_small_walk_step_runtime_slot_05"><![CDATA[[SECOND_MILLISECOND] >= 0.625 && [SECOND_MILLISECOND] < 0.75]]></Expression>
+                            <Expression name="show_magpie_small_walk_step_runtime_slot_06"><![CDATA[[SECOND_MILLISECOND] >= 0.75 && [SECOND_MILLISECOND] < 0.875]]></Expression>
+                            <Expression name="show_magpie_small_walk_step_runtime_slot_07"><![CDATA[[SECOND_MILLISECOND] >= 0.875]]></Expression>
+                        </Expressions>
+                        <Compare expression="show_magpie_small_walk_step_runtime_slot_00">
+                            <PartImage name="magpie_small_walk_step_runtime_slot_00" x="67" y="287" width="123" height="82">
+                                <Image resource="magpie_small_walk_step_frame_00" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_walk_step_runtime_slot_01">
+                            <PartImage name="magpie_small_walk_step_runtime_slot_01" x="67" y="287" width="123" height="82">
+                                <Image resource="magpie_small_walk_step_frame_01" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_walk_step_runtime_slot_02">
+                            <PartImage name="magpie_small_walk_step_runtime_slot_02" x="67" y="287" width="123" height="82">
+                                <Image resource="magpie_small_walk_step_frame_02" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_walk_step_runtime_slot_03">
+                            <PartImage name="magpie_small_walk_step_runtime_slot_03" x="67" y="287" width="123" height="82">
+                                <Image resource="magpie_small_walk_step_frame_03" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_walk_step_runtime_slot_04">
+                            <PartImage name="magpie_small_walk_step_runtime_slot_04" x="67" y="287" width="123" height="82">
+                                <Image resource="magpie_small_walk_step_frame_04" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_walk_step_runtime_slot_05">
+                            <PartImage name="magpie_small_walk_step_runtime_slot_05" x="67" y="287" width="123" height="82">
+                                <Image resource="magpie_small_walk_step_frame_05" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_walk_step_runtime_slot_06">
+                            <PartImage name="magpie_small_walk_step_runtime_slot_06" x="67" y="287" width="123" height="82">
+                                <Image resource="magpie_small_walk_step_frame_06" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_walk_step_runtime_slot_07">
+                            <PartImage name="magpie_small_walk_step_runtime_slot_07" x="67" y="287" width="123" height="82">
+                                <Image resource="magpie_small_walk_step_frame_07" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                    </Condition>
+                </Group>
             </Compare>
         </Condition>
 
@@ -125,13 +235,61 @@
                     <Image resource="hojakdo_v4_tiger_pupils" />
                     <Variant mode="AMBIENT" target="alpha" value="155" />
                 </PartImage>
-                <PartAnimatedImage name="tiger_head_eye_reaction" x="280" y="222" width="108" height="108">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="FIRST_FRAME" />
-                    <AnimatedImage resource="tiger_head_eye_reaction" format="AGIF" thumbnail="tiger_head_eye_reaction_thumbnail" />
-                    <Thumbnail resource="tiger_head_eye_reaction_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
+                <Group name="tiger_head_eye_reaction" x="0" y="0" width="450" height="450">
+                    <Condition>
+                        <Expressions>
+                            <Expression name="show_tiger_head_eye_reaction_runtime_slot_00"><![CDATA[[SECOND_MILLISECOND] < 0.125]]></Expression>
+                            <Expression name="show_tiger_head_eye_reaction_runtime_slot_01"><![CDATA[[SECOND_MILLISECOND] >= 0.125 && [SECOND_MILLISECOND] < 0.25]]></Expression>
+                            <Expression name="show_tiger_head_eye_reaction_runtime_slot_02"><![CDATA[[SECOND_MILLISECOND] >= 0.25 && [SECOND_MILLISECOND] < 0.375]]></Expression>
+                            <Expression name="show_tiger_head_eye_reaction_runtime_slot_03"><![CDATA[[SECOND_MILLISECOND] >= 0.375 && [SECOND_MILLISECOND] < 0.5]]></Expression>
+                            <Expression name="show_tiger_head_eye_reaction_runtime_slot_04"><![CDATA[[SECOND_MILLISECOND] >= 0.5 && [SECOND_MILLISECOND] < 0.625]]></Expression>
+                            <Expression name="show_tiger_head_eye_reaction_runtime_slot_05"><![CDATA[[SECOND_MILLISECOND] >= 0.625 && [SECOND_MILLISECOND] < 0.75]]></Expression>
+                            <Expression name="show_tiger_head_eye_reaction_runtime_slot_06"><![CDATA[[SECOND_MILLISECOND] >= 0.75]]></Expression>
+                        </Expressions>
+                        <Compare expression="show_tiger_head_eye_reaction_runtime_slot_00">
+                            <PartImage name="tiger_head_eye_reaction_runtime_slot_00" x="280" y="222" width="108" height="108">
+                                <Image resource="tiger_head_eye_reaction_frame_00" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_tiger_head_eye_reaction_runtime_slot_01">
+                            <PartImage name="tiger_head_eye_reaction_runtime_slot_01" x="280" y="222" width="108" height="108">
+                                <Image resource="tiger_head_eye_reaction_frame_01" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_tiger_head_eye_reaction_runtime_slot_02">
+                            <PartImage name="tiger_head_eye_reaction_runtime_slot_02" x="280" y="222" width="108" height="108">
+                                <Image resource="tiger_head_eye_reaction_frame_02" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_tiger_head_eye_reaction_runtime_slot_03">
+                            <PartImage name="tiger_head_eye_reaction_runtime_slot_03" x="280" y="222" width="108" height="108">
+                                <Image resource="tiger_head_eye_reaction_frame_03" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_tiger_head_eye_reaction_runtime_slot_04">
+                            <PartImage name="tiger_head_eye_reaction_runtime_slot_04" x="280" y="222" width="108" height="108">
+                                <Image resource="tiger_head_eye_reaction_frame_04" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_tiger_head_eye_reaction_runtime_slot_05">
+                            <PartImage name="tiger_head_eye_reaction_runtime_slot_05" x="280" y="222" width="108" height="108">
+                                <Image resource="tiger_head_eye_reaction_frame_05" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_tiger_head_eye_reaction_runtime_slot_06">
+                            <PartImage name="tiger_head_eye_reaction_runtime_slot_06" x="280" y="222" width="108" height="108">
+                                <Image resource="tiger_head_eye_reaction_frame_06" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                    </Condition>
+                </Group>
             </Compare>
             <Default>
                 <PartImage name="tiger_head" x="0" y="0" width="450" height="450">
@@ -278,121 +436,710 @@
                 <Expression name="show_magpie_small_peck_tiger_ear"><![CDATA[((floor((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) / 43) % 2) == 1) && ((([YEAR] * 527040) + ([DAY_OF_YEAR] * 1440) + ([HOUR_0_23] * 60) + [MINUTE] - 32) % 43) == 14]]></Expression>
             </Expressions>
             <Compare expression="show_magpie_large_fly_pine_to_hand">
-                <PartAnimatedImage name="magpie_large_fly_pine_to_hand" x="55" y="36" width="130" height="163">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
-                    <AnimatedImage resource="magpie_large_fly_pine_to_hand" format="AGIF" thumbnail="magpie_large_fly_pine_to_hand_thumbnail" />
-                    <Thumbnail resource="magpie_large_fly_pine_to_hand_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
+                <Group name="magpie_large_fly_pine_to_hand" x="0" y="0" width="450" height="450">
+                    <Condition>
+                        <Expressions>
+                            <Expression name="show_magpie_large_fly_pine_to_hand_runtime_slot_00"><![CDATA[[SECOND_MILLISECOND] < 0.125]]></Expression>
+                            <Expression name="show_magpie_large_fly_pine_to_hand_runtime_slot_01"><![CDATA[[SECOND_MILLISECOND] >= 0.125 && [SECOND_MILLISECOND] < 0.25]]></Expression>
+                            <Expression name="show_magpie_large_fly_pine_to_hand_runtime_slot_02"><![CDATA[[SECOND_MILLISECOND] >= 0.25 && [SECOND_MILLISECOND] < 0.375]]></Expression>
+                            <Expression name="show_magpie_large_fly_pine_to_hand_runtime_slot_03"><![CDATA[[SECOND_MILLISECOND] >= 0.375 && [SECOND_MILLISECOND] < 0.5]]></Expression>
+                            <Expression name="show_magpie_large_fly_pine_to_hand_runtime_slot_04"><![CDATA[[SECOND_MILLISECOND] >= 0.5 && [SECOND_MILLISECOND] < 0.625]]></Expression>
+                            <Expression name="show_magpie_large_fly_pine_to_hand_runtime_slot_05"><![CDATA[[SECOND_MILLISECOND] >= 0.625 && [SECOND_MILLISECOND] < 0.75]]></Expression>
+                            <Expression name="show_magpie_large_fly_pine_to_hand_runtime_slot_06"><![CDATA[[SECOND_MILLISECOND] >= 0.75 && [SECOND_MILLISECOND] < 0.875]]></Expression>
+                            <Expression name="show_magpie_large_fly_pine_to_hand_runtime_slot_07"><![CDATA[[SECOND_MILLISECOND] >= 0.875]]></Expression>
+                        </Expressions>
+                        <Compare expression="show_magpie_large_fly_pine_to_hand_runtime_slot_00">
+                            <PartImage name="magpie_large_fly_pine_to_hand_runtime_slot_00" x="55" y="36" width="130" height="163">
+                                <Image resource="magpie_large_fly_pine_to_hand_frame_00" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_fly_pine_to_hand_runtime_slot_01">
+                            <PartImage name="magpie_large_fly_pine_to_hand_runtime_slot_01" x="55" y="36" width="130" height="163">
+                                <Image resource="magpie_large_fly_pine_to_hand_frame_01" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_fly_pine_to_hand_runtime_slot_02">
+                            <PartImage name="magpie_large_fly_pine_to_hand_runtime_slot_02" x="55" y="36" width="130" height="163">
+                                <Image resource="magpie_large_fly_pine_to_hand_frame_02" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_fly_pine_to_hand_runtime_slot_03">
+                            <PartImage name="magpie_large_fly_pine_to_hand_runtime_slot_03" x="55" y="36" width="130" height="163">
+                                <Image resource="magpie_large_fly_pine_to_hand_frame_03" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_fly_pine_to_hand_runtime_slot_04">
+                            <PartImage name="magpie_large_fly_pine_to_hand_runtime_slot_04" x="55" y="36" width="130" height="163">
+                                <Image resource="magpie_large_fly_pine_to_hand_frame_04" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_fly_pine_to_hand_runtime_slot_05">
+                            <PartImage name="magpie_large_fly_pine_to_hand_runtime_slot_05" x="55" y="36" width="130" height="163">
+                                <Image resource="magpie_large_fly_pine_to_hand_frame_05" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_fly_pine_to_hand_runtime_slot_06">
+                            <PartImage name="magpie_large_fly_pine_to_hand_runtime_slot_06" x="55" y="36" width="130" height="163">
+                                <Image resource="magpie_large_fly_pine_to_hand_frame_06" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_fly_pine_to_hand_runtime_slot_07">
+                            <PartImage name="magpie_large_fly_pine_to_hand_runtime_slot_07" x="55" y="36" width="130" height="163">
+                                <Image resource="magpie_large_fly_pine_to_hand_frame_07" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                    </Condition>
+                </Group>
             </Compare>
             <Compare expression="show_magpie_large_land_on_hand">
-                <PartAnimatedImage name="magpie_large_land_on_hand" x="95" y="26" width="91" height="120">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
-                    <AnimatedImage resource="magpie_large_land_on_hand" format="AGIF" thumbnail="magpie_large_land_on_hand_thumbnail" />
-                    <Thumbnail resource="magpie_large_land_on_hand_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
+                <Group name="magpie_large_land_on_hand" x="0" y="0" width="450" height="450">
+                    <Condition>
+                        <Expressions>
+                            <Expression name="show_magpie_large_land_on_hand_runtime_slot_00"><![CDATA[[SECOND_MILLISECOND] < 0.125]]></Expression>
+                            <Expression name="show_magpie_large_land_on_hand_runtime_slot_01"><![CDATA[[SECOND_MILLISECOND] >= 0.125 && [SECOND_MILLISECOND] < 0.25]]></Expression>
+                            <Expression name="show_magpie_large_land_on_hand_runtime_slot_02"><![CDATA[[SECOND_MILLISECOND] >= 0.25 && [SECOND_MILLISECOND] < 0.375]]></Expression>
+                            <Expression name="show_magpie_large_land_on_hand_runtime_slot_03"><![CDATA[[SECOND_MILLISECOND] >= 0.375 && [SECOND_MILLISECOND] < 0.5]]></Expression>
+                            <Expression name="show_magpie_large_land_on_hand_runtime_slot_04"><![CDATA[[SECOND_MILLISECOND] >= 0.5 && [SECOND_MILLISECOND] < 0.625]]></Expression>
+                            <Expression name="show_magpie_large_land_on_hand_runtime_slot_05"><![CDATA[[SECOND_MILLISECOND] >= 0.625]]></Expression>
+                        </Expressions>
+                        <Compare expression="show_magpie_large_land_on_hand_runtime_slot_00">
+                            <PartImage name="magpie_large_land_on_hand_runtime_slot_00" x="95" y="26" width="91" height="120">
+                                <Image resource="magpie_large_land_on_hand_frame_00" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_land_on_hand_runtime_slot_01">
+                            <PartImage name="magpie_large_land_on_hand_runtime_slot_01" x="95" y="26" width="91" height="120">
+                                <Image resource="magpie_large_land_on_hand_frame_01" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_land_on_hand_runtime_slot_02">
+                            <PartImage name="magpie_large_land_on_hand_runtime_slot_02" x="95" y="26" width="91" height="120">
+                                <Image resource="magpie_large_land_on_hand_frame_02" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_land_on_hand_runtime_slot_03">
+                            <PartImage name="magpie_large_land_on_hand_runtime_slot_03" x="95" y="26" width="91" height="120">
+                                <Image resource="magpie_large_land_on_hand_frame_03" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_land_on_hand_runtime_slot_04">
+                            <PartImage name="magpie_large_land_on_hand_runtime_slot_04" x="95" y="26" width="91" height="120">
+                                <Image resource="magpie_large_land_on_hand_frame_04" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_land_on_hand_runtime_slot_05">
+                            <PartImage name="magpie_large_land_on_hand_runtime_slot_05" x="95" y="26" width="91" height="120">
+                                <Image resource="magpie_large_land_on_hand_frame_05" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                    </Condition>
+                </Group>
             </Compare>
             <Compare expression="show_magpie_large_hop_to_tiger">
-                <PartAnimatedImage name="magpie_large_hop_to_tiger" x="222" y="162" width="143" height="180">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
-                    <AnimatedImage resource="magpie_large_hop_to_tiger" format="AGIF" thumbnail="magpie_large_hop_to_tiger_thumbnail" />
-                    <Thumbnail resource="magpie_large_hop_to_tiger_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
+                <Group name="magpie_large_hop_to_tiger" x="0" y="0" width="450" height="450">
+                    <Condition>
+                        <Expressions>
+                            <Expression name="show_magpie_large_hop_to_tiger_runtime_slot_00"><![CDATA[[SECOND_MILLISECOND] < 0.125]]></Expression>
+                            <Expression name="show_magpie_large_hop_to_tiger_runtime_slot_01"><![CDATA[[SECOND_MILLISECOND] >= 0.125 && [SECOND_MILLISECOND] < 0.25]]></Expression>
+                            <Expression name="show_magpie_large_hop_to_tiger_runtime_slot_02"><![CDATA[[SECOND_MILLISECOND] >= 0.25 && [SECOND_MILLISECOND] < 0.375]]></Expression>
+                            <Expression name="show_magpie_large_hop_to_tiger_runtime_slot_03"><![CDATA[[SECOND_MILLISECOND] >= 0.375 && [SECOND_MILLISECOND] < 0.5]]></Expression>
+                            <Expression name="show_magpie_large_hop_to_tiger_runtime_slot_04"><![CDATA[[SECOND_MILLISECOND] >= 0.5 && [SECOND_MILLISECOND] < 0.625]]></Expression>
+                            <Expression name="show_magpie_large_hop_to_tiger_runtime_slot_05"><![CDATA[[SECOND_MILLISECOND] >= 0.625 && [SECOND_MILLISECOND] < 0.75]]></Expression>
+                            <Expression name="show_magpie_large_hop_to_tiger_runtime_slot_06"><![CDATA[[SECOND_MILLISECOND] >= 0.75 && [SECOND_MILLISECOND] < 0.875]]></Expression>
+                            <Expression name="show_magpie_large_hop_to_tiger_runtime_slot_07"><![CDATA[[SECOND_MILLISECOND] >= 0.875]]></Expression>
+                        </Expressions>
+                        <Compare expression="show_magpie_large_hop_to_tiger_runtime_slot_00">
+                            <PartImage name="magpie_large_hop_to_tiger_runtime_slot_00" x="222" y="162" width="143" height="180">
+                                <Image resource="magpie_large_hop_to_tiger_frame_00" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_hop_to_tiger_runtime_slot_01">
+                            <PartImage name="magpie_large_hop_to_tiger_runtime_slot_01" x="222" y="162" width="143" height="180">
+                                <Image resource="magpie_large_hop_to_tiger_frame_01" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_hop_to_tiger_runtime_slot_02">
+                            <PartImage name="magpie_large_hop_to_tiger_runtime_slot_02" x="222" y="162" width="143" height="180">
+                                <Image resource="magpie_large_hop_to_tiger_frame_02" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_hop_to_tiger_runtime_slot_03">
+                            <PartImage name="magpie_large_hop_to_tiger_runtime_slot_03" x="222" y="162" width="143" height="180">
+                                <Image resource="magpie_large_hop_to_tiger_frame_03" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_hop_to_tiger_runtime_slot_04">
+                            <PartImage name="magpie_large_hop_to_tiger_runtime_slot_04" x="222" y="162" width="143" height="180">
+                                <Image resource="magpie_large_hop_to_tiger_frame_04" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_hop_to_tiger_runtime_slot_05">
+                            <PartImage name="magpie_large_hop_to_tiger_runtime_slot_05" x="222" y="162" width="143" height="180">
+                                <Image resource="magpie_large_hop_to_tiger_frame_05" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_hop_to_tiger_runtime_slot_06">
+                            <PartImage name="magpie_large_hop_to_tiger_runtime_slot_06" x="222" y="162" width="143" height="180">
+                                <Image resource="magpie_large_hop_to_tiger_frame_06" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_hop_to_tiger_runtime_slot_07">
+                            <PartImage name="magpie_large_hop_to_tiger_runtime_slot_07" x="222" y="162" width="143" height="180">
+                                <Image resource="magpie_large_hop_to_tiger_frame_07" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                    </Condition>
+                </Group>
             </Compare>
             <Compare expression="show_magpie_large_head_tilt">
-                <PartAnimatedImage name="magpie_large_head_tilt" x="274" y="162" width="94" height="104">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
-                    <AnimatedImage resource="magpie_large_head_tilt" format="AGIF" thumbnail="magpie_large_head_tilt_thumbnail" />
-                    <Thumbnail resource="magpie_large_head_tilt_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
+                <Group name="magpie_large_head_tilt" x="0" y="0" width="450" height="450">
+                    <Condition>
+                        <Expressions>
+                            <Expression name="show_magpie_large_head_tilt_runtime_slot_00"><![CDATA[[SECOND_MILLISECOND] < 0.125]]></Expression>
+                            <Expression name="show_magpie_large_head_tilt_runtime_slot_01"><![CDATA[[SECOND_MILLISECOND] >= 0.125 && [SECOND_MILLISECOND] < 0.25]]></Expression>
+                            <Expression name="show_magpie_large_head_tilt_runtime_slot_02"><![CDATA[[SECOND_MILLISECOND] >= 0.25 && [SECOND_MILLISECOND] < 0.375]]></Expression>
+                            <Expression name="show_magpie_large_head_tilt_runtime_slot_03"><![CDATA[[SECOND_MILLISECOND] >= 0.375 && [SECOND_MILLISECOND] < 0.5]]></Expression>
+                            <Expression name="show_magpie_large_head_tilt_runtime_slot_04"><![CDATA[[SECOND_MILLISECOND] >= 0.5 && [SECOND_MILLISECOND] < 0.625]]></Expression>
+                            <Expression name="show_magpie_large_head_tilt_runtime_slot_05"><![CDATA[[SECOND_MILLISECOND] >= 0.625 && [SECOND_MILLISECOND] < 0.75]]></Expression>
+                            <Expression name="show_magpie_large_head_tilt_runtime_slot_06"><![CDATA[[SECOND_MILLISECOND] >= 0.75]]></Expression>
+                        </Expressions>
+                        <Compare expression="show_magpie_large_head_tilt_runtime_slot_00">
+                            <PartImage name="magpie_large_head_tilt_runtime_slot_00" x="274" y="162" width="94" height="104">
+                                <Image resource="magpie_large_head_tilt_frame_00" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_head_tilt_runtime_slot_01">
+                            <PartImage name="magpie_large_head_tilt_runtime_slot_01" x="274" y="162" width="94" height="104">
+                                <Image resource="magpie_large_head_tilt_frame_01" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_head_tilt_runtime_slot_02">
+                            <PartImage name="magpie_large_head_tilt_runtime_slot_02" x="274" y="162" width="94" height="104">
+                                <Image resource="magpie_large_head_tilt_frame_02" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_head_tilt_runtime_slot_03">
+                            <PartImage name="magpie_large_head_tilt_runtime_slot_03" x="274" y="162" width="94" height="104">
+                                <Image resource="magpie_large_head_tilt_frame_03" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_head_tilt_runtime_slot_04">
+                            <PartImage name="magpie_large_head_tilt_runtime_slot_04" x="274" y="162" width="94" height="104">
+                                <Image resource="magpie_large_head_tilt_frame_04" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_head_tilt_runtime_slot_05">
+                            <PartImage name="magpie_large_head_tilt_runtime_slot_05" x="274" y="162" width="94" height="104">
+                                <Image resource="magpie_large_head_tilt_frame_05" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_head_tilt_runtime_slot_06">
+                            <PartImage name="magpie_large_head_tilt_runtime_slot_06" x="274" y="162" width="94" height="104">
+                                <Image resource="magpie_large_head_tilt_frame_06" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                    </Condition>
+                </Group>
             </Compare>
             <Compare expression="show_magpie_large_turn_perch">
-                <PartAnimatedImage name="magpie_large_turn_perch" x="276" y="158" width="119" height="107">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
-                    <AnimatedImage resource="magpie_large_turn_perch" format="AGIF" thumbnail="magpie_large_turn_perch_thumbnail" />
-                    <Thumbnail resource="magpie_large_turn_perch_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
+                <Group name="magpie_large_turn_perch" x="0" y="0" width="450" height="450">
+                    <Condition>
+                        <Expressions>
+                            <Expression name="show_magpie_large_turn_perch_runtime_slot_00"><![CDATA[[SECOND_MILLISECOND] < 0.375]]></Expression>
+                            <Expression name="show_magpie_large_turn_perch_runtime_slot_01"><![CDATA[[SECOND_MILLISECOND] >= 0.375]]></Expression>
+                        </Expressions>
+                        <Compare expression="show_magpie_large_turn_perch_runtime_slot_00">
+                            <PartImage name="magpie_large_turn_perch_runtime_slot_00" x="276" y="158" width="119" height="107">
+                                <Image resource="magpie_large_turn_perch_frame_00" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_turn_perch_runtime_slot_01">
+                            <PartImage name="magpie_large_turn_perch_runtime_slot_01" x="276" y="158" width="119" height="107">
+                                <Image resource="magpie_large_turn_perch_frame_05" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                    </Condition>
+                </Group>
             </Compare>
             <Compare expression="show_magpie_large_exit_right_jump">
-                <PartAnimatedImage name="magpie_large_exit_right_jump" x="276" y="102" width="174" height="163">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
-                    <AnimatedImage resource="magpie_large_exit_right_jump" format="AGIF" thumbnail="magpie_large_exit_right_jump_thumbnail" />
-                    <Thumbnail resource="magpie_large_exit_right_jump_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
+                <Group name="magpie_large_exit_right_jump" x="0" y="0" width="450" height="450">
+                    <Condition>
+                        <Expressions>
+                            <Expression name="show_magpie_large_exit_right_jump_runtime_slot_00"><![CDATA[[SECOND_MILLISECOND] < 0.125]]></Expression>
+                            <Expression name="show_magpie_large_exit_right_jump_runtime_slot_01"><![CDATA[[SECOND_MILLISECOND] >= 0.125 && [SECOND_MILLISECOND] < 0.25]]></Expression>
+                            <Expression name="show_magpie_large_exit_right_jump_runtime_slot_02"><![CDATA[[SECOND_MILLISECOND] >= 0.25 && [SECOND_MILLISECOND] < 0.375]]></Expression>
+                            <Expression name="show_magpie_large_exit_right_jump_runtime_slot_03"><![CDATA[[SECOND_MILLISECOND] >= 0.375 && [SECOND_MILLISECOND] < 0.5]]></Expression>
+                            <Expression name="show_magpie_large_exit_right_jump_runtime_slot_04"><![CDATA[[SECOND_MILLISECOND] >= 0.5 && [SECOND_MILLISECOND] < 0.625]]></Expression>
+                            <Expression name="show_magpie_large_exit_right_jump_runtime_slot_05"><![CDATA[[SECOND_MILLISECOND] >= 0.625 && [SECOND_MILLISECOND] < 0.75]]></Expression>
+                            <Expression name="show_magpie_large_exit_right_jump_runtime_slot_06"><![CDATA[[SECOND_MILLISECOND] >= 0.75 && [SECOND_MILLISECOND] < 0.875]]></Expression>
+                            <Expression name="show_magpie_large_exit_right_jump_runtime_slot_07"><![CDATA[[SECOND_MILLISECOND] >= 0.875]]></Expression>
+                        </Expressions>
+                        <Compare expression="show_magpie_large_exit_right_jump_runtime_slot_00">
+                            <PartImage name="magpie_large_exit_right_jump_runtime_slot_00" x="276" y="102" width="174" height="163">
+                                <Image resource="magpie_large_exit_right_jump_frame_00" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_exit_right_jump_runtime_slot_01">
+                            <PartImage name="magpie_large_exit_right_jump_runtime_slot_01" x="276" y="102" width="174" height="163">
+                                <Image resource="magpie_large_exit_right_jump_frame_01" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_exit_right_jump_runtime_slot_02">
+                            <PartImage name="magpie_large_exit_right_jump_runtime_slot_02" x="276" y="102" width="174" height="163">
+                                <Image resource="magpie_large_exit_right_jump_frame_02" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_exit_right_jump_runtime_slot_03">
+                            <PartImage name="magpie_large_exit_right_jump_runtime_slot_03" x="276" y="102" width="174" height="163">
+                                <Image resource="magpie_large_exit_right_jump_frame_03" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_exit_right_jump_runtime_slot_04">
+                            <PartImage name="magpie_large_exit_right_jump_runtime_slot_04" x="276" y="102" width="174" height="163">
+                                <Image resource="magpie_large_exit_right_jump_frame_04" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_exit_right_jump_runtime_slot_05">
+                            <PartImage name="magpie_large_exit_right_jump_runtime_slot_05" x="276" y="102" width="174" height="163">
+                                <Image resource="magpie_large_exit_right_jump_frame_05" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_exit_right_jump_runtime_slot_06">
+                            <PartImage name="magpie_large_exit_right_jump_runtime_slot_06" x="276" y="102" width="174" height="163">
+                                <Image resource="magpie_large_exit_right_jump_frame_06" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_large_exit_right_jump_runtime_slot_07">
+                            <PartImage name="magpie_large_exit_right_jump_runtime_slot_07" x="276" y="102" width="174" height="163">
+                                <Image resource="magpie_large_exit_right_jump_frame_07" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                    </Condition>
+                </Group>
             </Compare>
             <Compare expression="show_magpie_small_fly_pine_to_hand">
-                <PartAnimatedImage name="magpie_small_fly_pine_to_hand" x="54" y="62" width="141" height="130">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
-                    <AnimatedImage resource="magpie_small_fly_pine_to_hand" format="AGIF" thumbnail="magpie_small_fly_pine_to_hand_thumbnail" />
-                    <Thumbnail resource="magpie_small_fly_pine_to_hand_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
+                <Group name="magpie_small_fly_pine_to_hand" x="0" y="0" width="450" height="450">
+                    <Condition>
+                        <Expressions>
+                            <Expression name="show_magpie_small_fly_pine_to_hand_runtime_slot_00"><![CDATA[[SECOND_MILLISECOND] < 0.125]]></Expression>
+                            <Expression name="show_magpie_small_fly_pine_to_hand_runtime_slot_01"><![CDATA[[SECOND_MILLISECOND] >= 0.125 && [SECOND_MILLISECOND] < 0.25]]></Expression>
+                            <Expression name="show_magpie_small_fly_pine_to_hand_runtime_slot_02"><![CDATA[[SECOND_MILLISECOND] >= 0.25 && [SECOND_MILLISECOND] < 0.375]]></Expression>
+                            <Expression name="show_magpie_small_fly_pine_to_hand_runtime_slot_03"><![CDATA[[SECOND_MILLISECOND] >= 0.375 && [SECOND_MILLISECOND] < 0.5]]></Expression>
+                            <Expression name="show_magpie_small_fly_pine_to_hand_runtime_slot_04"><![CDATA[[SECOND_MILLISECOND] >= 0.5 && [SECOND_MILLISECOND] < 0.625]]></Expression>
+                            <Expression name="show_magpie_small_fly_pine_to_hand_runtime_slot_05"><![CDATA[[SECOND_MILLISECOND] >= 0.625 && [SECOND_MILLISECOND] < 0.75]]></Expression>
+                            <Expression name="show_magpie_small_fly_pine_to_hand_runtime_slot_06"><![CDATA[[SECOND_MILLISECOND] >= 0.75 && [SECOND_MILLISECOND] < 0.875]]></Expression>
+                            <Expression name="show_magpie_small_fly_pine_to_hand_runtime_slot_07"><![CDATA[[SECOND_MILLISECOND] >= 0.875]]></Expression>
+                        </Expressions>
+                        <Compare expression="show_magpie_small_fly_pine_to_hand_runtime_slot_00">
+                            <PartImage name="magpie_small_fly_pine_to_hand_runtime_slot_00" x="54" y="62" width="141" height="130">
+                                <Image resource="magpie_small_fly_pine_to_hand_frame_00" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_fly_pine_to_hand_runtime_slot_01">
+                            <PartImage name="magpie_small_fly_pine_to_hand_runtime_slot_01" x="54" y="62" width="141" height="130">
+                                <Image resource="magpie_small_fly_pine_to_hand_frame_01" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_fly_pine_to_hand_runtime_slot_02">
+                            <PartImage name="magpie_small_fly_pine_to_hand_runtime_slot_02" x="54" y="62" width="141" height="130">
+                                <Image resource="magpie_small_fly_pine_to_hand_frame_02" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_fly_pine_to_hand_runtime_slot_03">
+                            <PartImage name="magpie_small_fly_pine_to_hand_runtime_slot_03" x="54" y="62" width="141" height="130">
+                                <Image resource="magpie_small_fly_pine_to_hand_frame_03" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_fly_pine_to_hand_runtime_slot_04">
+                            <PartImage name="magpie_small_fly_pine_to_hand_runtime_slot_04" x="54" y="62" width="141" height="130">
+                                <Image resource="magpie_small_fly_pine_to_hand_frame_04" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_fly_pine_to_hand_runtime_slot_05">
+                            <PartImage name="magpie_small_fly_pine_to_hand_runtime_slot_05" x="54" y="62" width="141" height="130">
+                                <Image resource="magpie_small_fly_pine_to_hand_frame_05" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_fly_pine_to_hand_runtime_slot_06">
+                            <PartImage name="magpie_small_fly_pine_to_hand_runtime_slot_06" x="54" y="62" width="141" height="130">
+                                <Image resource="magpie_small_fly_pine_to_hand_frame_06" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_fly_pine_to_hand_runtime_slot_07">
+                            <PartImage name="magpie_small_fly_pine_to_hand_runtime_slot_07" x="54" y="62" width="141" height="130">
+                                <Image resource="magpie_small_fly_pine_to_hand_frame_07" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                    </Condition>
+                </Group>
             </Compare>
             <Compare expression="show_magpie_small_land_on_hand">
-                <PartAnimatedImage name="magpie_small_land_on_hand" x="117" y="61" width="78" height="72">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
-                    <AnimatedImage resource="magpie_small_land_on_hand" format="AGIF" thumbnail="magpie_small_land_on_hand_thumbnail" />
-                    <Thumbnail resource="magpie_small_land_on_hand_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
+                <Group name="magpie_small_land_on_hand" x="0" y="0" width="450" height="450">
+                    <Condition>
+                        <Expressions>
+                            <Expression name="show_magpie_small_land_on_hand_runtime_slot_00"><![CDATA[[SECOND_MILLISECOND] < 0.125]]></Expression>
+                            <Expression name="show_magpie_small_land_on_hand_runtime_slot_01"><![CDATA[[SECOND_MILLISECOND] >= 0.125 && [SECOND_MILLISECOND] < 0.25]]></Expression>
+                            <Expression name="show_magpie_small_land_on_hand_runtime_slot_02"><![CDATA[[SECOND_MILLISECOND] >= 0.25 && [SECOND_MILLISECOND] < 0.375]]></Expression>
+                            <Expression name="show_magpie_small_land_on_hand_runtime_slot_03"><![CDATA[[SECOND_MILLISECOND] >= 0.375 && [SECOND_MILLISECOND] < 0.5]]></Expression>
+                            <Expression name="show_magpie_small_land_on_hand_runtime_slot_04"><![CDATA[[SECOND_MILLISECOND] >= 0.5 && [SECOND_MILLISECOND] < 0.625]]></Expression>
+                            <Expression name="show_magpie_small_land_on_hand_runtime_slot_05"><![CDATA[[SECOND_MILLISECOND] >= 0.625 && [SECOND_MILLISECOND] < 0.75]]></Expression>
+                            <Expression name="show_magpie_small_land_on_hand_runtime_slot_06"><![CDATA[[SECOND_MILLISECOND] >= 0.75]]></Expression>
+                        </Expressions>
+                        <Compare expression="show_magpie_small_land_on_hand_runtime_slot_00">
+                            <PartImage name="magpie_small_land_on_hand_runtime_slot_00" x="117" y="61" width="78" height="72">
+                                <Image resource="magpie_small_land_on_hand_frame_00" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_land_on_hand_runtime_slot_01">
+                            <PartImage name="magpie_small_land_on_hand_runtime_slot_01" x="117" y="61" width="78" height="72">
+                                <Image resource="magpie_small_land_on_hand_frame_01" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_land_on_hand_runtime_slot_02">
+                            <PartImage name="magpie_small_land_on_hand_runtime_slot_02" x="117" y="61" width="78" height="72">
+                                <Image resource="magpie_small_land_on_hand_frame_02" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_land_on_hand_runtime_slot_03">
+                            <PartImage name="magpie_small_land_on_hand_runtime_slot_03" x="117" y="61" width="78" height="72">
+                                <Image resource="magpie_small_land_on_hand_frame_03" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_land_on_hand_runtime_slot_04">
+                            <PartImage name="magpie_small_land_on_hand_runtime_slot_04" x="117" y="61" width="78" height="72">
+                                <Image resource="magpie_small_land_on_hand_frame_04" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_land_on_hand_runtime_slot_05">
+                            <PartImage name="magpie_small_land_on_hand_runtime_slot_05" x="117" y="61" width="78" height="72">
+                                <Image resource="magpie_small_land_on_hand_frame_05" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_land_on_hand_runtime_slot_06">
+                            <PartImage name="magpie_small_land_on_hand_runtime_slot_06" x="117" y="61" width="78" height="72">
+                                <Image resource="magpie_small_land_on_hand_frame_06" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                    </Condition>
+                </Group>
             </Compare>
             <Compare expression="show_magpie_small_hop_to_tiger">
-                <PartAnimatedImage name="magpie_small_hop_to_tiger" x="250" y="185" width="113" height="112">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
-                    <AnimatedImage resource="magpie_small_hop_to_tiger" format="AGIF" thumbnail="magpie_small_hop_to_tiger_thumbnail" />
-                    <Thumbnail resource="magpie_small_hop_to_tiger_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
+                <Group name="magpie_small_hop_to_tiger" x="0" y="0" width="450" height="450">
+                    <Condition>
+                        <Expressions>
+                            <Expression name="show_magpie_small_hop_to_tiger_runtime_slot_00"><![CDATA[[SECOND_MILLISECOND] < 0.125]]></Expression>
+                            <Expression name="show_magpie_small_hop_to_tiger_runtime_slot_01"><![CDATA[[SECOND_MILLISECOND] >= 0.125 && [SECOND_MILLISECOND] < 0.25]]></Expression>
+                            <Expression name="show_magpie_small_hop_to_tiger_runtime_slot_02"><![CDATA[[SECOND_MILLISECOND] >= 0.25 && [SECOND_MILLISECOND] < 0.375]]></Expression>
+                            <Expression name="show_magpie_small_hop_to_tiger_runtime_slot_03"><![CDATA[[SECOND_MILLISECOND] >= 0.375 && [SECOND_MILLISECOND] < 0.5]]></Expression>
+                            <Expression name="show_magpie_small_hop_to_tiger_runtime_slot_04"><![CDATA[[SECOND_MILLISECOND] >= 0.5 && [SECOND_MILLISECOND] < 0.625]]></Expression>
+                            <Expression name="show_magpie_small_hop_to_tiger_runtime_slot_05"><![CDATA[[SECOND_MILLISECOND] >= 0.625 && [SECOND_MILLISECOND] < 0.75]]></Expression>
+                            <Expression name="show_magpie_small_hop_to_tiger_runtime_slot_06"><![CDATA[[SECOND_MILLISECOND] >= 0.75 && [SECOND_MILLISECOND] < 0.875]]></Expression>
+                            <Expression name="show_magpie_small_hop_to_tiger_runtime_slot_07"><![CDATA[[SECOND_MILLISECOND] >= 0.875]]></Expression>
+                        </Expressions>
+                        <Compare expression="show_magpie_small_hop_to_tiger_runtime_slot_00">
+                            <PartImage name="magpie_small_hop_to_tiger_runtime_slot_00" x="250" y="185" width="113" height="112">
+                                <Image resource="magpie_small_hop_to_tiger_frame_00" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_hop_to_tiger_runtime_slot_01">
+                            <PartImage name="magpie_small_hop_to_tiger_runtime_slot_01" x="250" y="185" width="113" height="112">
+                                <Image resource="magpie_small_hop_to_tiger_frame_01" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_hop_to_tiger_runtime_slot_02">
+                            <PartImage name="magpie_small_hop_to_tiger_runtime_slot_02" x="250" y="185" width="113" height="112">
+                                <Image resource="magpie_small_hop_to_tiger_frame_02" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_hop_to_tiger_runtime_slot_03">
+                            <PartImage name="magpie_small_hop_to_tiger_runtime_slot_03" x="250" y="185" width="113" height="112">
+                                <Image resource="magpie_small_hop_to_tiger_frame_03" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_hop_to_tiger_runtime_slot_04">
+                            <PartImage name="magpie_small_hop_to_tiger_runtime_slot_04" x="250" y="185" width="113" height="112">
+                                <Image resource="magpie_small_hop_to_tiger_frame_04" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_hop_to_tiger_runtime_slot_05">
+                            <PartImage name="magpie_small_hop_to_tiger_runtime_slot_05" x="250" y="185" width="113" height="112">
+                                <Image resource="magpie_small_hop_to_tiger_frame_05" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_hop_to_tiger_runtime_slot_06">
+                            <PartImage name="magpie_small_hop_to_tiger_runtime_slot_06" x="250" y="185" width="113" height="112">
+                                <Image resource="magpie_small_hop_to_tiger_frame_06" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_hop_to_tiger_runtime_slot_07">
+                            <PartImage name="magpie_small_hop_to_tiger_runtime_slot_07" x="250" y="185" width="113" height="112">
+                                <Image resource="magpie_small_hop_to_tiger_frame_07" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                    </Condition>
+                </Group>
             </Compare>
             <Compare expression="show_magpie_small_head_scan">
-                <PartAnimatedImage name="magpie_small_head_scan" x="305" y="192" width="61" height="65">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
-                    <AnimatedImage resource="magpie_small_head_scan" format="AGIF" thumbnail="magpie_small_head_scan_thumbnail" />
-                    <Thumbnail resource="magpie_small_head_scan_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
+                <Group name="magpie_small_head_scan" x="0" y="0" width="450" height="450">
+                    <Condition>
+                        <Expressions>
+                            <Expression name="show_magpie_small_head_scan_runtime_slot_00"><![CDATA[[SECOND_MILLISECOND] < 0.125]]></Expression>
+                            <Expression name="show_magpie_small_head_scan_runtime_slot_01"><![CDATA[[SECOND_MILLISECOND] >= 0.125 && [SECOND_MILLISECOND] < 0.25]]></Expression>
+                            <Expression name="show_magpie_small_head_scan_runtime_slot_02"><![CDATA[[SECOND_MILLISECOND] >= 0.25 && [SECOND_MILLISECOND] < 0.375]]></Expression>
+                            <Expression name="show_magpie_small_head_scan_runtime_slot_03"><![CDATA[[SECOND_MILLISECOND] >= 0.375 && [SECOND_MILLISECOND] < 0.5]]></Expression>
+                            <Expression name="show_magpie_small_head_scan_runtime_slot_04"><![CDATA[[SECOND_MILLISECOND] >= 0.5 && [SECOND_MILLISECOND] < 0.625]]></Expression>
+                            <Expression name="show_magpie_small_head_scan_runtime_slot_05"><![CDATA[[SECOND_MILLISECOND] >= 0.625 && [SECOND_MILLISECOND] < 0.75]]></Expression>
+                            <Expression name="show_magpie_small_head_scan_runtime_slot_06"><![CDATA[[SECOND_MILLISECOND] >= 0.75 && [SECOND_MILLISECOND] < 0.875]]></Expression>
+                            <Expression name="show_magpie_small_head_scan_runtime_slot_07"><![CDATA[[SECOND_MILLISECOND] >= 0.875]]></Expression>
+                        </Expressions>
+                        <Compare expression="show_magpie_small_head_scan_runtime_slot_00">
+                            <PartImage name="magpie_small_head_scan_runtime_slot_00" x="305" y="192" width="61" height="65">
+                                <Image resource="magpie_small_head_scan_frame_00" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_head_scan_runtime_slot_01">
+                            <PartImage name="magpie_small_head_scan_runtime_slot_01" x="305" y="192" width="61" height="65">
+                                <Image resource="magpie_small_head_scan_frame_01" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_head_scan_runtime_slot_02">
+                            <PartImage name="magpie_small_head_scan_runtime_slot_02" x="305" y="192" width="61" height="65">
+                                <Image resource="magpie_small_head_scan_frame_02" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_head_scan_runtime_slot_03">
+                            <PartImage name="magpie_small_head_scan_runtime_slot_03" x="305" y="192" width="61" height="65">
+                                <Image resource="magpie_small_head_scan_frame_03" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_head_scan_runtime_slot_04">
+                            <PartImage name="magpie_small_head_scan_runtime_slot_04" x="305" y="192" width="61" height="65">
+                                <Image resource="magpie_small_head_scan_frame_04" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_head_scan_runtime_slot_05">
+                            <PartImage name="magpie_small_head_scan_runtime_slot_05" x="305" y="192" width="61" height="65">
+                                <Image resource="magpie_small_head_scan_frame_05" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_head_scan_runtime_slot_06">
+                            <PartImage name="magpie_small_head_scan_runtime_slot_06" x="305" y="192" width="61" height="65">
+                                <Image resource="magpie_small_head_scan_frame_06" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_head_scan_runtime_slot_07">
+                            <PartImage name="magpie_small_head_scan_runtime_slot_07" x="305" y="192" width="61" height="65">
+                                <Image resource="magpie_small_head_scan_frame_07" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                    </Condition>
+                </Group>
             </Compare>
             <Compare expression="show_magpie_small_look_plum">
-                <PartAnimatedImage name="magpie_small_look_plum" x="305" y="192" width="61" height="64">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
-                    <AnimatedImage resource="magpie_small_look_plum" format="AGIF" thumbnail="magpie_small_look_plum_thumbnail" />
-                    <Thumbnail resource="magpie_small_look_plum_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
+                <Group name="magpie_small_look_plum" x="0" y="0" width="450" height="450">
+                    <Condition>
+                        <Expressions>
+                            <Expression name="show_magpie_small_look_plum_runtime_slot_00"><![CDATA[[SECOND_MILLISECOND] < 0.125]]></Expression>
+                            <Expression name="show_magpie_small_look_plum_runtime_slot_01"><![CDATA[[SECOND_MILLISECOND] >= 0.125 && [SECOND_MILLISECOND] < 0.25]]></Expression>
+                            <Expression name="show_magpie_small_look_plum_runtime_slot_02"><![CDATA[[SECOND_MILLISECOND] >= 0.25 && [SECOND_MILLISECOND] < 0.375]]></Expression>
+                            <Expression name="show_magpie_small_look_plum_runtime_slot_03"><![CDATA[[SECOND_MILLISECOND] >= 0.375 && [SECOND_MILLISECOND] < 0.5]]></Expression>
+                            <Expression name="show_magpie_small_look_plum_runtime_slot_04"><![CDATA[[SECOND_MILLISECOND] >= 0.5 && [SECOND_MILLISECOND] < 0.625]]></Expression>
+                            <Expression name="show_magpie_small_look_plum_runtime_slot_05"><![CDATA[[SECOND_MILLISECOND] >= 0.625 && [SECOND_MILLISECOND] < 0.75]]></Expression>
+                            <Expression name="show_magpie_small_look_plum_runtime_slot_06"><![CDATA[[SECOND_MILLISECOND] >= 0.75]]></Expression>
+                        </Expressions>
+                        <Compare expression="show_magpie_small_look_plum_runtime_slot_00">
+                            <PartImage name="magpie_small_look_plum_runtime_slot_00" x="305" y="192" width="61" height="64">
+                                <Image resource="magpie_small_look_plum_frame_00" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_look_plum_runtime_slot_01">
+                            <PartImage name="magpie_small_look_plum_runtime_slot_01" x="305" y="192" width="61" height="64">
+                                <Image resource="magpie_small_look_plum_frame_01" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_look_plum_runtime_slot_02">
+                            <PartImage name="magpie_small_look_plum_runtime_slot_02" x="305" y="192" width="61" height="64">
+                                <Image resource="magpie_small_look_plum_frame_02" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_look_plum_runtime_slot_03">
+                            <PartImage name="magpie_small_look_plum_runtime_slot_03" x="305" y="192" width="61" height="64">
+                                <Image resource="magpie_small_look_plum_frame_03" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_look_plum_runtime_slot_04">
+                            <PartImage name="magpie_small_look_plum_runtime_slot_04" x="305" y="192" width="61" height="64">
+                                <Image resource="magpie_small_look_plum_frame_04" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_look_plum_runtime_slot_05">
+                            <PartImage name="magpie_small_look_plum_runtime_slot_05" x="305" y="192" width="61" height="64">
+                                <Image resource="magpie_small_look_plum_frame_05" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_look_plum_runtime_slot_06">
+                            <PartImage name="magpie_small_look_plum_runtime_slot_06" x="305" y="192" width="61" height="64">
+                                <Image resource="magpie_small_look_plum_frame_06" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                    </Condition>
+                </Group>
             </Compare>
             <Compare expression="show_magpie_small_turn_hop">
-                <PartAnimatedImage name="magpie_small_turn_hop" x="306" y="187" width="69" height="69">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
-                    <AnimatedImage resource="magpie_small_turn_hop" format="AGIF" thumbnail="magpie_small_turn_hop_thumbnail" />
-                    <Thumbnail resource="magpie_small_turn_hop_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
+                <Group name="magpie_small_turn_hop" x="0" y="0" width="450" height="450">
+                    <Condition>
+                        <Expressions>
+                            <Expression name="show_magpie_small_turn_hop_runtime_slot_00"><![CDATA[[SECOND_MILLISECOND] < 0.375]]></Expression>
+                            <Expression name="show_magpie_small_turn_hop_runtime_slot_01"><![CDATA[[SECOND_MILLISECOND] >= 0.375]]></Expression>
+                        </Expressions>
+                        <Compare expression="show_magpie_small_turn_hop_runtime_slot_00">
+                            <PartImage name="magpie_small_turn_hop_runtime_slot_00" x="306" y="187" width="69" height="69">
+                                <Image resource="magpie_small_turn_hop_frame_00" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_turn_hop_runtime_slot_01">
+                            <PartImage name="magpie_small_turn_hop_runtime_slot_01" x="306" y="187" width="69" height="69">
+                                <Image resource="magpie_small_turn_hop_frame_05" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                    </Condition>
+                </Group>
             </Compare>
             <Compare expression="show_magpie_small_peck_tiger_ear">
-                <PartAnimatedImage name="magpie_small_peck_tiger_ear" x="300" y="192" width="64" height="66">
-                    <AnimationController play="ON_VISIBLE" repeat="FALSE" loopCount="1"
-                        resumePlayBack="FALSE" beforePlaying="FIRST_FRAME" afterPlaying="HIDE" />
-                    <AnimatedImage resource="magpie_small_peck_tiger_ear" format="AGIF" thumbnail="magpie_small_peck_tiger_ear_thumbnail" />
-                    <Thumbnail resource="magpie_small_peck_tiger_ear_thumbnail" />
-                    <Variant mode="AMBIENT" target="alpha" value="0" />
-                </PartAnimatedImage>
+                <Group name="magpie_small_peck_tiger_ear" x="0" y="0" width="450" height="450">
+                    <Condition>
+                        <Expressions>
+                            <Expression name="show_magpie_small_peck_tiger_ear_runtime_slot_00"><![CDATA[[SECOND_MILLISECOND] < 0.125]]></Expression>
+                            <Expression name="show_magpie_small_peck_tiger_ear_runtime_slot_01"><![CDATA[[SECOND_MILLISECOND] >= 0.125 && [SECOND_MILLISECOND] < 0.25]]></Expression>
+                            <Expression name="show_magpie_small_peck_tiger_ear_runtime_slot_02"><![CDATA[[SECOND_MILLISECOND] >= 0.25 && [SECOND_MILLISECOND] < 0.375]]></Expression>
+                            <Expression name="show_magpie_small_peck_tiger_ear_runtime_slot_03"><![CDATA[[SECOND_MILLISECOND] >= 0.375 && [SECOND_MILLISECOND] < 0.5]]></Expression>
+                            <Expression name="show_magpie_small_peck_tiger_ear_runtime_slot_04"><![CDATA[[SECOND_MILLISECOND] >= 0.5 && [SECOND_MILLISECOND] < 0.625]]></Expression>
+                            <Expression name="show_magpie_small_peck_tiger_ear_runtime_slot_05"><![CDATA[[SECOND_MILLISECOND] >= 0.625 && [SECOND_MILLISECOND] < 0.75]]></Expression>
+                            <Expression name="show_magpie_small_peck_tiger_ear_runtime_slot_06"><![CDATA[[SECOND_MILLISECOND] >= 0.75]]></Expression>
+                        </Expressions>
+                        <Compare expression="show_magpie_small_peck_tiger_ear_runtime_slot_00">
+                            <PartImage name="magpie_small_peck_tiger_ear_runtime_slot_00" x="300" y="192" width="64" height="66">
+                                <Image resource="magpie_small_peck_tiger_ear_frame_00" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_peck_tiger_ear_runtime_slot_01">
+                            <PartImage name="magpie_small_peck_tiger_ear_runtime_slot_01" x="300" y="192" width="64" height="66">
+                                <Image resource="magpie_small_peck_tiger_ear_frame_01" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_peck_tiger_ear_runtime_slot_02">
+                            <PartImage name="magpie_small_peck_tiger_ear_runtime_slot_02" x="300" y="192" width="64" height="66">
+                                <Image resource="magpie_small_peck_tiger_ear_frame_02" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_peck_tiger_ear_runtime_slot_03">
+                            <PartImage name="magpie_small_peck_tiger_ear_runtime_slot_03" x="300" y="192" width="64" height="66">
+                                <Image resource="magpie_small_peck_tiger_ear_frame_03" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_peck_tiger_ear_runtime_slot_04">
+                            <PartImage name="magpie_small_peck_tiger_ear_runtime_slot_04" x="300" y="192" width="64" height="66">
+                                <Image resource="magpie_small_peck_tiger_ear_frame_04" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_peck_tiger_ear_runtime_slot_05">
+                            <PartImage name="magpie_small_peck_tiger_ear_runtime_slot_05" x="300" y="192" width="64" height="66">
+                                <Image resource="magpie_small_peck_tiger_ear_frame_05" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                        <Compare expression="show_magpie_small_peck_tiger_ear_runtime_slot_06">
+                            <PartImage name="magpie_small_peck_tiger_ear_runtime_slot_06" x="300" y="192" width="64" height="66">
+                                <Image resource="magpie_small_peck_tiger_ear_frame_06" />
+                                <Variant mode="AMBIENT" target="alpha" value="0" />
+                            </PartImage>
+                        </Compare>
+                    </Condition>
+                </Group>
             </Compare>
         </Condition>
 
