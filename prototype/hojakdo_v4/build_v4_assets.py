@@ -56,13 +56,13 @@ SMALL_TIGER_FOOT = (340.0, 241.0)
 FRAME_DURATION_MS = 125
 FPS = 1000 / FRAME_DURATION_MS
 READOUT_CENTER_X = FACE_SIZE // 2
-READOUT_TIME_Y = 38
-READOUT_TIME_FONT_SIZE = 36
-READOUT_DATE_WEEKDAY_Y = 79
-READOUT_DATE_WEEKDAY_FONT_SIZE = 13
+READOUT_TIME_Y = 85
+READOUT_TIME_FONT_SIZE = 46
+READOUT_DATE_WEEKDAY_Y = 132
+READOUT_DATE_WEEKDAY_FONT_SIZE = 16
 READOUT_DATE_WEEKDAY_SEPARATOR = "  "
-READOUT_TIME_WFF_BOUNDS = (155, 33, 140, 44)
-READOUT_DATE_WEEKDAY_WFF_BOUNDS = (174, 77, 102, 22)
+READOUT_TIME_WFF_BOUNDS = (142, 78, 166, 58)
+READOUT_DATE_WEEKDAY_WFF_BOUNDS = (166, 129, 118, 25)
 DATE_CLOUD_CLEANUP_BOUNDS = (198, 250, 252, 300)
 DATE_HANJI_OVERLAY_BOUNDS = (188, 272, 270, 294)
 PINE_SPRIG_CLEANUP_BOUNDS = (282, 158, 306, 181)
@@ -1111,7 +1111,7 @@ def _render_preview(
     board = Image.new("RGB", (940, 540), (20, 17, 13))
     board.paste(face.convert("RGB").resize((500, 500), Image.Resampling.LANCZOS), (20, 20))
     info = ImageDraw.Draw(board)
-    info.text((555, 42), "HOJAKDO V4.2", font=_font(29, bold=True), fill=(246, 226, 180))
+    info.text((555, 42), "HOJAKDO V4.3", font=_font(29, bold=True), fill=(246, 226, 180))
     info.text((555, 91), "TOP READOUT + HANDS", font=_font(15, bold=True), fill=(194, 76, 42))
     info.line((555, 126, 900, 126), fill=(87, 72, 50), width=1)
     lines = (
@@ -1129,7 +1129,7 @@ def _render_preview(
         info.ellipse((555, y + 5, 564, y + 14), fill=(181, 68, 41))
         info.text((578, y), line, font=_font(12), fill=(226, 207, 168))
         y += 39
-    info.text((555, 485), "V4.2 COMPLETE BUILD REVIEW", font=_font(11), fill=(129, 119, 101))
+    info.text((555, 485), "V4.3 COMPLETE BUILD REVIEW", font=_font(11), fill=(129, 119, 101))
     _save_rgb_png(board, OUTPUT_DIR / "hojakdo_v4_review_board.png")
 
 
@@ -1284,8 +1284,8 @@ def build() -> dict[str, object]:
     animation_decoded = sum(int(item["decodedBytesEstimate"]) for item in animations)
     manifest: dict[str, object] = {
         "schemaVersion": 1,
-        "version": "4.2.0",
-        "status": "v4_2_top_readout_candidate",
+        "version": "4.3.0",
+        "status": "v4_3_lower_larger_top_readout_candidate",
         "logicalCanvas": [FACE_SIZE, FACE_SIZE],
         "smallFlight": {
             "resource": "magpie_small_flight_right_v4.png",

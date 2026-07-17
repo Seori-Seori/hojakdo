@@ -10,8 +10,8 @@ android {
         applicationId = "com.seori.hojakdo"
         minSdk = 33
         targetSdk = 33
-        versionCode = 6
-        versionName = "4.2.0"
+        versionCode = 7
+        versionName = "4.3.0"
     }
 
     buildTypes {

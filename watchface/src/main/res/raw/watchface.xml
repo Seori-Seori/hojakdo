@@ -396,9 +396,9 @@
             </Compare>
         </Condition>
 
-        <PartText name="live_time" x="155" y="33" width="140" height="44">
+        <PartText name="live_time" x="142" y="78" width="166" height="58">
             <Text align="CENTER" verticalAlign="CENTER">
-                <Font family="SYNC_TO_DEVICE" size="36" color="#211811" weight="BOLD" letterSpacing="0.03">
+                <Font family="SYNC_TO_DEVICE" size="46" color="#211811" weight="BOLD" letterSpacing="0.03">
                     <Template>%s:%s
                         <Parameter expression="[HOUR_0_23_Z]" />
                         <Parameter expression="[MINUTE_Z]" />
@@ -407,9 +407,9 @@
             </Text>
             <Variant mode="AMBIENT" target="alpha" value="220" />
         </PartText>
-        <PartText name="live_date_weekday" x="174" y="77" width="102" height="22">
+        <PartText name="live_date_weekday" x="166" y="129" width="118" height="25">
             <Text align="CENTER" verticalAlign="CENTER">
-                <Font family="SYNC_TO_DEVICE" size="13" color="#211811" weight="BOLD">
+                <Font family="SYNC_TO_DEVICE" size="16" color="#211811" weight="BOLD">
                     <Upper><Template>%s.%s  %s
                             <Parameter expression="[MONTH_Z]" />
                             <Parameter expression="[DAY_Z]" />

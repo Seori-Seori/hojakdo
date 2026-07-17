@@ -65,10 +65,11 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         generate()
         cls.root = ET.parse(WATCHFACE_PATH).getroot()
 
-    def test_v42_manifest_and_approved_small_flight_size(self) -> None:
-        self.assertEqual("4.2.0", self.manifest["version"])
+    def test_v43_manifest_and_approved_small_flight_size(self) -> None:
+        self.assertEqual("4.3.0", self.manifest["version"])
         self.assertEqual(
-            "v4_2_top_readout_candidate", self.manifest["status"]
+            "v4_3_lower_larger_top_readout_candidate",
+            self.manifest["status"],
         )
         flight = self.manifest["smallFlight"]
         self.assertEqual([70, 54], flight["sizeLogical"])
@@ -336,14 +337,14 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             set(live_parts),
         )
         self.assertEqual(
-            ("155", "33", "140", "44"),
+            ("142", "78", "166", "58"),
             tuple(
                 live_parts["live_time"][key]
                 for key in ("x", "y", "width", "height")
             ),
         )
         self.assertEqual(
-            ("174", "77", "102", "22"),
+            ("166", "129", "118", "25"),
             tuple(
                 live_parts["live_date_weekday"][key]
                 for key in ("x", "y", "width", "height")
@@ -359,8 +360,8 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             for part in self.root.findall(".//PartText")
             if part.attrib["name"] == "live_date_weekday"
         )
-        self.assertEqual("36", time_font.attrib["size"])
-        self.assertEqual("13", date_weekday_font.attrib["size"])
+        self.assertEqual("46", time_font.attrib["size"])
+        self.assertEqual("16", date_weekday_font.attrib["size"])
 
     def test_all_wff_image_resources_exist_and_names_are_android_safe(self) -> None:
         available = {path.stem for path in DRAWABLE_DIR.glob("*.png")}
@@ -561,15 +562,15 @@ class HojakdoV4AssetsTest(unittest.TestCase):
                 "centerXLogical": 225,
                 "zOrder": "above_hands_birds_and_animations",
                 "time": {
-                    "yLogical": 38,
-                    "fontSize": 36,
-                    "wffBoundsLogical": [155, 33, 140, 44],
+                    "yLogical": 85,
+                    "fontSize": 46,
+                    "wffBoundsLogical": [142, 78, 166, 58],
                 },
                 "dateWeekday": {
-                    "yLogical": 79,
-                    "fontSize": 13,
+                    "yLogical": 132,
+                    "fontSize": 16,
                     "separator": "  ",
-                    "wffBoundsLogical": [174, 77, 102, 22],
+                    "wffBoundsLogical": [166, 129, 118, 25],
                 },
             },
             self.manifest["readoutLayout"],

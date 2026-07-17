@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "4.2.0",
-  "status": "v4_2_top_readout_candidate",
+  "version": "4.3.0",
+  "status": "v4_3_lower_larger_top_readout_candidate",
   "logicalCanvas": [
     450,
     450
@@ -100,24 +100,24 @@
     "centerXLogical": 225,
     "zOrder": "above_hands_birds_and_animations",
     "time": {
-      "yLogical": 38,
-      "fontSize": 36,
+      "yLogical": 85,
+      "fontSize": 46,
       "wffBoundsLogical": [
-        155,
-        33,
-        140,
-        44
+        142,
+        78,
+        166,
+        58
       ]
     },
     "dateWeekday": {
-      "yLogical": 79,
-      "fontSize": 13,
+      "yLogical": 132,
+      "fontSize": 16,
       "separator": "  ",
       "wffBoundsLogical": [
-        174,
-        77,
-        102,
-        22
+        166,
+        129,
+        118,
+        25
       ]
     }
   },
