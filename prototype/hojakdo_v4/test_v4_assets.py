@@ -22,7 +22,14 @@ from .build_v4_assets import (
     REPO_ROOT,
     build,
 )
-from .generate_watchface import WATCHFACE_PATH, generate
+from .generate_watchface import (
+    HARD_CUT_TURN_ANIMATIONS,
+    WATCHFACE_PATH,
+    frame_resource_name,
+    generate,
+    runtime_frame_index,
+    runtime_frame_windows,
+)
 
 
 EXPECTED_ANIMATIONS = {
@@ -65,10 +72,10 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         generate()
         cls.root = ET.parse(WATCHFACE_PATH).getroot()
 
-    def test_v43_manifest_and_approved_small_flight_size(self) -> None:
-        self.assertEqual("4.3.0", self.manifest["version"])
+    def test_v431_manifest_and_approved_small_flight_size(self) -> None:
+        self.assertEqual("4.3.1", self.manifest["version"])
         self.assertEqual(
-            "v4_3_lower_larger_top_readout_candidate",
+            "v4_3_1_stateless_visibility_reentry_fix",
             self.manifest["status"],
         )
         flight = self.manifest["smallFlight"]
@@ -245,25 +252,45 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             (stage_five.text or "").strip(),
         )
 
-    def test_live_wff_connects_every_animation_and_data_source(self) -> None:
-        animated_parts = self.root.findall(".//PartAnimatedImage")
-        self.assertEqual(16, len(animated_parts))
-        names = {part.attrib["name"] for part in animated_parts}
-        self.assertEqual(EXPECTED_ANIMATIONS, names)
-        for part in animated_parts:
-            controller = part.find("AnimationController")
-            self.assertIsNotNone(controller, part.attrib["name"])
-            expected_after = (
-                "FIRST_FRAME"
-                if part.attrib["name"] == "tiger_head_eye_reaction"
-                else "HIDE"
+    def test_live_wff_connects_every_stateless_animation_and_data_source(self) -> None:
+        # ON_VISIBLE animation controllers restart whenever the face is shown.
+        # Runtime motion must therefore consist only of absolute-time PNG
+        # frames selected from SECOND_MILLISECOND.
+        self.assertEqual([], self.root.findall(".//PartAnimatedImage"))
+        self.assertEqual([], self.root.findall(".//AnimationController"))
+        self.assertNotIn("ON_VISIBLE", WATCHFACE_PATH.read_text(encoding="utf-8"))
+
+        metadata_by_name = {item["id"]: item for item in self.manifest["animations"]}
+        for name in EXPECTED_ANIMATIONS:
+            group = self.root.find(f'.//Group[@name="{name}"]')
+            self.assertIsNotNone(group, name)
+            metadata = metadata_by_name[name]
+            windows = runtime_frame_windows(metadata)
+            parts = group.findall(".//PartImage")
+            expressions = group.findall(".//Expression")
+            self.assertEqual(len(windows), len(parts), name)
+            self.assertEqual(len(windows), len(expressions), name)
+
+            expected_resources = [
+                frame_resource_name(name, frame_index)
+                for frame_index, _, _ in windows
+            ]
+            self.assertEqual(
+                expected_resources,
+                [part.find("Image").attrib["resource"] for part in parts],
+                name,
             )
-            self.assertEqual(expected_after, controller.attrib["afterPlaying"])
-            self.assertIsNotNone(part.find("AnimatedImage"), part.attrib["name"])
-            self.assertIsNotNone(part.find("Thumbnail"), part.attrib["name"])
-            ambient = part.find("Variant")
-            self.assertIsNotNone(ambient, part.attrib["name"])
-            self.assertEqual("0", ambient.attrib["value"])
+            for part in parts:
+                ambient = part.find("Variant")
+                self.assertIsNotNone(ambient, part.attrib["name"])
+                self.assertEqual("0", ambient.attrib["value"])
+
+            # The final frame has no upper time bound, so a bird that has
+            # landed or finished an action remains visible for the rest of
+            # that minute instead of disappearing after roughly one second.
+            final_expression = (expressions[-1].text or "").strip()
+            self.assertIn("[SECOND_MILLISECOND] >=", final_expression, name)
+            self.assertNotIn("[SECOND_MILLISECOND] <", final_expression, name)
 
         xml = WATCHFACE_PATH.read_text(encoding="utf-8")
         for source in (
@@ -387,13 +414,68 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             ).attrib["align"],
         )
 
+    def test_every_animation_millisecond_survives_visibility_reentry(self) -> None:
+        """Exhaust the full minute for screen-off and face-switch restores."""
+
+        xml = WATCHFACE_PATH.read_text(encoding="utf-8")
+        metadata_by_name = {item["id"]: item for item in self.manifest["animations"]}
+        for name, metadata in metadata_by_name.items():
+            windows = runtime_frame_windows(metadata)
+            self.assertEqual(0.0, windows[0][1], name)
+            self.assertIsNone(windows[-1][2], name)
+
+            for millisecond in range(60_000):
+                second = millisecond / 1000.0
+                matches = [
+                    frame_index
+                    for frame_index, start, end in windows
+                    if second >= start and (end is None or second < end)
+                ]
+                self.assertEqual(1, len(matches), f"{name}@{second:.3f}")
+                visible_frame = runtime_frame_index(metadata, second)
+                # Re-evaluating after either screen-off/on or switching away
+                # and back must select the exact same absolute-time frame.
+                self.assertEqual(matches[0], visible_frame, name)
+                self.assertEqual(
+                    visible_frame,
+                    runtime_frame_index(metadata, second),
+                    name,
+                )
+
+            final_frame = int(metadata["frameCount"]) - 1
+            self.assertEqual(final_frame, runtime_frame_index(metadata, 59.999))
+            self.assertIn(frame_resource_name(name, final_frame), xml)
+
+        # The old squeeze-through-zero frames are deliberately absent from
+        # runtime WFF even though they remain in the archival source AGIFs.
+        for name in HARD_CUT_TURN_ANIMATIONS:
+            metadata = metadata_by_name[name]
+            frame_count = int(metadata["frameCount"])
+            windows = runtime_frame_windows(metadata)
+            self.assertEqual((0, frame_count - 1), tuple(item[0] for item in windows))
+            group = self.root.find(f'.//Group[@name="{name}"]')
+            self.assertIsNotNone(group, name)
+            resources = {
+                image.attrib["resource"] for image in group.findall(".//Image")
+            }
+            for middle_index in range(1, frame_count - 1):
+                self.assertNotIn(
+                    frame_resource_name(name, middle_index), resources, name
+                )
+
     def test_all_wff_image_resources_exist_and_names_are_android_safe(self) -> None:
         available = {path.stem for path in DRAWABLE_DIR.glob("*.png")}
-        available |= {path.stem for path in ANIMATION_DIR.glob("*.gif")}
+        available |= {
+            frame_resource_name(directory.name, path_index)
+            for directory in FRAME_DIR.iterdir()
+            if directory.is_dir()
+            for path_index, path in enumerate(
+                sorted(directory.glob("frame_*.png"))
+            )
+            if path.is_file()
+        }
         available.add("preview")
-        for element in self.root.findall(".//Image") + self.root.findall(
-            ".//AnimatedImage"
-        ) + self.root.findall(".//Thumbnail"):
+        for element in self.root.findall(".//Image"):
             resource = element.attrib["resource"]
             self.assertRegex(resource, r"^[a-z][a-z0-9_]*$")
             self.assertIn(resource, available)
@@ -416,7 +498,7 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             condition
             for condition in self.root.findall(".//Condition")
             if condition.find(
-                './/PartAnimatedImage[@name="tiger_head_eye_reaction"]'
+                './/Group[@name="tiger_head_eye_reaction"]'
             )
             is not None
         ]
