@@ -1,0 +1,55 @@
+name: Render V4 day GIFs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/render-v4-day-gifs.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install render dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core
+          python -m pip install --upgrade pip
+          python -m pip install pillow
+
+      - name: Run regression tests
+        run: python -m unittest discover -s prototype -p 'test_*.py'
+
+      - name: Render four 6-hour day-review GIFs
+        run: python -m prototype.hojakdo_v4.render_day_gifs
+
+      - name: Show generated artifacts
+        run: ls -lh prototype/hojakdo_v4/output/hojakdo_v4_day_*.gif prototype/hojakdo_v4/output/hojakdo_v4_day_review_manifest.json
+
+      - name: Commit generated artifacts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add prototype/hojakdo_v4/output/hojakdo_v4_day_*.gif
+          git add prototype/hojakdo_v4/output/hojakdo_v4_day_review_manifest.json
+          if git diff --cached --quiet; then
+            echo "No generated changes to commit."
+            exit 0
+          fi
+          git commit -m "artifacts: add V4.3.1 day review GIFs [skip ci]"
+          git push origin HEAD:main
