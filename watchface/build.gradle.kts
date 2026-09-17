@@ -49,7 +49,7 @@ val prepareHojakdoAssets by tasks.registering {
         // Package only resources actually referenced by the generated WFF.
         // Review thumbnails and archival middle frames stay in Git but do not
         // consume runtime resource or decoded-memory budget.
-        val imageResourceRegex = Regex("""<Image\\s+resource="([^"]+)"""")
+        val imageResourceRegex = Regex("""<Image resource="([^"]+)"""")
         val runtimeResources = imageResourceRegex.findAll(sourceWatchFaceXml.readText())
             .map { match -> match.groupValues[1] }
             .toSet()
