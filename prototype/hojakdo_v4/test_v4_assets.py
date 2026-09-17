@@ -59,8 +59,6 @@ EXPECTED_POSES = {
     "magpie_small_perch_tiger",
 }
 EXPECTED_MASKS = {
-    "plum_foreground_mask",
-    "pine_foreground_mask",
     "tiger_body_foreground_mask",
 }
 
@@ -73,9 +71,9 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         cls.root = ET.parse(WATCHFACE_PATH).getroot()
 
     def test_v431_manifest_and_approved_small_flight_size(self) -> None:
-        self.assertEqual("4.3.1", self.manifest["version"])
+        self.assertEqual("4.3.2", self.manifest["version"])
         self.assertEqual(
-            "v4_3_1_stateless_visibility_reentry_fix",
+            "v4_3_2_layer_cleanup_tiger_slot_ready",
             self.manifest["status"],
         )
         flight = self.manifest["smallFlight"]
@@ -130,7 +128,7 @@ class HojakdoV4AssetsTest(unittest.TestCase):
                     places=8,
                 )
 
-    def test_six_static_poses_and_three_masks_are_complete(self) -> None:
+    def test_six_static_poses_and_single_tiger_compatibility_mask_are_complete(self) -> None:
         poses = {item["id"] for item in self.manifest["staticPoses"]}
         masks = {item["id"] for item in self.manifest["foregroundMasks"]}
         self.assertEqual(EXPECTED_POSES, poses)
@@ -191,7 +189,7 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             self.assertTrue((DRAWABLE_DIR / item["resource"]).is_file())
         self.assertEqual(list(range(101)), coverage)
         self.assertEqual(
-            "above_plum_foreground_mask_below_hands",
+            "above_background_below_hands",
             self.manifest["plumBatteryLayer"],
         )
         with Image.open(DRAWABLE_DIR / stages[-1]["resource"]) as source:
@@ -199,10 +197,8 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         self.assertGreater(int((full_bloom[..., 3] > 0).sum()), 9000)
 
         xml = WATCHFACE_PATH.read_text(encoding="utf-8")
-        self.assertGreater(
-            xml.index('name="plum_stage_5"'),
-            xml.index('name="plum_foreground_mask"'),
-        )
+        self.assertNotIn('name="plum_foreground_mask"', xml)
+        self.assertNotIn('name="pine_foreground_mask"', xml)
         self.assertLess(
             xml.index('name="plum_stage_5"'),
             xml.index('name="hour_hand_group"'),
@@ -227,13 +223,9 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         self.assertEqual(
             [
                 "background",
-                "readout_hanji_patch",
-                "plum_foreground_mask",
                 "plum_battery_stage",
                 "plum_birds",
-                "pine_foreground_mask",
-                "tiger_body_foreground_mask",
-                "tiger_head_or_reaction",
+                "tiger_visual_slot",
                 "hour_hand",
                 "minute_hand",
                 "tiger_birds_and_exit",
@@ -319,10 +311,13 @@ class HojakdoV4AssetsTest(unittest.TestCase):
             'name="tiger_pupils"',
         ):
             self.assertGreater(live_index, xml.index(decorative_part))
-        patch_index = xml.index('name="readout_hanji_patch"')
-        self.assertGreater(patch_index, xml.index('name="hojakdo_v4_background"'))
-        self.assertLess(patch_index, xml.index('name="hour_hand_group"'))
-        self.assertLess(patch_index, xml.index('name="minute_hand_group"'))
+        self.assertNotIn('name="readout_hanji_patch"', xml)
+        self.assertNotIn("hojakdo_v4_readout_hanji_patch", xml)
+        tiger_slot = self.root.find('.//Group[@name="tiger_visual_slot"]')
+        self.assertIsNotNone(tiger_slot)
+        self.assertIsNotNone(
+            tiger_slot.find('.//PartImage[@name="tiger_body_foreground_mask"]')
+        )
         self.assertGreater(live_index, xml.index('name="tiger_pupils"'))
         self.assertLess(
             xml.index('name="tiger_head"'),
@@ -486,7 +481,7 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         minute_index = xml.index('name="minute_hand_group"')
         for environmental_part in (
             'name="plum_stage_5"',
-            'name="pine_foreground_mask"',
+            'name="tiger_visual_slot"',
             'name="tiger_body_foreground_mask"',
             'name="tiger_head_eye_reaction"',
             'name="tiger_head"',
@@ -579,6 +574,31 @@ class HojakdoV4AssetsTest(unittest.TestCase):
                 int(overlap.sum()), minimum_contact, name
             )
 
+    def test_layer_cleanup_removes_redundant_runtime_resources(self) -> None:
+        xml = WATCHFACE_PATH.read_text(encoding="utf-8")
+        self.assertNotIn("hojakdo_v4_readout_hanji_patch", xml)
+        self.assertNotIn("plum_foreground_mask", xml)
+        self.assertNotIn("pine_foreground_mask", xml)
+        self.assertIn('name="tiger_visual_slot"', xml)
+
+        referenced = {
+            image.attrib["resource"] for image in self.root.findall(".//Image")
+        }
+        for path in DRAWABLE_DIR.glob("*_thumbnail.png"):
+            self.assertNotIn(path.stem, referenced, path.name)
+
+        metadata_by_name = {
+            item["id"]: item for item in self.manifest["animations"]
+        }
+        for name in HARD_CUT_TURN_ANIMATIONS:
+            frame_count = int(metadata_by_name[name]["frameCount"])
+            self.assertIn(frame_resource_name(name, 0), referenced)
+            self.assertIn(frame_resource_name(name, frame_count - 1), referenced)
+            for middle_index in range(1, frame_count - 1):
+                self.assertNotIn(
+                    frame_resource_name(name, middle_index), referenced
+                )
+
     def test_wff_expressions_have_balanced_parentheses(self) -> None:
         source_pattern = re.compile(r"\[[A-Z0-9_.]+\]")
         for expression in self.root.findall(".//Expression"):
@@ -658,7 +678,7 @@ class HojakdoV4AssetsTest(unittest.TestCase):
         )
         self.assertEqual(
             [188, 272, 270, 294],
-            quiet_zone["dateFinalOverlayBoundsLogical"],
+            quiet_zone["dateFinalCleanBoundsLogical"],
         )
         self.assertEqual(225, quiet_zone["liveTextCenterXLogical"])
         self.assertNotIn("liveTextShiftLogical", quiet_zone)
@@ -691,23 +711,21 @@ class HojakdoV4AssetsTest(unittest.TestCase):
                 "tigerHindLegGhostBoundsLogical"
             ],
         )
-        patch_metadata = self.manifest["readoutHanjiPatch"]
-        self.assertEqual([188, 272], patch_metadata["placementLogical"])
-        self.assertEqual([82, 22], patch_metadata["sizeLogical"])
+        self.assertNotIn("readoutHanjiPatch", self.manifest)
+        self.assertFalse(
+            (DRAWABLE_DIR / "hojakdo_v4_readout_hanji_patch.png").exists()
+        )
+        self.assertFalse((DRAWABLE_DIR / "plum_foreground_mask.png").exists())
+        self.assertFalse((DRAWABLE_DIR / "pine_foreground_mask.png").exists())
+        tiger_prep = self.manifest["scene"]["tigerSlotPreparation"]
+        self.assertEqual("prepared_not_rebuilt", tiger_prep["status"])
+        self.assertTrue(tiger_prep["backgroundStillContainsTigerBody"])
         self.assertEqual(
-            "above_background_below_hands_and_decorations",
-            patch_metadata["layer"],
+            "tiger_body_foreground_mask", tiger_prep["compatibilityMask"]
         )
-        with Image.open(DRAWABLE_DIR / str(patch_metadata["resource"])) as source:
-            patch = np.asarray(source.convert("RGBA"), dtype=np.uint8)
-        self.assertEqual((22, 82, 4), patch.shape)
-        self.assertTrue(np.all(patch[2:-2, 2:-2, 3] == 255))
-        patch_luma = (
-            0.2126 * patch[..., 0]
-            + 0.7152 * patch[..., 1]
-            + 0.0722 * patch[..., 2]
+        self.assertEqual(
+            "replace_with_reviewed_full_tiger_frames", tiger_prep["nextStep"]
         )
-        self.assertEqual(0, int((patch_luma[2:-2, 2:-2] < 145).sum()))
         with Image.open(DRAWABLE_DIR / "hojakdo_v4_background.png") as source:
             background = np.asarray(source.convert("RGB"), dtype=np.float32)
         luma = (
