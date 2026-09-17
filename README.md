@@ -8,6 +8,12 @@
 
 애니메이션과 장면 구현의 최상위 기준은 [`docs/animation-blueprint.md`](docs/animation-blueprint.md), 자산 분리 상태는 [`docs/asset-extraction-plan.md`](docs/asset-extraction-plan.md)에서 관리한다.
 
+## 24시간 동작 미리보기
+
+> V4.3.1의 하루 동작을 **4배속**으로 압축한 미리보기다.
+
+![Hojakdo V4.3.1 24-hour fast preview](prototype/hojakdo_v4/output/hojakdo_v431_24h_preview_fast.gif)
+
 ## 현재 단계
 
 > **V4.3.1 화면 재진입 복원 수정 / 절대 시각 프레임·실시간 WFF·AOD 연결 완료**
@@ -65,6 +71,7 @@ V4.3.1의 소스·자산·WFF 연결과 정적 검증은 완료됐다. 현재 �
 - `hojakdo_v4_readout_cleanup_review.png`: 시침·분침을 12시 방향으로 세운 중앙 잔상 검사용 화면
 - `hojakdo_v4_review_board.png`: 승인값과 전체 연결 범위를 표시한 리뷰 보드
 - `hojakdo_v4_animation_catalog.png`: 16개 AGIF의 시작·중간·끝 프레임 카탈로그
+- `hojakdo_v431_24h_preview_fast.gif`: README용 24시간 4배속 통합 미리보기
 - `hojakdo_v4_day_00_06.gif` 외 3개: 24시간을 6시간씩 나눈 분 단위 WFF 회귀 검수
 - `assets/layers/v4/manifest.json`: 자산 크기·기준점·장면 시간표·메모리 보고서
 - `assets/layers/v4/frames/*`: AGIF별 원본 PNG 프레임
