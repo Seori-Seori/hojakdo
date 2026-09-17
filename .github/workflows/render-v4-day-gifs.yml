@@ -1,4 +1,4 @@
-name: Render V4 day GIFs
+name: Validate and render Hojakdo V4.3.2
 
 on:
   push:
@@ -38,7 +38,7 @@ jobs:
       - name: Render four 6-hour day-review GIFs
         run: python -m prototype.hojakdo_v4.render_day_gifs
 
-      - name: Combine a single 24-hour preview GIF
+      - name: Combine 24-hour previews
         run: |
           cd prototype/hojakdo_v4/output
           ffmpeg -hide_banner -loglevel error -y \
@@ -47,21 +47,45 @@ jobs:
             -i hojakdo_v4_day_12_18.gif \
             -i hojakdo_v4_day_18_24.gif \
             -filter_complex "[0:v][1:v][2:v][3:v]concat=n=4:v=1:a=0,split[a][b];[a]palettegen=max_colors=192:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=3:diff_mode=rectangle[v]" \
-            -map "[v]" -loop 0 hojakdo_v431_24h_preview.gif
+            -map "[v]" -loop 0 hojakdo_v432_24h_preview.gif
+          ffmpeg -hide_banner -loglevel error -y \
+            -i hojakdo_v432_24h_preview.gif \
+            -filter_complex "[0:v]setpts=PTS/4,fps=20,split[a][b];[a]palettegen=max_colors=160:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=3:diff_mode=rectangle[v]" \
+            -map "[v]" -loop 0 hojakdo_v432_24h_preview_fast.gif
+
+      - name: Verify cleaned generated tree
+        run: |
+          test ! -e assets/layers/v4/drawable/hojakdo_v4_readout_hanji_patch.png
+          test ! -e assets/layers/v4/drawable/plum_foreground_mask.png
+          test ! -e assets/layers/v4/drawable/pine_foreground_mask.png
+          grep -q 'name="tiger_visual_slot"' watchface/src/main/res/raw/watchface.xml
+          ! grep -q 'readout_hanji_patch' watchface/src/main/res/raw/watchface.xml
+          ! grep -q 'plum_foreground_mask' watchface/src/main/res/raw/watchface.xml
+          ! grep -q 'pine_foreground_mask' watchface/src/main/res/raw/watchface.xml
 
       - name: Show generated artifacts
-        run: ls -lh prototype/hojakdo_v4/output/hojakdo_v4_day_*.gif prototype/hojakdo_v4/output/hojakdo_v431_24h_preview.gif prototype/hojakdo_v4/output/hojakdo_v4_day_review_manifest.json
+        run: |
+          ls -lh prototype/hojakdo_v4/output/hojakdo_v4_day_*.gif
+          ls -lh prototype/hojakdo_v4/output/hojakdo_v432_24h_preview*.gif
+          ls -lh prototype/hojakdo_v4/output/hojakdo_v4_day_review_manifest.json
 
-      - name: Commit generated artifacts
+      - name: Commit generated assets and review artifacts
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A assets/layers/v4
+          git add watchface/src/main/res/raw/watchface.xml
+          git add prototype/hojakdo_v4/output/hojakdo_v4_integrated_static.png
+          git add prototype/hojakdo_v4/output/hojakdo_v4_readout_cleanup_review.png
+          git add prototype/hojakdo_v4/output/hojakdo_v4_emulator_regression_review.png
+          git add prototype/hojakdo_v4/output/hojakdo_v4_review_board.png
+          git add prototype/hojakdo_v4/output/hojakdo_v4_animation_catalog.png
           git add prototype/hojakdo_v4/output/hojakdo_v4_day_*.gif
-          git add prototype/hojakdo_v4/output/hojakdo_v431_24h_preview.gif
+          git add prototype/hojakdo_v4/output/hojakdo_v432_24h_preview*.gif
           git add prototype/hojakdo_v4/output/hojakdo_v4_day_review_manifest.json
           if git diff --cached --quiet; then
             echo "No generated changes to commit."
             exit 0
           fi
-          git commit -m "artifacts: add V4.3.1 day review GIFs [skip ci]"
+          git commit -m "artifacts: refresh V4.3.2 layer-cleanup review [skip ci]"
           git push origin HEAD:main
