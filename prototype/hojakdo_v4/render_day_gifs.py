@@ -337,35 +337,27 @@ class DayReviewRenderer:
         placement = tuple(int(value) for value in metadata["placementLogical"])
         face.alpha_composite(frames[index], placement)
 
-    def _composite_plum_foreground(self, face: Image.Image) -> None:
-        masks = {item["id"]: item for item in self.manifest["foregroundMasks"]}
-        plum_mask = masks["plum_foreground_mask"]
-        face.alpha_composite(
-            self.layers["plum_foreground_mask"],
-            tuple(int(value) for value in plum_mask["placementLogical"]),
-        )
-
+    def _composite_plum_battery(self, face: Image.Image) -> None:
         bloom_placement = tuple(
             int(value) for value in self.full_bloom["placementLogical"]
         )
         bloom_name = Path(str(self.full_bloom["resource"])).stem
         face.alpha_composite(self.layers[bloom_name], bloom_placement)
 
-    def _composite_pine_and_tiger(
+    def _composite_tiger(
         self,
         face: Image.Image,
         state: TimelineState,
         animation_frame: int | None,
     ) -> None:
+        # Temporary compatibility layer: the tiger body is still baked into
+        # the world background. This single slot is the boundary for the next
+        # pass, where reviewed full-tiger frames will replace the old pieces.
         masks = {item["id"]: item for item in self.manifest["foregroundMasks"]}
-        for name in ("pine_foreground_mask", "tiger_body_foreground_mask"):
-            metadata = masks[name]
-            placement = tuple(int(value) for value in metadata["placementLogical"])
-            face.alpha_composite(self.layers[name], placement)
+        metadata = masks["tiger_body_foreground_mask"]
+        placement = tuple(int(value) for value in metadata["placementLogical"])
+        face.alpha_composite(self.layers["tiger_body_foreground_mask"], placement)
         if state.animation == "tiger_head_eye_reaction":
-            # The moving head replaces the static head for this slot. Drawing
-            # both versions at once visually averaged the motion into a
-            # frozen-looking tiger.
             self._composite_animation(face, state, animation_frame)
         else:
             face.alpha_composite(self.layers["hojakdo_v4_tiger_head"])
@@ -434,19 +426,14 @@ class DayReviewRenderer:
         ):
             exit_progress = second_millisecond / 60.0
         face = self.layers["hojakdo_v4_background"].copy()
-        patch = self.manifest["readoutHanjiPatch"]
-        face.alpha_composite(
-            self.layers["hojakdo_v4_readout_hanji_patch"],
-            tuple(int(value) for value in patch["placementLogical"]),
-        )
-        # Mirror the production WFF order: restore the complete plum before
-        # its walking bird so neither branches nor battery blossoms can hide
-        # the bird. Resolve the remaining environment before both hands.
-        self._composite_plum_foreground(face)
+        # Mirror production: repaired hanji, plum branches, and pine are baked
+        # into the world background. Only dynamic blossom stages and the tiger
+        # compatibility slot are layered above it.
+        self._composite_plum_battery(face)
         self._composite_plum_bird(face, state)
         if state.animation is not None and state.animation.endswith("_walk_step"):
             self._composite_animation(face, state, animation_frame)
-        self._composite_pine_and_tiger(face, state, animation_frame)
+        self._composite_tiger(face, state, animation_frame)
         self._composite_hand(face, "hour", timestamp, state)
         self._composite_hand(face, "minute", timestamp, state)
         self._composite_tiger_bird(face, state, exit_progress)
@@ -593,13 +580,15 @@ def render_day(
     emulator_reference = timeline_state(datetime(2026, 7, 13, 6, 5))
     review_manifest: dict[str, object] = {
         "schemaVersion": 1,
+        "sourceVersion": str(renderer.manifest["version"]),
         "date": review_date.isoformat(),
         "batteryPercent": battery_percent,
         "chunkHours": CHUNK_HOURS,
         "sampling": "every simulated minute; full AGIF frames at active minutes",
         "sceneOrder": (
-            "environment and tiger below both hands; tiger reaction replaces "
-            "the static head; active birds remain above the hands"
+            "repaired world background; dynamic plum stage; plum birds; one "
+            "tiger visual slot below both hands; tiger-perched birds and active "
+            "bird motion above the hands"
         ),
         "emulatorReference": emulator_reference.serializable(),
         "chunks": chunks,
