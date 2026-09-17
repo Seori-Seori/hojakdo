@@ -4,6 +4,12 @@
 
 > 손목 위에서 살아 움직이는 호작도 한 점.
 
+## 24시간 동작 미리보기
+
+> 현재 저장소에 커밋된 단일 24시간 빨리감기 미리보기는 V2.1 프로토타입이다. V4.x는 6시간 단위 회귀 렌더를 사용한다.
+
+![Hojakdo 24h fast-forward prototype](prototype/hojakdo_v2/output/hojakdo_v21_24h_debug.gif)
+
 소나무 가지를 시침과 분침으로 사용하고, 큰 까치와 작은 까치가 절대 시간에 맞춰 그림 속을 이동한다. 움직임은 부드러운 캐릭터 애니메이션보다 피영극처럼 빠르게 움직이고 오래 멈추는 절제된 리듬을 지향한다.
 
 애니메이션과 장면 구현의 최상위 기준은 [`docs/animation-blueprint.md`](docs/animation-blueprint.md), 자산 분리 상태는 [`docs/asset-extraction-plan.md`](docs/asset-extraction-plan.md)에서 관리한다.
