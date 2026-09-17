@@ -10,8 +10,8 @@ android {
         applicationId = "com.seori.hojakdo"
         minSdk = 33
         targetSdk = 33
-        versionCode = 8
-        versionName = "4.3.1"
+        versionCode = 9
+        versionName = "4.3.2"
     }
 
     buildTypes {
@@ -29,6 +29,7 @@ android {
 val generatedResDir = layout.buildDirectory.dir("generated/hojakdo-res")
 val sourceLayerDir = rootProject.file("assets/layers/v4/drawable")
 val sourceFrameDir = rootProject.file("assets/layers/v4/frames")
+val sourceWatchFaceXml = rootProject.file("watchface/src/main/res/raw/watchface.xml")
 val sourcePreview = rootProject.file(
     "prototype/hojakdo_v4/output/hojakdo_v4_integrated_static.png"
 )
@@ -36,6 +37,7 @@ val sourcePreview = rootProject.file(
 val prepareHojakdoAssets by tasks.registering {
     inputs.dir(sourceLayerDir)
     inputs.dir(sourceFrameDir)
+    inputs.file(sourceWatchFaceXml)
     inputs.file(sourcePreview)
     outputs.dir(generatedResDir)
 
@@ -44,7 +46,16 @@ val prepareHojakdoAssets by tasks.registering {
         drawableDir.deleteRecursively()
         drawableDir.mkdirs()
 
+        // Package only resources actually referenced by the generated WFF.
+        // Review thumbnails and archival middle frames stay in Git but do not
+        // consume runtime resource or decoded-memory budget.
+        val imageResourceRegex = Regex("""<Image\\s+resource="([^"]+)"""")
+        val runtimeResources = imageResourceRegex.findAll(sourceWatchFaceXml.readText())
+            .map { match -> match.groupValues[1] }
+            .toSet()
+
         sourceLayerDir.listFiles { file -> file.extension == "png" }
+            ?.filter { file -> file.nameWithoutExtension in runtimeResources }
             ?.forEach { file ->
                 file.copyTo(drawableDir.resolve(file.name), overwrite = true)
             }
@@ -54,10 +65,14 @@ val prepareHojakdoAssets by tasks.registering {
                 animationDir.listFiles { file -> file.extension == "png" }
                     ?.sortedBy { file -> file.name }
                     ?.forEach { file ->
-                        file.copyTo(
-                            drawableDir.resolve("${animationDir.name}_${file.name}"),
-                            overwrite = true,
-                        )
+                        val resourceName =
+                            "\${animationDir.name}_\${file.nameWithoutExtension}"
+                        if (resourceName in runtimeResources) {
+                            file.copyTo(
+                                drawableDir.resolve("\${resourceName}.png"),
+                                overwrite = true,
+                            )
+                        }
                     }
             }
 
