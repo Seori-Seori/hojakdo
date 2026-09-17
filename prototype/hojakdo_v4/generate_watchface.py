@@ -500,11 +500,7 @@ def generate() -> str:
     )
 
     mask_parts: dict[str, str] = {}
-    for name in (
-        "pine_foreground_mask",
-        "plum_foreground_mask",
-        "tiger_body_foreground_mask",
-    ):
+    for name in ("tiger_body_foreground_mask",):
         mask = masks[name]
         x, y = (int(value) for value in mask["placementLogical"])
         width, height = (int(value) for value in mask["sizeLogical"])
@@ -581,40 +577,25 @@ def generate() -> str:
         # visible instead of averaging into an apparently frozen tiger.
         default="\n".join((tiger_head, tiger_pupils)),
     )
-    hanji_patch = manifest["readoutHanjiPatch"]
-    patch_x, patch_y = (int(value) for value in hanji_patch["placementLogical"])
-    patch_width, patch_height = (
-        int(value) for value in hanji_patch["sizeLogical"]
-    )
-    readout_hanji_patch = _part_image(
-        Path(str(hanji_patch["resource"])).stem,
-        patch_x,
-        patch_y,
-        patch_width,
-        patch_height,
-        name="readout_hanji_patch",
-        # The underlying background contains the same forced repair. Hiding
-        # this overlay in ambient avoids stacking two translucent paper layers.
-        ambient_alpha=0,
-    )
+    # V4.3.2 gives the tiger one explicit visual slot. The body compatibility
+    # mask remains temporary because the body is still baked into the world
+    # background; the next tiger pass can replace this entire group with
+    # reviewed full-tiger frames without disturbing the rest of the scene.
+    tiger_visual_slot = f'''<Group name="tiger_visual_slot" x="0" y="0" width="450" height="450">
+{_indent(mask_parts["tiger_body_foreground_mask"], 4)}
+{_indent(tiger_visual_condition, 4)}
+</Group>'''
     scene_parts = [
         background,
-        # The repair patch must never cover a rotating hand. Keep it directly
-        # above the base background and below every decorative/runtime layer.
-        readout_hanji_patch,
-        # Restore the complete plum first, then keep both the walking
-        # animation and its idle pose visibly in front of every branch and
-        # battery-driven blossom. All of these layers remain below the hands.
-        mask_parts["plum_foreground_mask"],
+        # Hanji cleanup, plum branches, and pine are already baked into the
+        # repaired background. Re-layering the same pixels only added fragile
+        # Z-order without changing the picture.
         _condition(plum_expressions),
         plum_static_condition,
         walk_animation_condition,
-        # Resolve all environmental depth before the hands. The previous
-        # order left the pine mask above a down-left minute hand, making it
-        # disappear around frames such as 11:42.
-        mask_parts["pine_foreground_mask"],
-        mask_parts["tiger_body_foreground_mask"],
-        tiger_visual_condition,
+        # Keep the current tiger implementation behind both hands as one slot.
+        # Only this slot needs replacement when full-tiger motion is authored.
+        tiger_visual_slot,
         hour_group,
         minute_group,
         # Tiger-perched birds and active bird animations remain above the
