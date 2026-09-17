@@ -12,6 +12,8 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
+from .generate_watchface import runtime_frame_index, runtime_frame_windows
+
 
 PACKAGE_DIR = Path(__file__).resolve().parent
 REPO_ROOT = PACKAGE_DIR.parents[1]
@@ -420,6 +422,17 @@ class DayReviewRenderer:
         exit_progress: float | None = None,
     ) -> Image.Image:
         state = timeline_state(timestamp)
+        second_millisecond = timestamp.second + timestamp.microsecond / 1_000_000
+        if state.animation is not None and animation_frame is None:
+            animation_frame = runtime_frame_index(
+                self.animations[state.animation], second_millisecond
+            )
+        if (
+            state.action == "EXIT_RIGHT"
+            and state.character == "SMALL"
+            and exit_progress is None
+        ):
+            exit_progress = second_millisecond / 60.0
         face = self.layers["hojakdo_v4_background"].copy()
         patch = self.manifest["readoutHanjiPatch"]
         face.alpha_composite(
@@ -450,17 +463,16 @@ class DayReviewRenderer:
     ) -> list[tuple[Image.Image, TimelineState]]:
         state = timeline_state(timestamp)
         if state.animation is not None:
-            frames = self._frames(state.animation)
-            count = max(1, len(frames))
+            metadata = self.animations[state.animation]
             return [
                 (
                     self.render(
-                        timestamp + timedelta(seconds=index * 0.125),
-                        animation_frame=index,
+                        timestamp + timedelta(seconds=start),
+                        animation_frame=frame_index,
                     ),
                     state,
                 )
-                for index in range(count)
+                for frame_index, start, _ in runtime_frame_windows(metadata)
             ]
         if state.action == "EXIT_RIGHT" and state.character == "SMALL":
             return [

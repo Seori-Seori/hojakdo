@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "4.3.0",
-  "status": "v4_3_lower_larger_top_readout_candidate",
+  "version": "4.3.1",
+  "status": "v4_3_1_stateless_visibility_reentry_fix",
   "logicalCanvas": [
     450,
     450
