@@ -20,6 +20,15 @@ jobs:
         with:
           ref: main
 
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -34,6 +43,9 @@ jobs:
 
       - name: Run regression tests
         run: python -m unittest discover -s prototype -p 'test_*.py'
+
+      - name: Assemble resource-only watch face
+        run: ./gradlew :watchface:assembleDebug --stacktrace
 
       - name: Render four 6-hour day-review GIFs
         run: python -m prototype.hojakdo_v4.render_day_gifs
