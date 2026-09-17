@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import shutil
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Sequence
@@ -918,30 +919,6 @@ def _build_battery_icon() -> None:
     _save_png(icon, DRAWABLE_DIR / "battery_icon.png")
 
 
-def _build_readout_hanji_patch(background: Image.Image) -> dict[str, object]:
-    """Build a final date backing that sits above every decorative layer."""
-    x0, y0, x1, y1 = DATE_HANJI_OVERLAY_BOUNDS
-    patch = background.crop(DATE_HANJI_OVERLAY_BOUNDS).convert("RGBA")
-    height, width = patch.height, patch.width
-    yy, xx = np.indices((height, width))
-    edge_distance = np.minimum.reduce((xx, yy, width - 1 - xx, height - 1 - yy))
-    alpha = np.clip(edge_distance.astype(np.float32) / 2.0, 0.0, 1.0)
-    alpha = alpha * alpha * (3.0 - 2.0 * alpha)
-    values = np.asarray(patch, dtype=np.uint8).copy()
-    values[..., 3] = np.clip(alpha * 255, 0, 255).astype(np.uint8)
-    patch = Image.fromarray(values, "RGBA")
-    path = DRAWABLE_DIR / "hojakdo_v4_readout_hanji_patch.png"
-    _save_png(patch, path)
-    return {
-        "resource": path.name,
-        "placementLogical": [x0, y0],
-        "sizeLogical": [x1 - x0, y1 - y0],
-        "sha256": _sha256(path),
-        "layer": "above_background_below_hands_and_decorations",
-        "ambientBehavior": "hidden_clean_background_remains",
-    }
-
-
 def _compose_preview_face(
     background: Image.Image,
     hour_branch: Image.Image,
@@ -956,21 +933,10 @@ def _compose_preview_face(
     battery_percent: int = 85,
 ) -> Image.Image:
     face = background.convert("RGBA")
-    # The hanji backing belongs directly above the repaired background. Hands,
-    # characters, masks, and live text must all remain visible above it.
-    with Image.open(DRAWABLE_DIR / "hojakdo_v4_readout_hanji_patch.png") as source:
-        face.alpha_composite(
-            source.convert("RGBA"), DATE_HANJI_OVERLAY_BOUNDS[:2]
-        )
-
-    # Restore the plum branches and flowers first. Both clock hands must remain
-    # above the complete bloom or they disappear through the left half-dial.
+    # The final background already contains the repaired hanji, plum branches,
+    # and pine artwork. Do not re-layer identical pixels. Only dynamic blossom
+    # stages and the temporary tiger compatibility layer belong above it.
     masks_by_name = {str(mask["id"]): mask for mask in masks}
-    plum_mask = masks_by_name["plum_foreground_mask"]
-    with Image.open(DRAWABLE_DIR / str(plum_mask["resource"])) as source:
-        face.alpha_composite(
-            source.convert("RGBA"), tuple(plum_mask["placementLogical"])
-        )
     selected_plum = next(
         item
         for item in plum
@@ -983,12 +949,11 @@ def _compose_preview_face(
             source.convert("RGBA"), tuple(selected_plum["placementLogical"])
         )
 
-    for name in ("pine_foreground_mask", "tiger_body_foreground_mask"):
-        mask = masks_by_name[name]
-        with Image.open(DRAWABLE_DIR / str(mask["resource"])) as source:
-            face.alpha_composite(
-                source.convert("RGBA"), tuple(mask["placementLogical"])
-            )
+    tiger_mask = masks_by_name["tiger_body_foreground_mask"]
+    with Image.open(DRAWABLE_DIR / str(tiger_mask["resource"])) as source:
+        face.alpha_composite(
+            source.convert("RGBA"), tuple(tiger_mask["placementLogical"])
+        )
     face.alpha_composite(tiger_head)
     face.alpha_composite(tiger_pupils)
 
@@ -1120,7 +1085,7 @@ def _render_preview(
     board = Image.new("RGB", (940, 540), (20, 17, 13))
     board.paste(face.convert("RGB").resize((500, 500), Image.Resampling.LANCZOS), (20, 20))
     info = ImageDraw.Draw(board)
-    info.text((555, 42), "HOJAKDO V4.3.1", font=_font(29, bold=True), fill=(246, 226, 180))
+    info.text((555, 42), "HOJAKDO V4.3.2", font=_font(29, bold=True), fill=(246, 226, 180))
     info.text((555, 91), "TOP READOUT + HANDS", font=_font(15, bold=True), fill=(194, 76, 42))
     info.line((555, 126, 900, 126), fill=(87, 72, 50), width=1)
     lines = (
@@ -1129,7 +1094,7 @@ def _render_preview(
         "TITLE + SEAL INSIDE DIAL",
         "LIVE TIME / DATE / WEEKDAY",
         "LIVE BATTERY / 5 PLUM STAGES",
-        "16 AGIF / 6 STATIC POSES / 3 MASKS",
+        "16 AGIF / 6 STATIC POSES / 1 TIGER MASK",
         "DETERMINISTIC 43-MINUTE SCENE",
         "AMBIENT-SAFE STATIC FALLBACK",
     )
@@ -1138,7 +1103,7 @@ def _render_preview(
         info.ellipse((555, y + 5, 564, y + 14), fill=(181, 68, 41))
         info.text((578, y), line, font=_font(12), fill=(226, 207, 168))
         y += 39
-    info.text((555, 485), "V4.3.1 VISIBILITY RESTORE", font=_font(11), fill=(129, 119, 101))
+    info.text((555, 485), "V4.3.2 LAYER CLEANUP / TIGER SLOT PREP", font=_font(11), fill=(129, 119, 101))
     _save_rgb_png(board, OUTPUT_DIR / "hojakdo_v4_review_board.png")
 
 
@@ -1182,8 +1147,14 @@ def _render_catalog(animations: list[dict[str, object]]) -> None:
 
 
 def build() -> dict[str, object]:
-    for directory in (DRAWABLE_DIR, ANIMATION_DIR, FRAME_DIR, OUTPUT_DIR):
+    # V4 drawable/animation/frame trees are generated output. Rebuild them from
+    # source every time so retired compatibility layers cannot survive as stale
+    # runtime resources.
+    for directory in (DRAWABLE_DIR, ANIMATION_DIR, FRAME_DIR):
+        if directory.exists():
+            shutil.rmtree(directory)
         directory.mkdir(parents=True, exist_ok=True)
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     calculator = HojakdoSceneCalculator()
     renderer = PrototypeRenderer(calculator)
@@ -1217,7 +1188,6 @@ def build() -> dict[str, object]:
     _save_png(tiger_head, DRAWABLE_DIR / "hojakdo_v4_tiger_head.png")
     _save_png(tiger_pupils, DRAWABLE_DIR / "hojakdo_v4_tiger_pupils.png")
     _build_battery_icon()
-    readout_hanji_patch = _build_readout_hanji_patch(background)
 
     large_sprite, large_anchor, _ = renderer.birds["LARGE"]
     small_sprite, small_anchor, _ = renderer.birds["SMALL"]
@@ -1251,21 +1221,10 @@ def build() -> dict[str, object]:
         ),
     ]
 
+    # Plum and pine are already baked into the repaired world background.
+    # Keep only the tiger-body compatibility mask until the full tiger visual
+    # slot is rebuilt together from reviewed frames.
     masks = [
-        _foreground_mask(
-            "plum_foreground_mask",
-            background,
-            (0, 226, 205, 450),
-            ((0, 235), (180, 235), (205, 450), (0, 450)),
-            158,
-        ),
-        _foreground_mask(
-            "pine_foreground_mask",
-            background,
-            (0, 0, 220, 260),
-            ((0, 0), (220, 0), (205, 200), (145, 260), (0, 260)),
-            151,
-        ),
         _foreground_mask(
             "tiger_body_foreground_mask",
             background,
@@ -1293,8 +1252,8 @@ def build() -> dict[str, object]:
     animation_decoded = sum(int(item["decodedBytesEstimate"]) for item in animations)
     manifest: dict[str, object] = {
         "schemaVersion": 1,
-        "version": "4.3.1",
-        "status": "v4_3_1_stateless_visibility_reentry_fix",
+        "version": "4.3.2",
+        "status": "v4_3_2_layer_cleanup_tiger_slot_ready",
         "logicalCanvas": [FACE_SIZE, FACE_SIZE],
         "smallFlight": {
             "resource": "magpie_small_flight_right_v4.png",
@@ -1336,7 +1295,6 @@ def build() -> dict[str, object]:
             ),
             "method": "color_matched_paper_texture_and_scaled_tiger_source",
         },
-        "readoutHanjiPatch": readout_hanji_patch,
         "readoutLayout": {
             "layout": "top_two_rows_time_then_date_weekday",
             "centerXLogical": READOUT_CENTER_X,
@@ -1356,7 +1314,7 @@ def build() -> dict[str, object]:
         "readoutQuietZone": {
             "sourceCleanupBoundsLogical": [175, 220, 275, 295],
             "dateCloudCleanupBoundsLogical": list(DATE_CLOUD_CLEANUP_BOUNDS),
-            "dateFinalOverlayBoundsLogical": list(DATE_HANJI_OVERLAY_BOUNDS),
+            "dateFinalCleanBoundsLogical": list(DATE_HANJI_OVERLAY_BOUNDS),
             "liveTextCenterXLogical": READOUT_CENTER_X,
             "removes": ["baked_time", "baked_date", "baked_weekday", "cloud_line"],
             "liveTextLayer": "topmost",
@@ -1365,7 +1323,7 @@ def build() -> dict[str, object]:
         "foregroundMasks": masks,
         "animations": animations,
         "plumBatteryStages": plum,
-        "plumBatteryLayer": "above_plum_foreground_mask_below_hands",
+        "plumBatteryLayer": "above_background_below_hands",
         "scene": {
             "cycleMinutes": 43,
             "cycleOffsetMinutes": 32,
@@ -1390,13 +1348,9 @@ def build() -> dict[str, object]:
             },
             "layerOrder": [
                 "background",
-                "readout_hanji_patch",
-                "plum_foreground_mask",
                 "plum_battery_stage",
                 "plum_birds",
-                "pine_foreground_mask",
-                "tiger_body_foreground_mask",
-                "tiger_head_or_reaction",
+                "tiger_visual_slot",
                 "hour_hand",
                 "minute_hand",
                 "tiger_birds_and_exit",
@@ -1404,6 +1358,17 @@ def build() -> dict[str, object]:
                 "live_text",
             ],
             "stateless": True,
+            "tigerSlotPreparation": {
+                "status": "prepared_not_rebuilt",
+                "backgroundStillContainsTigerBody": True,
+                "compatibilityMask": "tiger_body_foreground_mask",
+                "currentDynamicParts": [
+                    "hojakdo_v4_tiger_head",
+                    "hojakdo_v4_tiger_pupils",
+                    "tiger_head_eye_reaction",
+                ],
+                "nextStep": "replace_with_reviewed_full_tiger_frames",
+            },
         },
         "liveData": [
             "HOUR_0_23_Z",
