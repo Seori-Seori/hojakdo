@@ -1,0 +1,47 @@
+name: Build fast Hojakdo README preview
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/build-fast-hojakdo-preview.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Build 4x-speed 24h preview
+        run: |
+          cd prototype/hojakdo_v4/output
+          ffmpeg -hide_banner -loglevel error -y \
+            -i hojakdo_v431_24h_preview.gif \
+            -filter_complex "[0:v]setpts=PTS/4,fps=20,split[a][b];[a]palettegen=max_colors=160:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=3:diff_mode=rectangle[v]" \
+            -map "[v]" -loop 0 hojakdo_v431_24h_preview_fast.gif
+          ls -lh hojakdo_v431_24h_preview_fast.gif
+
+      - name: Commit fast preview
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add prototype/hojakdo_v4/output/hojakdo_v431_24h_preview_fast.gif
+          if git diff --cached --quiet; then
+            echo "No preview changes to commit."
+            exit 0
+          fi
+          git commit -m "artifacts: add fast V4.3.1 24h README preview [skip ci]"
+          git push origin HEAD:main
