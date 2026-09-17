@@ -1,10 +1,11 @@
 {
   "schemaVersion": 1,
+  "sourceVersion": "4.3.2",
   "date": "2026-07-13",
   "batteryPercent": 100,
   "chunkHours": 6,
   "sampling": "every simulated minute; full AGIF frames at active minutes",
-  "sceneOrder": "environment and tiger below both hands; tiger reaction replaces the static head; active birds remain above the hands",
+  "sceneOrder": "repaired world background; dynamic plum stage; plum birds; one tiger visual slot below both hands; tiger-perched birds and active bird motion above the hands",
   "emulatorReference": {
     "timestamp": "2026-07-13T06:05",
     "minute_key": 1068062733,
@@ -27,7 +28,7 @@
       "fps": 20,
       "frameCount": 709,
       "durationSeconds": 35.45,
-      "sha256": "bbfd3ca5b2d1703d3a2a662a2c69b7dbbf8eb95c4549ee7aa56da80cd961a023",
+      "sha256": "970a90878863e1e5b7abdd8dc293f04f0150755b62c8f66dc7207507ce2a44d1",
       "events": [
         {
           "timestamp": "2026-07-13T00:10",
@@ -642,7 +643,7 @@
       "fps": 20,
       "frameCount": 715,
       "durationSeconds": 35.75,
-      "sha256": "2da09f0663e650308183ee80b1c3f2c021b5b33927a04e82aac1ac91fe13060a",
+      "sha256": "1b57f2c7524fcdb190518ad1e5b218ae4097a4335070ec8deb3dc12969064479",
       "events": [
         {
           "timestamp": "2026-07-13T06:05",
@@ -1277,7 +1278,7 @@
       "fps": 20,
       "frameCount": 689,
       "durationSeconds": 34.45,
-      "sha256": "0fdece53541859f1412312d13877dad2d62d58bc6a3f6ebc9450e2c82efd9b0e",
+      "sha256": "5f62809bb04fc6e40f8093b3ddebc022c615d4539206780ae1575bc6ef9e072a",
       "events": [
         {
           "timestamp": "2026-07-13T12:21",
@@ -1862,7 +1863,7 @@
       "fps": 20,
       "frameCount": 710,
       "durationSeconds": 35.5,
-      "sha256": "fde6e33d4f157136ab4fe3a752fd4b90e0c7d6c3ecea65d7ac5341166220eed6",
+      "sha256": "6b42e03b337adf52826727827307643206a4b9f3720b52a2dedba84f84788ddb",
       "events": [
         {
           "timestamp": "2026-07-13T18:05",

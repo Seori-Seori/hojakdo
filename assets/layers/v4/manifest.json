@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "4.3.1",
-  "status": "v4_3_1_stateless_visibility_reentry_fix",
+  "version": "4.3.2",
+  "status": "v4_3_2_layer_cleanup_tiger_slot_ready",
   "logicalCanvas": [
     450,
     450
@@ -81,20 +81,6 @@
     ],
     "method": "color_matched_paper_texture_and_scaled_tiger_source"
   },
-  "readoutHanjiPatch": {
-    "resource": "hojakdo_v4_readout_hanji_patch.png",
-    "placementLogical": [
-      188,
-      272
-    ],
-    "sizeLogical": [
-      82,
-      22
-    ],
-    "sha256": "7623ad597c6918277584bb9caaeedae5cc8f0b50f829c71f69194c3a9dc3206b",
-    "layer": "above_background_below_hands_and_decorations",
-    "ambientBehavior": "hidden_clean_background_remains"
-  },
   "readoutLayout": {
     "layout": "top_two_rows_time_then_date_weekday",
     "centerXLogical": 225,
@@ -134,7 +120,7 @@
       252,
       300
     ],
-    "dateFinalOverlayBoundsLogical": [
+    "dateFinalCleanBoundsLogical": [
       188,
       272,
       270,
@@ -230,32 +216,6 @@
     }
   ],
   "foregroundMasks": [
-    {
-      "id": "plum_foreground_mask",
-      "resource": "plum_foreground_mask.png",
-      "placementLogical": [
-        0,
-        226
-      ],
-      "sizeLogical": [
-        205,
-        224
-      ],
-      "sha256": "169411b87db37c76c4603c50d4030887695ce4ca9144c8686d05ad27d002d64d"
-    },
-    {
-      "id": "pine_foreground_mask",
-      "resource": "pine_foreground_mask.png",
-      "placementLogical": [
-        0,
-        0
-      ],
-      "sizeLogical": [
-        220,
-        260
-      ],
-      "sha256": "c1fc793420ff5ca2ed8c74e8e2d292dec610605385df51ea20333c69f63c8d02"
-    },
     {
       "id": "tiger_body_foreground_mask",
       "resource": "tiger_body_foreground_mask.png",
@@ -840,7 +800,7 @@
       ]
     }
   ],
-  "plumBatteryLayer": "above_plum_foreground_mask_below_hands",
+  "plumBatteryLayer": "above_background_below_hands",
   "scene": {
     "cycleMinutes": 43,
     "cycleOffsetMinutes": 32,
@@ -886,20 +846,27 @@
     },
     "layerOrder": [
       "background",
-      "readout_hanji_patch",
-      "plum_foreground_mask",
       "plum_battery_stage",
       "plum_birds",
-      "pine_foreground_mask",
-      "tiger_body_foreground_mask",
-      "tiger_head_or_reaction",
+      "tiger_visual_slot",
       "hour_hand",
       "minute_hand",
       "tiger_birds_and_exit",
       "bird_animations",
       "live_text"
     ],
-    "stateless": true
+    "stateless": true,
+    "tigerSlotPreparation": {
+      "status": "prepared_not_rebuilt",
+      "backgroundStillContainsTigerBody": true,
+      "compatibilityMask": "tiger_body_foreground_mask",
+      "currentDynamicParts": [
+        "hojakdo_v4_tiger_head",
+        "hojakdo_v4_tiger_pupils",
+        "tiger_head_eye_reaction"
+      ],
+      "nextStep": "replace_with_reviewed_full_tiger_frames"
+    }
   },
   "liveData": [
     "HOUR_0_23_Z",
@@ -916,9 +883,9 @@
     "SECOND_MILLISECOND"
   ],
   "memoryEstimate": {
-    "staticDecodedBytes": 6103696,
+    "staticDecodedBytes": 5684000,
     "animatedDecodedBytes": 6073584,
-    "interactiveDecodedBytes": 12177280,
+    "interactiveDecodedBytes": 11757584,
     "officialInteractiveBudgetBytes": 104857600,
     "officialAmbientBudgetBytes": 10485760
   }
