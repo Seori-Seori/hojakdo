@@ -66,10 +66,10 @@ val prepareHojakdoAssets by tasks.registering {
                     ?.sortedBy { file -> file.name }
                     ?.forEach { file ->
                         val resourceName =
-                            "\${animationDir.name}_\${file.nameWithoutExtension}"
+                            "${animationDir.name}_${file.nameWithoutExtension}"
                         if (resourceName in runtimeResources) {
                             file.copyTo(
-                                drawableDir.resolve("\${resourceName}.png"),
+                                drawableDir.resolve("${resourceName}.png"),
                                 overwrite = true,
                             )
                         }
