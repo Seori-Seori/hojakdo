@@ -1,0 +1,2470 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-07-13",
+  "batteryPercent": 100,
+  "chunkHours": 6,
+  "sampling": "every simulated minute; full AGIF frames at active minutes",
+  "sceneOrder": "environment and tiger below both hands; tiger reaction replaces the static head; active birds remain above the hands",
+  "emulatorReference": {
+    "timestamp": "2026-07-13T06:05",
+    "minute_key": 1068062733,
+    "cycle_index": 24838668,
+    "cycle_local": 9,
+    "character": "LARGE",
+    "route": "PLUM",
+    "action": "HOP_TIGER",
+    "animation": "magpie_large_hop_to_tiger"
+  },
+  "chunks": [
+    {
+      "start": "00:00",
+      "endExclusive": "06:00",
+      "resource": "hojakdo_v4_day_00_06.gif",
+      "size": [
+        450,
+        450
+      ],
+      "fps": 20,
+      "frameCount": 709,
+      "durationSeconds": 35.45,
+      "sha256": "bbfd3ca5b2d1703d3a2a662a2c69b7dbbf8eb95c4549ee7aa56da80cd961a023",
+      "events": [
+        {
+          "timestamp": "2026-07-13T00:10",
+          "minute_key": 1068062378,
+          "cycle_index": 24838659,
+          "cycle_local": 41,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": null
+        },
+        {
+          "timestamp": "2026-07-13T00:14",
+          "minute_key": 1068062382,
+          "cycle_index": 24838660,
+          "cycle_local": 2,
+          "character": "LARGE",
+          "route": "HOUR",
+          "action": "FLY_TO_HAND",
+          "animation": "magpie_large_fly_pine_to_hand"
+        },
+        {
+          "timestamp": "2026-07-13T00:15",
+          "minute_key": 1068062383,
+          "cycle_index": 24838660,
+          "cycle_local": 3,
+          "character": "LARGE",
+          "route": "HOUR",
+          "action": "LAND_HAND",
+          "animation": "magpie_large_land_on_hand"
+        },
+        {
+          "timestamp": "2026-07-13T00:21",
+          "minute_key": 1068062389,
+          "cycle_index": 24838660,
+          "cycle_local": 9,
+          "character": "LARGE",
+          "route": "HOUR",
+          "action": "HOP_TIGER",
+          "animation": "magpie_large_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T00:22",
+          "minute_key": 1068062390,
+          "cycle_index": 24838660,
+          "cycle_local": 10,
+          "character": "LARGE",
+          "route": "HOUR",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T00:23",
+          "minute_key": 1068062391,
+          "cycle_index": 24838660,
+          "cycle_local": 11,
+          "character": "LARGE",
+          "route": "HOUR",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_large_head_tilt"
+        },
+        {
+          "timestamp": "2026-07-13T00:24",
+          "minute_key": 1068062392,
+          "cycle_index": 24838660,
+          "cycle_local": 12,
+          "character": "LARGE",
+          "route": "HOUR",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_large_turn_perch"
+        },
+        {
+          "timestamp": "2026-07-13T00:53",
+          "minute_key": 1068062421,
+          "cycle_index": 24838660,
+          "cycle_local": 41,
+          "character": "LARGE",
+          "route": "HOUR",
+          "action": "EXIT_RIGHT",
+          "animation": "magpie_large_exit_right_jump"
+        },
+        {
+          "timestamp": "2026-07-13T00:57",
+          "minute_key": 1068062425,
+          "cycle_index": 24838661,
+          "cycle_local": 2,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_small_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T01:04",
+          "minute_key": 1068062432,
+          "cycle_index": 24838661,
+          "cycle_local": 9,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_small_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T01:05",
+          "minute_key": 1068062433,
+          "cycle_index": 24838661,
+          "cycle_local": 10,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T01:06",
+          "minute_key": 1068062434,
+          "cycle_index": 24838661,
+          "cycle_local": 11,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_small_head_scan"
+        },
+        {
+          "timestamp": "2026-07-13T01:07",
+          "minute_key": 1068062435,
+          "cycle_index": 24838661,
+          "cycle_local": 12,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_small_look_plum"
+        },
+        {
+          "timestamp": "2026-07-13T01:08",
+          "minute_key": 1068062436,
+          "cycle_index": 24838661,
+          "cycle_local": 13,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_HOP",
+          "animation": "magpie_small_turn_hop"
+        },
+        {
+          "timestamp": "2026-07-13T01:09",
+          "minute_key": 1068062437,
+          "cycle_index": 24838661,
+          "cycle_local": 14,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "PECK_EAR",
+          "animation": "magpie_small_peck_tiger_ear"
+        },
+        {
+          "timestamp": "2026-07-13T01:36",
+          "minute_key": 1068062464,
+          "cycle_index": 24838661,
+          "cycle_local": 41,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": null
+        },
+        {
+          "timestamp": "2026-07-13T01:40",
+          "minute_key": 1068062468,
+          "cycle_index": 24838662,
+          "cycle_local": 2,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_large_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T01:47",
+          "minute_key": 1068062475,
+          "cycle_index": 24838662,
+          "cycle_local": 9,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_large_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T01:48",
+          "minute_key": 1068062476,
+          "cycle_index": 24838662,
+          "cycle_local": 10,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T01:49",
+          "minute_key": 1068062477,
+          "cycle_index": 24838662,
+          "cycle_local": 11,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_large_head_tilt"
+        },
+        {
+          "timestamp": "2026-07-13T01:50",
+          "minute_key": 1068062478,
+          "cycle_index": 24838662,
+          "cycle_local": 12,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_large_turn_perch"
+        },
+        {
+          "timestamp": "2026-07-13T02:19",
+          "minute_key": 1068062507,
+          "cycle_index": 24838662,
+          "cycle_local": 41,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": "magpie_large_exit_right_jump"
+        },
+        {
+          "timestamp": "2026-07-13T02:23",
+          "minute_key": 1068062511,
+          "cycle_index": 24838663,
+          "cycle_local": 2,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_small_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T02:30",
+          "minute_key": 1068062518,
+          "cycle_index": 24838663,
+          "cycle_local": 9,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_small_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T02:31",
+          "minute_key": 1068062519,
+          "cycle_index": 24838663,
+          "cycle_local": 10,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T02:32",
+          "minute_key": 1068062520,
+          "cycle_index": 24838663,
+          "cycle_local": 11,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_small_head_scan"
+        },
+        {
+          "timestamp": "2026-07-13T02:33",
+          "minute_key": 1068062521,
+          "cycle_index": 24838663,
+          "cycle_local": 12,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_small_look_plum"
+        },
+        {
+          "timestamp": "2026-07-13T02:34",
+          "minute_key": 1068062522,
+          "cycle_index": 24838663,
+          "cycle_local": 13,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_HOP",
+          "animation": "magpie_small_turn_hop"
+        },
+        {
+          "timestamp": "2026-07-13T02:35",
+          "minute_key": 1068062523,
+          "cycle_index": 24838663,
+          "cycle_local": 14,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "PECK_EAR",
+          "animation": "magpie_small_peck_tiger_ear"
+        },
+        {
+          "timestamp": "2026-07-13T03:02",
+          "minute_key": 1068062550,
+          "cycle_index": 24838663,
+          "cycle_local": 41,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": null
+        },
+        {
+          "timestamp": "2026-07-13T03:06",
+          "minute_key": 1068062554,
+          "cycle_index": 24838664,
+          "cycle_local": 2,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_large_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T03:13",
+          "minute_key": 1068062561,
+          "cycle_index": 24838664,
+          "cycle_local": 9,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_large_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T03:14",
+          "minute_key": 1068062562,
+          "cycle_index": 24838664,
+          "cycle_local": 10,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T03:15",
+          "minute_key": 1068062563,
+          "cycle_index": 24838664,
+          "cycle_local": 11,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_large_head_tilt"
+        },
+        {
+          "timestamp": "2026-07-13T03:16",
+          "minute_key": 1068062564,
+          "cycle_index": 24838664,
+          "cycle_local": 12,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_large_turn_perch"
+        },
+        {
+          "timestamp": "2026-07-13T03:45",
+          "minute_key": 1068062593,
+          "cycle_index": 24838664,
+          "cycle_local": 41,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": "magpie_large_exit_right_jump"
+        },
+        {
+          "timestamp": "2026-07-13T03:49",
+          "minute_key": 1068062597,
+          "cycle_index": 24838665,
+          "cycle_local": 2,
+          "character": "SMALL",
+          "route": "MINUTE",
+          "action": "FLY_TO_HAND",
+          "animation": "magpie_small_fly_pine_to_hand"
+        },
+        {
+          "timestamp": "2026-07-13T03:50",
+          "minute_key": 1068062598,
+          "cycle_index": 24838665,
+          "cycle_local": 3,
+          "character": "SMALL",
+          "route": "MINUTE",
+          "action": "LAND_HAND",
+          "animation": "magpie_small_land_on_hand"
+        },
+        {
+          "timestamp": "2026-07-13T03:56",
+          "minute_key": 1068062604,
+          "cycle_index": 24838665,
+          "cycle_local": 9,
+          "character": "SMALL",
+          "route": "MINUTE",
+          "action": "HOP_TIGER",
+          "animation": "magpie_small_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T03:57",
+          "minute_key": 1068062605,
+          "cycle_index": 24838665,
+          "cycle_local": 10,
+          "character": "SMALL",
+          "route": "MINUTE",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T03:58",
+          "minute_key": 1068062606,
+          "cycle_index": 24838665,
+          "cycle_local": 11,
+          "character": "SMALL",
+          "route": "MINUTE",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_small_head_scan"
+        },
+        {
+          "timestamp": "2026-07-13T03:59",
+          "minute_key": 1068062607,
+          "cycle_index": 24838665,
+          "cycle_local": 12,
+          "character": "SMALL",
+          "route": "MINUTE",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_small_look_plum"
+        },
+        {
+          "timestamp": "2026-07-13T04:00",
+          "minute_key": 1068062608,
+          "cycle_index": 24838665,
+          "cycle_local": 13,
+          "character": "SMALL",
+          "route": "MINUTE",
+          "action": "TURN_HOP",
+          "animation": "magpie_small_turn_hop"
+        },
+        {
+          "timestamp": "2026-07-13T04:01",
+          "minute_key": 1068062609,
+          "cycle_index": 24838665,
+          "cycle_local": 14,
+          "character": "SMALL",
+          "route": "MINUTE",
+          "action": "PECK_EAR",
+          "animation": "magpie_small_peck_tiger_ear"
+        },
+        {
+          "timestamp": "2026-07-13T04:28",
+          "minute_key": 1068062636,
+          "cycle_index": 24838665,
+          "cycle_local": 41,
+          "character": "SMALL",
+          "route": "MINUTE",
+          "action": "EXIT_RIGHT",
+          "animation": null
+        },
+        {
+          "timestamp": "2026-07-13T04:32",
+          "minute_key": 1068062640,
+          "cycle_index": 24838666,
+          "cycle_local": 2,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_large_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T04:39",
+          "minute_key": 1068062647,
+          "cycle_index": 24838666,
+          "cycle_local": 9,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_large_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T04:40",
+          "minute_key": 1068062648,
+          "cycle_index": 24838666,
+          "cycle_local": 10,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T04:41",
+          "minute_key": 1068062649,
+          "cycle_index": 24838666,
+          "cycle_local": 11,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_large_head_tilt"
+        },
+        {
+          "timestamp": "2026-07-13T04:42",
+          "minute_key": 1068062650,
+          "cycle_index": 24838666,
+          "cycle_local": 12,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_large_turn_perch"
+        },
+        {
+          "timestamp": "2026-07-13T05:11",
+          "minute_key": 1068062679,
+          "cycle_index": 24838666,
+          "cycle_local": 41,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": "magpie_large_exit_right_jump"
+        },
+        {
+          "timestamp": "2026-07-13T05:15",
+          "minute_key": 1068062683,
+          "cycle_index": 24838667,
+          "cycle_local": 2,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_small_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T05:22",
+          "minute_key": 1068062690,
+          "cycle_index": 24838667,
+          "cycle_local": 9,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_small_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T05:23",
+          "minute_key": 1068062691,
+          "cycle_index": 24838667,
+          "cycle_local": 10,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T05:24",
+          "minute_key": 1068062692,
+          "cycle_index": 24838667,
+          "cycle_local": 11,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_small_head_scan"
+        },
+        {
+          "timestamp": "2026-07-13T05:25",
+          "minute_key": 1068062693,
+          "cycle_index": 24838667,
+          "cycle_local": 12,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_small_look_plum"
+        },
+        {
+          "timestamp": "2026-07-13T05:26",
+          "minute_key": 1068062694,
+          "cycle_index": 24838667,
+          "cycle_local": 13,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_HOP",
+          "animation": "magpie_small_turn_hop"
+        },
+        {
+          "timestamp": "2026-07-13T05:27",
+          "minute_key": 1068062695,
+          "cycle_index": 24838667,
+          "cycle_local": 14,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "PECK_EAR",
+          "animation": "magpie_small_peck_tiger_ear"
+        },
+        {
+          "timestamp": "2026-07-13T05:54",
+          "minute_key": 1068062722,
+          "cycle_index": 24838667,
+          "cycle_local": 41,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": null
+        },
+        {
+          "timestamp": "2026-07-13T05:58",
+          "minute_key": 1068062726,
+          "cycle_index": 24838668,
+          "cycle_local": 2,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_large_walk_step"
+        }
+      ]
+    },
+    {
+      "start": "06:00",
+      "endExclusive": "12:00",
+      "resource": "hojakdo_v4_day_06_12.gif",
+      "size": [
+        450,
+        450
+      ],
+      "fps": 20,
+      "frameCount": 715,
+      "durationSeconds": 35.75,
+      "sha256": "2da09f0663e650308183ee80b1c3f2c021b5b33927a04e82aac1ac91fe13060a",
+      "events": [
+        {
+          "timestamp": "2026-07-13T06:05",
+          "minute_key": 1068062733,
+          "cycle_index": 24838668,
+          "cycle_local": 9,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_large_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T06:06",
+          "minute_key": 1068062734,
+          "cycle_index": 24838668,
+          "cycle_local": 10,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T06:07",
+          "minute_key": 1068062735,
+          "cycle_index": 24838668,
+          "cycle_local": 11,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_large_head_tilt"
+        },
+        {
+          "timestamp": "2026-07-13T06:08",
+          "minute_key": 1068062736,
+          "cycle_index": 24838668,
+          "cycle_local": 12,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_large_turn_perch"
+        },
+        {
+          "timestamp": "2026-07-13T06:37",
+          "minute_key": 1068062765,
+          "cycle_index": 24838668,
+          "cycle_local": 41,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": "magpie_large_exit_right_jump"
+        },
+        {
+          "timestamp": "2026-07-13T06:41",
+          "minute_key": 1068062769,
+          "cycle_index": 24838669,
+          "cycle_local": 2,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_small_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T06:48",
+          "minute_key": 1068062776,
+          "cycle_index": 24838669,
+          "cycle_local": 9,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_small_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T06:49",
+          "minute_key": 1068062777,
+          "cycle_index": 24838669,
+          "cycle_local": 10,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T06:50",
+          "minute_key": 1068062778,
+          "cycle_index": 24838669,
+          "cycle_local": 11,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_small_head_scan"
+        },
+        {
+          "timestamp": "2026-07-13T06:51",
+          "minute_key": 1068062779,
+          "cycle_index": 24838669,
+          "cycle_local": 12,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_small_look_plum"
+        },
+        {
+          "timestamp": "2026-07-13T06:52",
+          "minute_key": 1068062780,
+          "cycle_index": 24838669,
+          "cycle_local": 13,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_HOP",
+          "animation": "magpie_small_turn_hop"
+        },
+        {
+          "timestamp": "2026-07-13T06:53",
+          "minute_key": 1068062781,
+          "cycle_index": 24838669,
+          "cycle_local": 14,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "PECK_EAR",
+          "animation": "magpie_small_peck_tiger_ear"
+        },
+        {
+          "timestamp": "2026-07-13T07:20",
+          "minute_key": 1068062808,
+          "cycle_index": 24838669,
+          "cycle_local": 41,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": null
+        },
+        {
+          "timestamp": "2026-07-13T07:24",
+          "minute_key": 1068062812,
+          "cycle_index": 24838670,
+          "cycle_local": 2,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_large_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T07:31",
+          "minute_key": 1068062819,
+          "cycle_index": 24838670,
+          "cycle_local": 9,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_large_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T07:32",
+          "minute_key": 1068062820,
+          "cycle_index": 24838670,
+          "cycle_local": 10,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T07:33",
+          "minute_key": 1068062821,
+          "cycle_index": 24838670,
+          "cycle_local": 11,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_large_head_tilt"
+        },
+        {
+          "timestamp": "2026-07-13T07:34",
+          "minute_key": 1068062822,
+          "cycle_index": 24838670,
+          "cycle_local": 12,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_large_turn_perch"
+        },
+        {
+          "timestamp": "2026-07-13T08:03",
+          "minute_key": 1068062851,
+          "cycle_index": 24838670,
+          "cycle_local": 41,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": "magpie_large_exit_right_jump"
+        },
+        {
+          "timestamp": "2026-07-13T08:07",
+          "minute_key": 1068062855,
+          "cycle_index": 24838671,
+          "cycle_local": 2,
+          "character": "SMALL",
+          "route": "HOUR",
+          "action": "FLY_TO_HAND",
+          "animation": "magpie_small_fly_pine_to_hand"
+        },
+        {
+          "timestamp": "2026-07-13T08:08",
+          "minute_key": 1068062856,
+          "cycle_index": 24838671,
+          "cycle_local": 3,
+          "character": "SMALL",
+          "route": "HOUR",
+          "action": "LAND_HAND",
+          "animation": "magpie_small_land_on_hand"
+        },
+        {
+          "timestamp": "2026-07-13T08:14",
+          "minute_key": 1068062862,
+          "cycle_index": 24838671,
+          "cycle_local": 9,
+          "character": "SMALL",
+          "route": "HOUR",
+          "action": "HOP_TIGER",
+          "animation": "magpie_small_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T08:15",
+          "minute_key": 1068062863,
+          "cycle_index": 24838671,
+          "cycle_local": 10,
+          "character": "SMALL",
+          "route": "HOUR",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T08:16",
+          "minute_key": 1068062864,
+          "cycle_index": 24838671,
+          "cycle_local": 11,
+          "character": "SMALL",
+          "route": "HOUR",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_small_head_scan"
+        },
+        {
+          "timestamp": "2026-07-13T08:17",
+          "minute_key": 1068062865,
+          "cycle_index": 24838671,
+          "cycle_local": 12,
+          "character": "SMALL",
+          "route": "HOUR",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_small_look_plum"
+        },
+        {
+          "timestamp": "2026-07-13T08:18",
+          "minute_key": 1068062866,
+          "cycle_index": 24838671,
+          "cycle_local": 13,
+          "character": "SMALL",
+          "route": "HOUR",
+          "action": "TURN_HOP",
+          "animation": "magpie_small_turn_hop"
+        },
+        {
+          "timestamp": "2026-07-13T08:19",
+          "minute_key": 1068062867,
+          "cycle_index": 24838671,
+          "cycle_local": 14,
+          "character": "SMALL",
+          "route": "HOUR",
+          "action": "PECK_EAR",
+          "animation": "magpie_small_peck_tiger_ear"
+        },
+        {
+          "timestamp": "2026-07-13T08:46",
+          "minute_key": 1068062894,
+          "cycle_index": 24838671,
+          "cycle_local": 41,
+          "character": "SMALL",
+          "route": "HOUR",
+          "action": "EXIT_RIGHT",
+          "animation": null
+        },
+        {
+          "timestamp": "2026-07-13T08:50",
+          "minute_key": 1068062898,
+          "cycle_index": 24838672,
+          "cycle_local": 2,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_large_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T08:57",
+          "minute_key": 1068062905,
+          "cycle_index": 24838672,
+          "cycle_local": 9,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_large_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T08:58",
+          "minute_key": 1068062906,
+          "cycle_index": 24838672,
+          "cycle_local": 10,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T08:59",
+          "minute_key": 1068062907,
+          "cycle_index": 24838672,
+          "cycle_local": 11,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_large_head_tilt"
+        },
+        {
+          "timestamp": "2026-07-13T09:00",
+          "minute_key": 1068062908,
+          "cycle_index": 24838672,
+          "cycle_local": 12,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_large_turn_perch"
+        },
+        {
+          "timestamp": "2026-07-13T09:29",
+          "minute_key": 1068062937,
+          "cycle_index": 24838672,
+          "cycle_local": 41,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": "magpie_large_exit_right_jump"
+        },
+        {
+          "timestamp": "2026-07-13T09:33",
+          "minute_key": 1068062941,
+          "cycle_index": 24838673,
+          "cycle_local": 2,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_small_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T09:40",
+          "minute_key": 1068062948,
+          "cycle_index": 24838673,
+          "cycle_local": 9,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_small_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T09:41",
+          "minute_key": 1068062949,
+          "cycle_index": 24838673,
+          "cycle_local": 10,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T09:42",
+          "minute_key": 1068062950,
+          "cycle_index": 24838673,
+          "cycle_local": 11,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_small_head_scan"
+        },
+        {
+          "timestamp": "2026-07-13T09:43",
+          "minute_key": 1068062951,
+          "cycle_index": 24838673,
+          "cycle_local": 12,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_small_look_plum"
+        },
+        {
+          "timestamp": "2026-07-13T09:44",
+          "minute_key": 1068062952,
+          "cycle_index": 24838673,
+          "cycle_local": 13,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_HOP",
+          "animation": "magpie_small_turn_hop"
+        },
+        {
+          "timestamp": "2026-07-13T09:45",
+          "minute_key": 1068062953,
+          "cycle_index": 24838673,
+          "cycle_local": 14,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "PECK_EAR",
+          "animation": "magpie_small_peck_tiger_ear"
+        },
+        {
+          "timestamp": "2026-07-13T10:12",
+          "minute_key": 1068062980,
+          "cycle_index": 24838673,
+          "cycle_local": 41,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": null
+        },
+        {
+          "timestamp": "2026-07-13T10:16",
+          "minute_key": 1068062984,
+          "cycle_index": 24838674,
+          "cycle_local": 2,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_large_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T10:23",
+          "minute_key": 1068062991,
+          "cycle_index": 24838674,
+          "cycle_local": 9,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_large_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T10:24",
+          "minute_key": 1068062992,
+          "cycle_index": 24838674,
+          "cycle_local": 10,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T10:25",
+          "minute_key": 1068062993,
+          "cycle_index": 24838674,
+          "cycle_local": 11,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_large_head_tilt"
+        },
+        {
+          "timestamp": "2026-07-13T10:26",
+          "minute_key": 1068062994,
+          "cycle_index": 24838674,
+          "cycle_local": 12,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_large_turn_perch"
+        },
+        {
+          "timestamp": "2026-07-13T10:55",
+          "minute_key": 1068063023,
+          "cycle_index": 24838674,
+          "cycle_local": 41,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": "magpie_large_exit_right_jump"
+        },
+        {
+          "timestamp": "2026-07-13T10:59",
+          "minute_key": 1068063027,
+          "cycle_index": 24838675,
+          "cycle_local": 2,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_small_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T11:06",
+          "minute_key": 1068063034,
+          "cycle_index": 24838675,
+          "cycle_local": 9,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_small_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T11:07",
+          "minute_key": 1068063035,
+          "cycle_index": 24838675,
+          "cycle_local": 10,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T11:08",
+          "minute_key": 1068063036,
+          "cycle_index": 24838675,
+          "cycle_local": 11,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_small_head_scan"
+        },
+        {
+          "timestamp": "2026-07-13T11:09",
+          "minute_key": 1068063037,
+          "cycle_index": 24838675,
+          "cycle_local": 12,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_small_look_plum"
+        },
+        {
+          "timestamp": "2026-07-13T11:10",
+          "minute_key": 1068063038,
+          "cycle_index": 24838675,
+          "cycle_local": 13,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_HOP",
+          "animation": "magpie_small_turn_hop"
+        },
+        {
+          "timestamp": "2026-07-13T11:11",
+          "minute_key": 1068063039,
+          "cycle_index": 24838675,
+          "cycle_local": 14,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "PECK_EAR",
+          "animation": "magpie_small_peck_tiger_ear"
+        },
+        {
+          "timestamp": "2026-07-13T11:38",
+          "minute_key": 1068063066,
+          "cycle_index": 24838675,
+          "cycle_local": 41,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": null
+        },
+        {
+          "timestamp": "2026-07-13T11:42",
+          "minute_key": 1068063070,
+          "cycle_index": 24838676,
+          "cycle_local": 2,
+          "character": "LARGE",
+          "route": "MINUTE",
+          "action": "FLY_TO_HAND",
+          "animation": "magpie_large_fly_pine_to_hand"
+        },
+        {
+          "timestamp": "2026-07-13T11:43",
+          "minute_key": 1068063071,
+          "cycle_index": 24838676,
+          "cycle_local": 3,
+          "character": "LARGE",
+          "route": "MINUTE",
+          "action": "LAND_HAND",
+          "animation": "magpie_large_land_on_hand"
+        },
+        {
+          "timestamp": "2026-07-13T11:49",
+          "minute_key": 1068063077,
+          "cycle_index": 24838676,
+          "cycle_local": 9,
+          "character": "LARGE",
+          "route": "MINUTE",
+          "action": "HOP_TIGER",
+          "animation": "magpie_large_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T11:50",
+          "minute_key": 1068063078,
+          "cycle_index": 24838676,
+          "cycle_local": 10,
+          "character": "LARGE",
+          "route": "MINUTE",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T11:51",
+          "minute_key": 1068063079,
+          "cycle_index": 24838676,
+          "cycle_local": 11,
+          "character": "LARGE",
+          "route": "MINUTE",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_large_head_tilt"
+        },
+        {
+          "timestamp": "2026-07-13T11:52",
+          "minute_key": 1068063080,
+          "cycle_index": 24838676,
+          "cycle_local": 12,
+          "character": "LARGE",
+          "route": "MINUTE",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_large_turn_perch"
+        }
+      ]
+    },
+    {
+      "start": "12:00",
+      "endExclusive": "18:00",
+      "resource": "hojakdo_v4_day_12_18.gif",
+      "size": [
+        450,
+        450
+      ],
+      "fps": 20,
+      "frameCount": 689,
+      "durationSeconds": 34.45,
+      "sha256": "0fdece53541859f1412312d13877dad2d62d58bc6a3f6ebc9450e2c82efd9b0e",
+      "events": [
+        {
+          "timestamp": "2026-07-13T12:21",
+          "minute_key": 1068063109,
+          "cycle_index": 24838676,
+          "cycle_local": 41,
+          "character": "LARGE",
+          "route": "MINUTE",
+          "action": "EXIT_RIGHT",
+          "animation": "magpie_large_exit_right_jump"
+        },
+        {
+          "timestamp": "2026-07-13T12:25",
+          "minute_key": 1068063113,
+          "cycle_index": 24838677,
+          "cycle_local": 2,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_small_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T12:32",
+          "minute_key": 1068063120,
+          "cycle_index": 24838677,
+          "cycle_local": 9,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_small_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T12:33",
+          "minute_key": 1068063121,
+          "cycle_index": 24838677,
+          "cycle_local": 10,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T12:34",
+          "minute_key": 1068063122,
+          "cycle_index": 24838677,
+          "cycle_local": 11,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_small_head_scan"
+        },
+        {
+          "timestamp": "2026-07-13T12:35",
+          "minute_key": 1068063123,
+          "cycle_index": 24838677,
+          "cycle_local": 12,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_small_look_plum"
+        },
+        {
+          "timestamp": "2026-07-13T12:36",
+          "minute_key": 1068063124,
+          "cycle_index": 24838677,
+          "cycle_local": 13,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_HOP",
+          "animation": "magpie_small_turn_hop"
+        },
+        {
+          "timestamp": "2026-07-13T12:37",
+          "minute_key": 1068063125,
+          "cycle_index": 24838677,
+          "cycle_local": 14,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "PECK_EAR",
+          "animation": "magpie_small_peck_tiger_ear"
+        },
+        {
+          "timestamp": "2026-07-13T13:04",
+          "minute_key": 1068063152,
+          "cycle_index": 24838677,
+          "cycle_local": 41,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": null
+        },
+        {
+          "timestamp": "2026-07-13T13:08",
+          "minute_key": 1068063156,
+          "cycle_index": 24838678,
+          "cycle_local": 2,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_large_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T13:15",
+          "minute_key": 1068063163,
+          "cycle_index": 24838678,
+          "cycle_local": 9,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_large_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T13:16",
+          "minute_key": 1068063164,
+          "cycle_index": 24838678,
+          "cycle_local": 10,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T13:17",
+          "minute_key": 1068063165,
+          "cycle_index": 24838678,
+          "cycle_local": 11,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_large_head_tilt"
+        },
+        {
+          "timestamp": "2026-07-13T13:18",
+          "minute_key": 1068063166,
+          "cycle_index": 24838678,
+          "cycle_local": 12,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_large_turn_perch"
+        },
+        {
+          "timestamp": "2026-07-13T13:47",
+          "minute_key": 1068063195,
+          "cycle_index": 24838678,
+          "cycle_local": 41,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": "magpie_large_exit_right_jump"
+        },
+        {
+          "timestamp": "2026-07-13T13:51",
+          "minute_key": 1068063199,
+          "cycle_index": 24838679,
+          "cycle_local": 2,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_small_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T13:58",
+          "minute_key": 1068063206,
+          "cycle_index": 24838679,
+          "cycle_local": 9,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_small_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T13:59",
+          "minute_key": 1068063207,
+          "cycle_index": 24838679,
+          "cycle_local": 10,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T14:00",
+          "minute_key": 1068063208,
+          "cycle_index": 24838679,
+          "cycle_local": 11,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_small_head_scan"
+        },
+        {
+          "timestamp": "2026-07-13T14:01",
+          "minute_key": 1068063209,
+          "cycle_index": 24838679,
+          "cycle_local": 12,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_small_look_plum"
+        },
+        {
+          "timestamp": "2026-07-13T14:02",
+          "minute_key": 1068063210,
+          "cycle_index": 24838679,
+          "cycle_local": 13,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_HOP",
+          "animation": "magpie_small_turn_hop"
+        },
+        {
+          "timestamp": "2026-07-13T14:03",
+          "minute_key": 1068063211,
+          "cycle_index": 24838679,
+          "cycle_local": 14,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "PECK_EAR",
+          "animation": "magpie_small_peck_tiger_ear"
+        },
+        {
+          "timestamp": "2026-07-13T14:30",
+          "minute_key": 1068063238,
+          "cycle_index": 24838679,
+          "cycle_local": 41,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": null
+        },
+        {
+          "timestamp": "2026-07-13T14:34",
+          "minute_key": 1068063242,
+          "cycle_index": 24838680,
+          "cycle_local": 2,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_large_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T14:41",
+          "minute_key": 1068063249,
+          "cycle_index": 24838680,
+          "cycle_local": 9,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_large_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T14:42",
+          "minute_key": 1068063250,
+          "cycle_index": 24838680,
+          "cycle_local": 10,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T14:43",
+          "minute_key": 1068063251,
+          "cycle_index": 24838680,
+          "cycle_local": 11,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_large_head_tilt"
+        },
+        {
+          "timestamp": "2026-07-13T14:44",
+          "minute_key": 1068063252,
+          "cycle_index": 24838680,
+          "cycle_local": 12,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_large_turn_perch"
+        },
+        {
+          "timestamp": "2026-07-13T15:13",
+          "minute_key": 1068063281,
+          "cycle_index": 24838680,
+          "cycle_local": 41,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": "magpie_large_exit_right_jump"
+        },
+        {
+          "timestamp": "2026-07-13T15:17",
+          "minute_key": 1068063285,
+          "cycle_index": 24838681,
+          "cycle_local": 2,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_small_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T15:24",
+          "minute_key": 1068063292,
+          "cycle_index": 24838681,
+          "cycle_local": 9,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_small_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T15:25",
+          "minute_key": 1068063293,
+          "cycle_index": 24838681,
+          "cycle_local": 10,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T15:26",
+          "minute_key": 1068063294,
+          "cycle_index": 24838681,
+          "cycle_local": 11,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_small_head_scan"
+        },
+        {
+          "timestamp": "2026-07-13T15:27",
+          "minute_key": 1068063295,
+          "cycle_index": 24838681,
+          "cycle_local": 12,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_small_look_plum"
+        },
+        {
+          "timestamp": "2026-07-13T15:28",
+          "minute_key": 1068063296,
+          "cycle_index": 24838681,
+          "cycle_local": 13,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_HOP",
+          "animation": "magpie_small_turn_hop"
+        },
+        {
+          "timestamp": "2026-07-13T15:29",
+          "minute_key": 1068063297,
+          "cycle_index": 24838681,
+          "cycle_local": 14,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "PECK_EAR",
+          "animation": "magpie_small_peck_tiger_ear"
+        },
+        {
+          "timestamp": "2026-07-13T15:56",
+          "minute_key": 1068063324,
+          "cycle_index": 24838681,
+          "cycle_local": 41,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": null
+        },
+        {
+          "timestamp": "2026-07-13T16:00",
+          "minute_key": 1068063328,
+          "cycle_index": 24838682,
+          "cycle_local": 2,
+          "character": "LARGE",
+          "route": "HOUR",
+          "action": "FLY_TO_HAND",
+          "animation": "magpie_large_fly_pine_to_hand"
+        },
+        {
+          "timestamp": "2026-07-13T16:01",
+          "minute_key": 1068063329,
+          "cycle_index": 24838682,
+          "cycle_local": 3,
+          "character": "LARGE",
+          "route": "HOUR",
+          "action": "LAND_HAND",
+          "animation": "magpie_large_land_on_hand"
+        },
+        {
+          "timestamp": "2026-07-13T16:07",
+          "minute_key": 1068063335,
+          "cycle_index": 24838682,
+          "cycle_local": 9,
+          "character": "LARGE",
+          "route": "HOUR",
+          "action": "HOP_TIGER",
+          "animation": "magpie_large_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T16:08",
+          "minute_key": 1068063336,
+          "cycle_index": 24838682,
+          "cycle_local": 10,
+          "character": "LARGE",
+          "route": "HOUR",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T16:09",
+          "minute_key": 1068063337,
+          "cycle_index": 24838682,
+          "cycle_local": 11,
+          "character": "LARGE",
+          "route": "HOUR",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_large_head_tilt"
+        },
+        {
+          "timestamp": "2026-07-13T16:10",
+          "minute_key": 1068063338,
+          "cycle_index": 24838682,
+          "cycle_local": 12,
+          "character": "LARGE",
+          "route": "HOUR",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_large_turn_perch"
+        },
+        {
+          "timestamp": "2026-07-13T16:39",
+          "minute_key": 1068063367,
+          "cycle_index": 24838682,
+          "cycle_local": 41,
+          "character": "LARGE",
+          "route": "HOUR",
+          "action": "EXIT_RIGHT",
+          "animation": "magpie_large_exit_right_jump"
+        },
+        {
+          "timestamp": "2026-07-13T16:43",
+          "minute_key": 1068063371,
+          "cycle_index": 24838683,
+          "cycle_local": 2,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_small_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T16:50",
+          "minute_key": 1068063378,
+          "cycle_index": 24838683,
+          "cycle_local": 9,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_small_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T16:51",
+          "minute_key": 1068063379,
+          "cycle_index": 24838683,
+          "cycle_local": 10,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T16:52",
+          "minute_key": 1068063380,
+          "cycle_index": 24838683,
+          "cycle_local": 11,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_small_head_scan"
+        },
+        {
+          "timestamp": "2026-07-13T16:53",
+          "minute_key": 1068063381,
+          "cycle_index": 24838683,
+          "cycle_local": 12,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_small_look_plum"
+        },
+        {
+          "timestamp": "2026-07-13T16:54",
+          "minute_key": 1068063382,
+          "cycle_index": 24838683,
+          "cycle_local": 13,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_HOP",
+          "animation": "magpie_small_turn_hop"
+        },
+        {
+          "timestamp": "2026-07-13T16:55",
+          "minute_key": 1068063383,
+          "cycle_index": 24838683,
+          "cycle_local": 14,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "PECK_EAR",
+          "animation": "magpie_small_peck_tiger_ear"
+        },
+        {
+          "timestamp": "2026-07-13T17:22",
+          "minute_key": 1068063410,
+          "cycle_index": 24838683,
+          "cycle_local": 41,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": null
+        },
+        {
+          "timestamp": "2026-07-13T17:26",
+          "minute_key": 1068063414,
+          "cycle_index": 24838684,
+          "cycle_local": 2,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_large_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T17:33",
+          "minute_key": 1068063421,
+          "cycle_index": 24838684,
+          "cycle_local": 9,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_large_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T17:34",
+          "minute_key": 1068063422,
+          "cycle_index": 24838684,
+          "cycle_local": 10,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T17:35",
+          "minute_key": 1068063423,
+          "cycle_index": 24838684,
+          "cycle_local": 11,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_large_head_tilt"
+        },
+        {
+          "timestamp": "2026-07-13T17:36",
+          "minute_key": 1068063424,
+          "cycle_index": 24838684,
+          "cycle_local": 12,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_large_turn_perch"
+        }
+      ]
+    },
+    {
+      "start": "18:00",
+      "endExclusive": "24:00",
+      "resource": "hojakdo_v4_day_18_24.gif",
+      "size": [
+        450,
+        450
+      ],
+      "fps": 20,
+      "frameCount": 710,
+      "durationSeconds": 35.5,
+      "sha256": "fde6e33d4f157136ab4fe3a752fd4b90e0c7d6c3ecea65d7ac5341166220eed6",
+      "events": [
+        {
+          "timestamp": "2026-07-13T18:05",
+          "minute_key": 1068063453,
+          "cycle_index": 24838684,
+          "cycle_local": 41,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": "magpie_large_exit_right_jump"
+        },
+        {
+          "timestamp": "2026-07-13T18:09",
+          "minute_key": 1068063457,
+          "cycle_index": 24838685,
+          "cycle_local": 2,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_small_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T18:16",
+          "minute_key": 1068063464,
+          "cycle_index": 24838685,
+          "cycle_local": 9,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_small_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T18:17",
+          "minute_key": 1068063465,
+          "cycle_index": 24838685,
+          "cycle_local": 10,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T18:18",
+          "minute_key": 1068063466,
+          "cycle_index": 24838685,
+          "cycle_local": 11,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_small_head_scan"
+        },
+        {
+          "timestamp": "2026-07-13T18:19",
+          "minute_key": 1068063467,
+          "cycle_index": 24838685,
+          "cycle_local": 12,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_small_look_plum"
+        },
+        {
+          "timestamp": "2026-07-13T18:20",
+          "minute_key": 1068063468,
+          "cycle_index": 24838685,
+          "cycle_local": 13,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_HOP",
+          "animation": "magpie_small_turn_hop"
+        },
+        {
+          "timestamp": "2026-07-13T18:21",
+          "minute_key": 1068063469,
+          "cycle_index": 24838685,
+          "cycle_local": 14,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "PECK_EAR",
+          "animation": "magpie_small_peck_tiger_ear"
+        },
+        {
+          "timestamp": "2026-07-13T18:48",
+          "minute_key": 1068063496,
+          "cycle_index": 24838685,
+          "cycle_local": 41,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": null
+        },
+        {
+          "timestamp": "2026-07-13T18:52",
+          "minute_key": 1068063500,
+          "cycle_index": 24838686,
+          "cycle_local": 2,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_large_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T18:59",
+          "minute_key": 1068063507,
+          "cycle_index": 24838686,
+          "cycle_local": 9,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_large_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T19:00",
+          "minute_key": 1068063508,
+          "cycle_index": 24838686,
+          "cycle_local": 10,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T19:01",
+          "minute_key": 1068063509,
+          "cycle_index": 24838686,
+          "cycle_local": 11,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_large_head_tilt"
+        },
+        {
+          "timestamp": "2026-07-13T19:02",
+          "minute_key": 1068063510,
+          "cycle_index": 24838686,
+          "cycle_local": 12,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_large_turn_perch"
+        },
+        {
+          "timestamp": "2026-07-13T19:31",
+          "minute_key": 1068063539,
+          "cycle_index": 24838686,
+          "cycle_local": 41,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": "magpie_large_exit_right_jump"
+        },
+        {
+          "timestamp": "2026-07-13T19:35",
+          "minute_key": 1068063543,
+          "cycle_index": 24838687,
+          "cycle_local": 2,
+          "character": "SMALL",
+          "route": "MINUTE",
+          "action": "FLY_TO_HAND",
+          "animation": "magpie_small_fly_pine_to_hand"
+        },
+        {
+          "timestamp": "2026-07-13T19:36",
+          "minute_key": 1068063544,
+          "cycle_index": 24838687,
+          "cycle_local": 3,
+          "character": "SMALL",
+          "route": "MINUTE",
+          "action": "LAND_HAND",
+          "animation": "magpie_small_land_on_hand"
+        },
+        {
+          "timestamp": "2026-07-13T19:42",
+          "minute_key": 1068063550,
+          "cycle_index": 24838687,
+          "cycle_local": 9,
+          "character": "SMALL",
+          "route": "MINUTE",
+          "action": "HOP_TIGER",
+          "animation": "magpie_small_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T19:43",
+          "minute_key": 1068063551,
+          "cycle_index": 24838687,
+          "cycle_local": 10,
+          "character": "SMALL",
+          "route": "MINUTE",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T19:44",
+          "minute_key": 1068063552,
+          "cycle_index": 24838687,
+          "cycle_local": 11,
+          "character": "SMALL",
+          "route": "MINUTE",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_small_head_scan"
+        },
+        {
+          "timestamp": "2026-07-13T19:45",
+          "minute_key": 1068063553,
+          "cycle_index": 24838687,
+          "cycle_local": 12,
+          "character": "SMALL",
+          "route": "MINUTE",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_small_look_plum"
+        },
+        {
+          "timestamp": "2026-07-13T19:46",
+          "minute_key": 1068063554,
+          "cycle_index": 24838687,
+          "cycle_local": 13,
+          "character": "SMALL",
+          "route": "MINUTE",
+          "action": "TURN_HOP",
+          "animation": "magpie_small_turn_hop"
+        },
+        {
+          "timestamp": "2026-07-13T19:47",
+          "minute_key": 1068063555,
+          "cycle_index": 24838687,
+          "cycle_local": 14,
+          "character": "SMALL",
+          "route": "MINUTE",
+          "action": "PECK_EAR",
+          "animation": "magpie_small_peck_tiger_ear"
+        },
+        {
+          "timestamp": "2026-07-13T20:14",
+          "minute_key": 1068063582,
+          "cycle_index": 24838687,
+          "cycle_local": 41,
+          "character": "SMALL",
+          "route": "MINUTE",
+          "action": "EXIT_RIGHT",
+          "animation": null
+        },
+        {
+          "timestamp": "2026-07-13T20:18",
+          "minute_key": 1068063586,
+          "cycle_index": 24838688,
+          "cycle_local": 2,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_large_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T20:25",
+          "minute_key": 1068063593,
+          "cycle_index": 24838688,
+          "cycle_local": 9,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_large_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T20:26",
+          "minute_key": 1068063594,
+          "cycle_index": 24838688,
+          "cycle_local": 10,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T20:27",
+          "minute_key": 1068063595,
+          "cycle_index": 24838688,
+          "cycle_local": 11,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_large_head_tilt"
+        },
+        {
+          "timestamp": "2026-07-13T20:28",
+          "minute_key": 1068063596,
+          "cycle_index": 24838688,
+          "cycle_local": 12,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_large_turn_perch"
+        },
+        {
+          "timestamp": "2026-07-13T20:57",
+          "minute_key": 1068063625,
+          "cycle_index": 24838688,
+          "cycle_local": 41,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": "magpie_large_exit_right_jump"
+        },
+        {
+          "timestamp": "2026-07-13T21:01",
+          "minute_key": 1068063629,
+          "cycle_index": 24838689,
+          "cycle_local": 2,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_small_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T21:08",
+          "minute_key": 1068063636,
+          "cycle_index": 24838689,
+          "cycle_local": 9,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_small_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T21:09",
+          "minute_key": 1068063637,
+          "cycle_index": 24838689,
+          "cycle_local": 10,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T21:10",
+          "minute_key": 1068063638,
+          "cycle_index": 24838689,
+          "cycle_local": 11,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_small_head_scan"
+        },
+        {
+          "timestamp": "2026-07-13T21:11",
+          "minute_key": 1068063639,
+          "cycle_index": 24838689,
+          "cycle_local": 12,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_small_look_plum"
+        },
+        {
+          "timestamp": "2026-07-13T21:12",
+          "minute_key": 1068063640,
+          "cycle_index": 24838689,
+          "cycle_local": 13,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_HOP",
+          "animation": "magpie_small_turn_hop"
+        },
+        {
+          "timestamp": "2026-07-13T21:13",
+          "minute_key": 1068063641,
+          "cycle_index": 24838689,
+          "cycle_local": 14,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "PECK_EAR",
+          "animation": "magpie_small_peck_tiger_ear"
+        },
+        {
+          "timestamp": "2026-07-13T21:40",
+          "minute_key": 1068063668,
+          "cycle_index": 24838689,
+          "cycle_local": 41,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": null
+        },
+        {
+          "timestamp": "2026-07-13T21:44",
+          "minute_key": 1068063672,
+          "cycle_index": 24838690,
+          "cycle_local": 2,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_large_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T21:51",
+          "minute_key": 1068063679,
+          "cycle_index": 24838690,
+          "cycle_local": 9,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_large_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T21:52",
+          "minute_key": 1068063680,
+          "cycle_index": 24838690,
+          "cycle_local": 10,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T21:53",
+          "minute_key": 1068063681,
+          "cycle_index": 24838690,
+          "cycle_local": 11,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_large_head_tilt"
+        },
+        {
+          "timestamp": "2026-07-13T21:54",
+          "minute_key": 1068063682,
+          "cycle_index": 24838690,
+          "cycle_local": 12,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_large_turn_perch"
+        },
+        {
+          "timestamp": "2026-07-13T22:23",
+          "minute_key": 1068063711,
+          "cycle_index": 24838690,
+          "cycle_local": 41,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": "magpie_large_exit_right_jump"
+        },
+        {
+          "timestamp": "2026-07-13T22:27",
+          "minute_key": 1068063715,
+          "cycle_index": 24838691,
+          "cycle_local": 2,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_small_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T22:34",
+          "minute_key": 1068063722,
+          "cycle_index": 24838691,
+          "cycle_local": 9,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_small_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T22:35",
+          "minute_key": 1068063723,
+          "cycle_index": 24838691,
+          "cycle_local": 10,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T22:36",
+          "minute_key": 1068063724,
+          "cycle_index": 24838691,
+          "cycle_local": 11,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_small_head_scan"
+        },
+        {
+          "timestamp": "2026-07-13T22:37",
+          "minute_key": 1068063725,
+          "cycle_index": 24838691,
+          "cycle_local": 12,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_small_look_plum"
+        },
+        {
+          "timestamp": "2026-07-13T22:38",
+          "minute_key": 1068063726,
+          "cycle_index": 24838691,
+          "cycle_local": 13,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "TURN_HOP",
+          "animation": "magpie_small_turn_hop"
+        },
+        {
+          "timestamp": "2026-07-13T22:39",
+          "minute_key": 1068063727,
+          "cycle_index": 24838691,
+          "cycle_local": 14,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "PECK_EAR",
+          "animation": "magpie_small_peck_tiger_ear"
+        },
+        {
+          "timestamp": "2026-07-13T23:06",
+          "minute_key": 1068063754,
+          "cycle_index": 24838691,
+          "cycle_local": 41,
+          "character": "SMALL",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": null
+        },
+        {
+          "timestamp": "2026-07-13T23:10",
+          "minute_key": 1068063758,
+          "cycle_index": 24838692,
+          "cycle_local": 2,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "WALK_PLUM",
+          "animation": "magpie_large_walk_step"
+        },
+        {
+          "timestamp": "2026-07-13T23:17",
+          "minute_key": 1068063765,
+          "cycle_index": 24838692,
+          "cycle_local": 9,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HOP_TIGER",
+          "animation": "magpie_large_hop_to_tiger"
+        },
+        {
+          "timestamp": "2026-07-13T23:18",
+          "minute_key": 1068063766,
+          "cycle_index": 24838692,
+          "cycle_local": 10,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TIGER_REACT",
+          "animation": "tiger_head_eye_reaction"
+        },
+        {
+          "timestamp": "2026-07-13T23:19",
+          "minute_key": 1068063767,
+          "cycle_index": 24838692,
+          "cycle_local": 11,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "HEAD_ACTION",
+          "animation": "magpie_large_head_tilt"
+        },
+        {
+          "timestamp": "2026-07-13T23:20",
+          "minute_key": 1068063768,
+          "cycle_index": 24838692,
+          "cycle_local": 12,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "TURN_OR_LOOK",
+          "animation": "magpie_large_turn_perch"
+        },
+        {
+          "timestamp": "2026-07-13T23:49",
+          "minute_key": 1068063797,
+          "cycle_index": 24838692,
+          "cycle_local": 41,
+          "character": "LARGE",
+          "route": "PLUM",
+          "action": "EXIT_RIGHT",
+          "animation": "magpie_large_exit_right_jump"
+        },
+        {
+          "timestamp": "2026-07-13T23:53",
+          "minute_key": 1068063801,
+          "cycle_index": 24838693,
+          "cycle_local": 2,
+          "character": "SMALL",
+          "route": "HOUR",
+          "action": "FLY_TO_HAND",
+          "animation": "magpie_small_fly_pine_to_hand"
+        },
+        {
+          "timestamp": "2026-07-13T23:54",
+          "minute_key": 1068063802,
+          "cycle_index": 24838693,
+          "cycle_local": 3,
+          "character": "SMALL",
+          "route": "HOUR",
+          "action": "LAND_HAND",
+          "animation": "magpie_small_land_on_hand"
+        }
+      ]
+    }
+  ]
+}
